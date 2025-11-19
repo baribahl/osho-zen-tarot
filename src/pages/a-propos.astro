@@ -1,0 +1,537 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="À propos - Barib's Osho Zen Tarot"
+  description="Découvrez l'histoire et la philosophie derrière le Tarot Zen d'Osho, un outil de contemplation et d'introspection spirituelle."
+>
+  <div class="about-page">
+    <div class="about-container">
+      <header class="about-header">
+        <h1 class="page-title">À propos du Tarot Zen d'Osho</h1>
+        <p class="page-lead">
+          Un voyage spirituel à travers 79 cartes de sagesse et de contemplation
+        </p>
+      </header>
+
+      <section class="about-section" aria-labelledby="project-heading">
+        <h2 class="section-heading" id="project-heading">
+          <span class="material-symbols-outlined" aria-hidden="true">auto_stories</span>
+          Le Projet
+        </h2>
+        <div class="content-block">
+          <p>
+            Bienvenue dans l'univers du <strong>Tarot Zen d'Osho</strong>, une collection de 79 cartes 
+            conçues pour inspirer la contemplation, l'introspection et l'éveil spirituel. 
+            Ce tarot transcende la divination traditionnelle pour devenir un miroir de l'âme, 
+            reflétant l'état présent de votre être intérieur.
+          </p>
+          <p>
+            Chaque carte porte en elle une sagesse profonde, invitant à explorer les différentes 
+            facettes de l'existence humaine - des joies aux peines, des certitudes aux doutes, 
+            de l'action à la contemplation.
+          </p>
+        </div>
+      </section>
+
+      <section class="about-section" aria-labelledby="philosophy-heading">
+        <h2 class="section-heading" id="philosophy-heading">
+          <span class="material-symbols-outlined" aria-hidden="true">spa</span>
+          La Philosophie
+        </h2>
+        <div class="content-block">
+          <p>
+            Le Tarot Zen d'Osho s'inspire de la philosophie zen et des enseignements d'Osho, 
+            maître spirituel contemporain. Contrairement aux tarots traditionnels qui prétendent 
+            prédire l'avenir, ce tarot vous invite à <strong>comprendre le présent</strong>.
+          </p>
+          <p>
+            Chaque tirage est une opportunité de dialogue avec soi-même, un moment de pause dans 
+            l'agitation du quotidien pour se reconnecter à son essence profonde.
+          </p>
+        </div>
+      </section>
+
+      <section class="about-section families-section" aria-labelledby="families-heading">
+        <h2 class="section-heading" id="families-heading">
+          <span class="material-symbols-outlined" aria-hidden="true">category</span>
+          Les Familles de Cartes
+        </h2>
+        <div class="families-grid">
+          <div class="family-card">
+            <div class="family-icon feu">🔥</div>
+            <h3 class="family-title">Feu</h3>
+            <p class="family-description">
+              Passion, action, créativité et transformation. Le feu représente l'énergie vitale 
+              et le courage d'avancer.
+            </p>
+          </div>
+          
+          <div class="family-card">
+            <div class="family-icon eau">💧</div>
+            <h3 class="family-title">Eau</h3>
+            <p class="family-description">
+              Émotions, intuition, profondeur et fluidité. L'eau symbolise la capacité d'adaptation 
+              et la sensibilité.
+            </p>
+          </div>
+          
+          <div class="family-card">
+            <div class="family-icon nuages">☁️</div>
+            <h3 class="family-title">Nuages</h3>
+            <p class="family-description">
+              Mental, pensées, intellect et clarté. Les nuages évoquent la légèreté de l'esprit 
+              et la perspective.
+            </p>
+          </div>
+          
+          <div class="family-card">
+            <div class="family-icon arc-en-ciel">🌈</div>
+            <h3 class="family-title">Arc-en-ciel</h3>
+            <p class="family-description">
+              Manifestation physique, ancrage et abondance. L'arc-en-ciel relie le ciel et la terre, 
+              l'esprit et la matière.
+            </p>
+          </div>
+          
+          <div class="family-card majeures">
+            <div class="family-icon majeure">✨</div>
+            <h3 class="family-title">Arcanes Majeurs</h3>
+            <p class="family-description">
+              Les grandes leçons de vie, les archétypes universels et les étapes majeures 
+              du chemin spirituel.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="about-section" aria-labelledby="usage-heading">
+        <h2 class="section-heading" id="usage-heading">
+          <span class="material-symbols-outlined" aria-hidden="true">lightbulb</span>
+          Comment Utiliser ce Tarot
+        </h2>
+        <div class="content-block">
+          <ol class="usage-list">
+            <li>
+              <strong>Centrez-vous</strong> : Prenez un moment de silence pour vous recentrer 
+              et clarifier votre intention.
+            </li>
+            <li>
+              <strong>Posez votre question</strong> : Formulez intérieurement une question ouverte 
+              sur votre situation présente.
+            </li>
+            <li>
+              <strong>Tirez une carte</strong> : Laissez votre intuition vous guider vers la carte 
+              qui résonne avec vous.
+            </li>
+            <li>
+              <strong>Contemplez</strong> : Observez l'image, lisez la signification, accueillez 
+              ce qui émerge en vous.
+            </li>
+            <li>
+              <strong>Intégrez</strong> : Laissez le message de la carte vous accompagner tout au 
+              long de votre journée.
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="about-section cta-section">
+        <div class="cta-card">
+          <h2 class="cta-title">Prêt à explorer ?</h2>
+          <p class="cta-description">
+            Commencez votre voyage spirituel en tirant votre première carte
+          </p>
+          <div class="cta-buttons">
+            <a href="/" class="cta-button primary">
+              <span class="material-symbols-outlined" aria-hidden="true">style</span>
+              Tirer une carte
+            </a>
+            <a href="/cartes" class="cta-button secondary">
+              <span class="material-symbols-outlined" aria-hidden="true">grid_view</span>
+              Parcourir toutes les cartes
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <footer class="about-footer">
+        <p>
+          <em>
+            "Le moment présent est le seul temps qui existe vraiment. 
+            Chaque carte est une invitation à l'habiter pleinement."
+          </em>
+        </p>
+      </footer>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .about-page {
+    min-height: 100vh;
+    padding: var(--space-2xl) var(--space-xl);
+    padding-top: calc(var(--space-2xl) + 60px);
+  }
+
+  .about-container {
+    max-width: var(--breakpoint-lg);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xl);
+  }
+
+  .about-header {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .page-title {
+    font-family: var(--font-heading);
+    font-size: var(--text-5xl);
+    font-weight: 900;
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--space-md);
+    line-height: 1.2;
+  }
+
+  .page-lead {
+    font-size: var(--text-xl);
+    color: var(--color-text-secondary);
+    font-style: italic;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .about-section {
+    background: rgba(15, 23, 37, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: var(--space-2xl);
+    backdrop-filter: blur(10px);
+  }
+
+  .section-heading {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-accent-turquoise);
+    margin-bottom: var(--space-xl);
+  }
+
+  .section-heading .material-symbols-outlined {
+    font-size: 2rem;
+  }
+
+  .content-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .content-block p {
+    font-size: var(--text-lg);
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .content-block strong {
+    color: var(--color-accent-orange);
+    font-weight: 700;
+  }
+
+  /* === Families Grid === */
+  .families-section {
+    background: linear-gradient(135deg, rgba(15, 23, 37, 0.7), rgba(26, 26, 62, 0.5));
+  }
+
+  .families-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .family-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-md);
+    transition: all var(--transition-normal);
+  }
+
+  .family-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent-orange);
+    box-shadow: var(--glow-orange);
+  }
+
+  .family-card.majeures {
+    grid-column: 1 / -1;
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .family-icon {
+    font-size: 3rem;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .family-icon.feu {
+    background: rgba(255, 107, 74, 0.2);
+  }
+
+  .family-icon.eau {
+    background: rgba(74, 158, 255, 0.2);
+  }
+
+  .family-icon.nuages {
+    background: rgba(160, 160, 196, 0.2);
+  }
+
+  .family-icon.arc-en-ciel {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(78, 205, 196, 0.2));
+  }
+
+  .family-icon.majeure {
+    background: rgba(255, 215, 0, 0.2);
+  }
+
+  .family-title {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    color: var(--color-accent-orange);
+    margin: 0;
+  }
+
+  .family-description {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* === Usage List === */
+  .usage-list {
+    list-style: none;
+    counter-reset: usage-counter;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .usage-list li {
+    counter-increment: usage-counter;
+    position: relative;
+    padding-left: var(--space-3xl);
+    font-size: var(--text-lg);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+  }
+
+  .usage-list li::before {
+    content: counter(usage-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    background: var(--gradient-accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+
+  /* === CTA Section === */
+  .cta-section {
+    background: linear-gradient(135deg, rgba(255, 140, 66, 0.1), rgba(78, 205, 196, 0.1));
+    border-color: var(--color-accent-turquoise);
+  }
+
+  .cta-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .cta-title {
+    font-family: var(--font-heading);
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    color: var(--color-accent-turquoise);
+    margin: 0;
+  }
+
+  .cta-description {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    max-width: 500px;
+    margin: 0;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-xl);
+    border-radius: 8px;
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    transition: all var(--transition-normal);
+  }
+
+  .cta-button.primary {
+    background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-magenta));
+    color: var(--color-text-primary);
+    border: 2px solid transparent;
+  }
+
+  .cta-button.primary:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--glow-orange);
+  }
+
+  .cta-button.secondary {
+    background: rgba(78, 205, 196, 0.1);
+    color: var(--color-accent-turquoise);
+    border: 2px solid var(--color-accent-turquoise);
+  }
+
+  .cta-button.secondary:hover {
+    background: rgba(78, 205, 196, 0.2);
+    transform: translateY(-4px);
+    box-shadow: var(--glow-turquoise);
+  }
+
+  /* === Footer === */
+  .about-footer {
+    text-align: center;
+    padding-top: var(--space-xl);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .about-footer em {
+    font-size: var(--text-xl);
+    color: var(--color-text-secondary);
+    font-style: italic;
+    line-height: 1.8;
+  }
+
+  /* === Responsive === */
+  @media (max-width: 768px) {
+    .about-page {
+      padding: var(--space-xl) var(--space-md);
+      padding-top: calc(var(--space-lg) + 60px);
+    }
+
+    .about-container {
+      gap: var(--space-2xl);
+    }
+
+    .page-title {
+      font-size: var(--text-3xl);
+    }
+
+    .page-lead {
+      font-size: var(--text-base);
+    }
+
+    .about-section {
+      padding: var(--space-lg);
+    }
+
+    .section-heading {
+      font-size: var(--text-2xl);
+    }
+
+    .content-block p,
+    .usage-list li {
+      font-size: var(--text-base);
+    }
+
+    .families-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .cta-button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .about-page {
+      padding: var(--space-lg) var(--space-sm);
+      padding-top: calc(var(--space-md) + 60px);
+    }
+
+    .page-title {
+      font-size: var(--text-2xl);
+    }
+
+    .page-lead {
+      font-size: var(--text-sm);
+    }
+
+    .about-section {
+      padding: var(--space-md);
+    }
+
+    .section-heading {
+      font-size: var(--text-xl);
+    }
+
+    .usage-list li {
+      padding-left: var(--space-2xl);
+      font-size: var(--text-sm);
+    }
+
+    .usage-list li::before {
+      width: 32px;
+      height: 32px;
+      font-size: var(--text-base);
+    }
+  }
+</style>

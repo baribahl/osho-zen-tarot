@@ -1,11 +1,720 @@
----
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+﻿---
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Les cartes seront chargées côté client
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title="Barib''s Osho Zen Tarot - Tirer une carte">
+  <div class="hero-section" role="region" aria-label="Tirage de carte">
+    <div class="hero-container">
+      <div class="hero-left">
+        <h1 class="hero-title">Tirer une carte</h1>
+        <p class="hero-subtitle">
+          Une invitation à la contemplation et à l''introspection.
+          Laissez l''instant présent vous guider vers une carte qui résonne avec votre être.
+        </p>
+        <button class="draw-button" id="drawCardBtn" aria-label="Tirer une carte du tarot Zen d'Osho">
+          <span class="button-text">Tirer une carte</span>
+          <span class="button-glow" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="hero-right">
+        <div class="card-stack" id="cardStack" role="img" aria-label="Pile de cartes de tarot">
+          <div class="stack-card" style="--card-index: 0">
+            <div class="card-back"></div>
+          </div>
+          <div class="stack-card" style="--card-index: 1">
+            <div class="card-back"></div>
+          </div>
+          <div class="stack-card" style="--card-index: 2">
+            <div class="card-back"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="drawn-card-section" id="drawnCardSection" style="display: none;" role="region" aria-live="polite" aria-label="Carte tirée">
+    <div class="container">
+      <h2 class="section-title">Carte du jour</h2>
+      <div class="drawn-card-content" id="drawnCardContent">
+        <!-- Contenu injecté dynamiquement -->
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .hero-section {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    padding: var(--space-3xl) var(--space-xl);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* === Parallax background layers === */
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(
+      ellipse at 30% 40%,
+      rgba(255, 140, 66, 0.15) 0%,
+      transparent 50%
+    );
+    z-index: 0;
+    pointer-events: none;
+    will-change: transform;
+    transform: translateY(var(--parallax-offset-before, 0));
+    transition: transform 0.1s ease-out;
+  }
+
+  .hero-section::after {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(
+      ellipse at 70% 60%,
+      rgba(78, 205, 196, 0.12) 0%,
+      transparent 50%
+    );
+    z-index: 0;
+    pointer-events: none;
+    will-change: transform;
+    transform: translateY(var(--parallax-offset-after, 0));
+    transition: transform 0.1s ease-out;
+  }
+
+  .hero-container {
+    max-width: var(--breakpoint-xl);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    will-change: transform;
+  }
+
+  .hero-title {
+    font-size: var(--text-5xl);
+    font-family: var(--font-heading);
+    font-weight: 900;
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    max-width: 500px;
+  }
+
+  .draw-button {
+    position: relative;
+    padding: var(--space-lg) var(--space-2xl);
+    font-size: var(--text-xl);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(238, 90, 111, 0.2));
+    border: 2px solid var(--color-accent-magenta);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    overflow: hidden;
+    width: fit-content;
+  }
+
+  .draw-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glow-magenta), var(--card-shadow-lg);
+    border-color: var(--color-accent-orange);
+  }
+
+  .draw-button:active {
+    transform: translateY(0);
+  }
+
+  .button-glow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(255, 140, 66, 0.3), transparent);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+  }
+
+  .draw-button:hover .button-glow {
+    opacity: 1;
+  }
+
+  .hero-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    will-change: transform;
+  }
+
+  .card-stack {
+    position: relative;
+    width: 280px;
+    height: 400px;
+  }
+
+  .stack-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--card-border-radius);
+    transform: 
+      translateX(calc(var(--card-index) * 12px))
+      translateY(calc(var(--card-index) * -8px))
+      rotateZ(calc(var(--card-index) * 3deg));
+    transition: transform var(--transition-slow);
+  }
+
+  .card-back {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2a2a4e 0%, #1a1a3e 100%);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--card-shadow-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-back::before {
+    content: "";
+    position: absolute;
+    inset: 20px;
+    border: 2px solid rgba(255, 140, 66, 0.3);
+    border-radius: 8px;
+  }
+
+  .card-back::after {
+    content: "";
+    font-size: 4rem;
+    color: rgba(255, 140, 66, 0.4);
+  }
+
+  .drawn-card-section {
+    padding: var(--space-3xl) var(--space-xl);
+    margin-top: var(--space-3xl);
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+
+  .section-title {
+    font-size: var(--text-4xl);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+    color: var(--color-accent-turquoise);
+  }
+
+  .drawn-card-content {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-2xl);
+    max-width: 900px;
+    margin: 0 auto;
+    background: rgba(15, 23, 37, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: var(--space-2xl);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+  }
+
+  .card-image-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    width: 280px;
+    max-width: 280px;
+    flex-shrink: 0;
+  }
+
+  .card-image {
+    width: 280px !important;
+    max-width: 280px !important;
+    height: auto;
+    max-height: 420px;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow-lg);
+    display: block;
+    object-fit: contain;
+  }
+
+  .card-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .card-name {
+    font-family: var(--font-card-name);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-accent-orange);
+    margin: 0;
+  }
+
+  .card-arcana {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .card-excerpt {
+    font-size: var(--text-lg);
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+    font-style: italic;
+  }
+
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-lg);
+    background: rgba(255, 140, 66, 0.1);
+    border: 1px solid var(--color-accent-orange);
+    border-radius: 6px;
+    color: var(--color-accent-orange);
+    text-decoration: none;
+    font-family: var(--font-heading);
+    transition: all var(--transition-normal);
+    width: fit-content;
+  }
+
+  .card-link .material-symbols-outlined {
+    font-size: 1.2rem;
+    transition: transform var(--transition-normal);
+  }
+
+  .card-link:hover {
+    background: rgba(255, 140, 66, 0.2);
+    transform: translateY(-2px);
+    box-shadow: var(--glow-orange);
+  }
+
+  .card-link:hover .material-symbols-outlined {
+    transform: translateX(4px);
+  }
+
+  /* === Animation de tirage === */
+  .draw-animation-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 20, 0);
+    backdrop-filter: blur(0px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+
+  .draw-animation-overlay.active {
+    opacity: 1;
+    background: rgba(10, 10, 20, 0.85);
+    backdrop-filter: blur(8px);
+    pointer-events: all;
+  }
+
+  .animated-card {
+    width: 280px;
+    height: 400px;
+    position: relative;
+    transform: translateY(100vh) rotateY(0deg);
+    transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .draw-animation-overlay.active .animated-card {
+    transform: translateY(0) rotateY(0deg);
+  }
+
+  .animated-card.reveal {
+    animation: cardReveal 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  }
+
+  @keyframes cardReveal {
+    0% {
+      transform: translateY(0) rotateY(0deg) scale(1);
+    }
+    50% {
+      transform: translateY(-30px) rotateY(90deg) scale(1.1);
+    }
+    100% {
+      transform: translateY(0) rotateY(180deg) scale(1);
+      opacity: 0;
+    }
+  }
+
+  .animated-card-back {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2a2a4e 0%, #1a1a3e 100%);
+    border: 2px solid rgba(255, 140, 66, 0.5);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--card-shadow-lg), var(--glow-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .animated-card-back::before {
+    content: "";
+    position: absolute;
+    inset: 20px;
+    border: 2px solid rgba(255, 140, 66, 0.3);
+    border-radius: 8px;
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% {
+      border-color: rgba(255, 140, 66, 0.3);
+      box-shadow: 0 0 10px rgba(255, 140, 66, 0.2);
+    }
+    50% {
+      border-color: rgba(255, 140, 66, 0.6);
+      box-shadow: 0 0 20px rgba(255, 140, 66, 0.4);
+    }
+  }
+
+  /* Animation de mélange pour la pile */
+  .card-stack.shuffling .stack-card {
+    animation: shuffle 0.4s ease-in-out;
+  }
+
+  .card-stack.shuffling .stack-card:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  .card-stack.shuffling .stack-card:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+
+  .card-stack.shuffling .stack-card:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+
+  @keyframes shuffle {
+    0%, 100% {
+      transform: 
+        translateX(calc(var(--card-index) * 12px))
+        translateY(calc(var(--card-index) * -8px))
+        rotateZ(calc(var(--card-index) * 3deg));
+    }
+    25% {
+      transform: 
+        translateX(calc(var(--card-index) * 20px))
+        translateY(calc(var(--card-index) * -15px))
+        rotateZ(calc(var(--card-index) * 8deg));
+    }
+    50% {
+      transform: 
+        translateX(calc(var(--card-index) * 5px))
+        translateY(calc(var(--card-index) * -12px))
+        rotateZ(calc(var(--card-index) * -5deg));
+    }
+    75% {
+      transform: 
+        translateX(calc(var(--card-index) * 15px))
+        translateY(calc(var(--card-index) * -10px))
+        rotateZ(calc(var(--card-index) * 6deg));
+    }
+  }
+
+  /* Désactiver l'animation si prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .animated-card,
+    .card-stack.shuffling .stack-card {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    .draw-animation-overlay.active {
+      transition: opacity 0.1s ease;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      min-height: auto;
+      padding: var(--space-2xl) var(--space-md);
+    }
+
+    .hero-container {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+
+    .hero-title {
+      font-size: var(--text-4xl);
+    }
+
+    .hero-subtitle {
+      font-size: var(--text-base);
+      max-width: 100%;
+    }
+
+    .draw-button {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .card-stack {
+      width: 200px;
+      height: 290px;
+    }
+
+    .drawn-card-section {
+      padding: var(--space-2xl) var(--space-md);
+    }
+
+    .drawn-card-content {
+      grid-template-columns: 1fr;
+      padding: var(--space-lg);
+    }
+
+    .card-image-wrapper {
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: var(--text-3xl);
+    }
+
+    .hero-subtitle {
+      font-size: var(--text-sm);
+    }
+
+    .card-stack {
+      width: 160px;
+      height: 240px;
+    }
+
+    .draw-button {
+      font-size: var(--text-lg);
+      padding: var(--space-md) var(--space-xl);
+    }
+  }
+
+  @media (max-width: 375px) {
+    .hero-section {
+      padding: var(--space-xl) var(--space-sm);
+    }
+
+    .drawn-card-content {
+      padding: var(--space-md);
+    }
+  }
+</style>
+
+<script>
+  // Charger les cartes depuis le JSON
+  let cardsData: any[] = [];
+
+  async function loadCards() {
+    try {
+      const response = await fetch("/src/data/osho_cards.json");
+      cardsData = await response.json();
+    } catch (error) {
+      console.error("Erreur de chargement des cartes:", error);
+    }
+  }
+
+  // Initialiser au chargement
+  loadCards();
+
+  const drawBtn = document.getElementById("drawCardBtn") as HTMLButtonElement;
+  const drawnSection = document.getElementById("drawnCardSection");
+  const drawnContent = document.getElementById("drawnCardContent");
+
+  if (drawBtn && drawnSection && drawnContent) {
+    drawBtn.addEventListener("click", async () => {
+      if (cardsData.length === 0) {
+        console.error("Les cartes ne sont pas encore chargées");
+        return;
+      }
+
+      // Désactiver le bouton pendant l'animation
+      drawBtn.disabled = true;
+      
+      // Créer l'overlay d'animation
+      const overlay = document.createElement('div');
+      overlay.className = 'draw-animation-overlay';
+      document.body.appendChild(overlay);
+
+      // Créer la carte animée
+      const animatedCard = document.createElement('div');
+      animatedCard.className = 'animated-card';
+      animatedCard.innerHTML = '<div class="animated-card-back"></div>';
+      overlay.appendChild(animatedCard);
+
+      // Attendre que l'overlay soit visible
+      await new Promise(resolve => setTimeout(resolve, 50));
+      overlay.classList.add('active');
+
+      // Tirer une carte au hasard
+      const randomCard = cardsData[Math.floor(Math.random() * cardsData.length)];
+      
+      // Effet de mélange (animation de la pile)
+      const cardStack = document.getElementById('cardStack');
+      if (cardStack) {
+        cardStack.classList.add('shuffling');
+      }
+
+      // Attendre la fin du mélange (400ms)
+      await new Promise(resolve => setTimeout(resolve, 400));
+
+      // Carte monte et se retourne (600ms)
+      animatedCard.classList.add('reveal');
+      
+      // Attendre la fin de l'animation de révélation
+      await new Promise(resolve => setTimeout(resolve, 800));
+
+      // Retirer les classes d'animation
+      if (cardStack) {
+        cardStack.classList.remove('shuffling');
+      }
+
+      // Extraire la première phrase du commentaire et retirer les balises HTML
+      const stripHtml = (html: string) => {
+        const tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        return tmp.textContent || tmp.innerText || '';
+      };
+      const cleanCommentary = stripHtml(randomCard.commentary);
+      const shortExcerpt = cleanCommentary.split(".")[0] + ".";
+
+      // Construire le HTML de la carte tirée
+      drawnContent.innerHTML = `
+        <div class="card-image-wrapper">
+          <img 
+            src="${randomCard.image_url_online}" 
+            alt="${randomCard.name}"
+            class="card-image"
+          />
+        </div>
+        <div class="card-info">
+          <div>
+            <h3 class="card-name">${randomCard.name}</h3>
+            <p class="card-arcana">${randomCard.arcana}</p>
+          </div>
+          <p class="card-excerpt">${shortExcerpt}</p>
+          <a href="/carte/${randomCard.card_number}" class="card-link">
+            Lire la signification complète <span class="material-symbols-outlined">arrow_forward</span> 
+          </a>
+        </div>
+      `;
+
+      // Afficher la section
+      drawnSection.style.display = "block";
+      
+      // Retirer l'overlay
+      overlay.classList.remove('active');
+      await new Promise(resolve => setTimeout(resolve, 300));
+      overlay.remove();
+
+      // Réactiver le bouton
+      drawBtn.disabled = false;
+      
+      // Scroll vers la carte tirée
+      setTimeout(() => {
+        drawnSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    });
+  }
+
+  // Parallax scroll effect
+  let ticking = false;
+  const heroSection = document.querySelector('.hero-section') as HTMLElement;
+  const heroLeft = document.querySelector('.hero-left') as HTMLElement;
+  const heroRight = document.querySelector('.hero-right') as HTMLElement;
+
+  function updateParallax() {
+    const scrolled = window.pageYOffset;
+    const heroHeight = heroSection ? heroSection.offsetHeight : 0;
+    
+    if (scrolled < heroHeight) {
+      const parallaxSpeed = 0.5;
+      const parallaxSpeedFast = 0.3;
+      
+      if (heroSection) {
+        const before = heroSection.querySelector('::before') as HTMLElement;
+        const after = heroSection.querySelector('::after') as HTMLElement;
+        
+        // Move background layers at different speeds
+        heroSection.style.setProperty('--parallax-offset-before', `${scrolled * parallaxSpeed}px`);
+        heroSection.style.setProperty('--parallax-offset-after', `${scrolled * parallaxSpeedFast}px`);
+      }
+      
+      // Move content layers
+      if (heroLeft) {
+        heroLeft.style.transform = `translateY(${scrolled * 0.4}px)`;
+        heroLeft.style.opacity = `${1 - scrolled / heroHeight}`;
+      }
+      
+      if (heroRight) {
+        heroRight.style.transform = `translateY(${scrolled * 0.2}px)`;
+        heroRight.style.opacity = `${1 - scrolled / heroHeight}`;
+      }
+    }
+    
+    ticking = false;
+  }
+
+  function requestParallaxUpdate() {
+    if (!ticking && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      window.requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', requestParallaxUpdate);
+</script>

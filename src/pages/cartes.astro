@@ -1,0 +1,525 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import cardsData from '../data/osho_cards.json';
+
+// Tous les types de familles pour les filtres
+const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
+---
+
+<BaseLayout title="Parcourir les cartes - Barib's Osho Zen Tarot">
+  <div class="gallery-page">
+    <div class="gallery-header">
+      <h1 class="page-title">Parcourir les cartes</h1>
+      <p class="page-subtitle">
+        Explorez les 79 cartes du Tarot Zen d'Osho et découvrez leurs significations profondes
+      </p>
+    </div>
+
+    <div class="gallery-container">
+      <!-- Filtres sidebar -->
+      <aside class="filters-sidebar" role="complementary" aria-label="Filtres de recherche">
+        <div class="filter-section">
+          <h3 class="filter-title">
+            <span class="material-symbols-outlined" aria-hidden="true">filter_list</span>
+            Filtres
+          </h3>
+          
+          <div class="filter-group">
+            <h4 class="filter-group-title">Type d'arcane</h4>
+            <div class="filter-chips" id="familyFilters">
+              {families.map((family) => (
+                <button 
+                  class={`filter-chip ${family === 'Toutes' ? 'active' : ''}`}
+                  data-family={family}
+                  type="button"
+                  role="radio"
+                  aria-checked={family === 'Toutes' ? 'true' : 'false'}
+                >
+                  {family}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <h4 class="filter-group-title">
+              <span class="material-symbols-outlined">search</span>
+              Recherche
+            </h4>
+            <input 
+              type="text" 
+              id="searchInput"
+              class="search-input" 
+              placeholder="Nom de la carte..."
+              aria-label="Rechercher une carte par son nom"
+            />
+          </div>
+
+          <button class="reset-button" id="resetFilters" aria-label="Réinitialiser tous les filtres">
+            <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+            Réinitialiser
+          </button>
+        </div>
+      </aside>
+
+      <!-- Grille de cartes -->
+      <main class="cards-grid" id="cardsGrid" role="main" aria-label="Galerie des cartes de tarot">
+        {cardsData.map((card) => (
+          <a 
+            href={`/carte/${card.card_number}`} 
+            class="card-item"
+            data-card-family={card.arcana_family || 'Majeures'}
+            data-card-name={card.name.toLowerCase()}
+          >
+            <div class="card-image-container">
+              <img 
+                src={card.image_url_online} 
+                alt={card.name}
+                class="card-thumbnail"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-details">
+              <h3 class="card-title">{card.name}</h3>
+              <p class="card-arcana">{card.arcana}</p>
+            </div>
+          </a>
+        ))}
+      </main>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .gallery-page {
+    min-height: 100vh;
+    padding: var(--space-2xl) var(--space-xl);
+  }
+
+  .gallery-header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+    padding-top: var(--space-xl);
+    will-change: transform;
+    transition: transform 0.1s ease-out;
+  }
+
+  .page-title {
+    font-family: var(--font-heading);
+    font-size: var(--text-5xl);
+    font-weight: 900;
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--space-md);
+  }
+
+  .page-subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .gallery-container {
+    max-width: var(--breakpoint-xl);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-3xl);
+  }
+
+  /* === Sidebar Filtres === */
+  .filters-sidebar {
+    position: sticky;
+    top: calc(var(--space-3xl) + 60px);
+    height: fit-content;
+    background: rgba(15, 23, 37, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: var(--space-xl);
+    backdrop-filter: blur(10px);
+  }
+
+  .filter-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    color: var(--color-accent-turquoise);
+    margin-bottom: var(--space-lg);
+  }
+
+  .filter-title .material-symbols-outlined {
+    font-size: 1.5rem;
+  }
+
+  .filter-group {
+    margin-bottom: var(--space-xl);
+  }
+
+  .filter-group-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--space-md);
+  }
+
+  .filter-group-title .material-symbols-outlined {
+    font-size: 1rem;
+  }
+
+  .filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .filter-chip {
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+  }
+
+  .filter-chip:hover {
+    background: rgba(255, 140, 66, 0.1);
+    border-color: var(--color-accent-orange);
+    color: var(--color-accent-orange);
+  }
+
+  .filter-chip.active {
+    background: rgba(255, 140, 66, 0.2);
+    border-color: var(--color-accent-orange);
+    color: var(--color-accent-orange);
+    font-weight: 600;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: var(--space-md);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    transition: all var(--transition-normal);
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--color-accent-turquoise);
+    box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
+  }
+
+  .search-input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .reset-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    width: 100%;
+    padding: var(--space-md);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--color-text-secondary);
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+  }
+
+  .reset-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-primary);
+  }
+
+  .reset-button .material-symbols-outlined {
+    font-size: 1.2rem;
+  }
+
+  /* === Grille de cartes === */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-xl);
+  }
+
+  .card-item {
+    display: flex;
+    flex-direction: column;
+    background: rgba(15, 23, 37, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+  }
+
+  .card-item:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--card-shadow-lg), var(--glow-orange);
+    border-color: var(--color-accent-orange);
+  }
+
+  .card-image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2/3;
+    overflow: hidden;
+    background: linear-gradient(135deg, #2a2a4e 0%, #1a1a3e 100%);
+  }
+
+  .card-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+
+  .card-item:hover .card-thumbnail {
+    transform: scale(1.05);
+  }
+
+  .card-details {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .card-title {
+    font-family: var(--font-card-name);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-accent-orange);
+    margin: 0;
+  }
+
+  .card-arcana {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
+  }
+
+  .card-item.hidden {
+    display: none;
+  }
+
+  /* === Responsive === */
+  @media (max-width: 1024px) {
+    .gallery-container {
+      grid-template-columns: 1fr;
+    }
+
+    .filters-sidebar {
+      position: static;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .gallery-page {
+      padding: var(--space-xl) var(--space-md);
+    }
+
+    .gallery-header {
+      padding-top: var(--space-md);
+      margin-bottom: var(--space-2xl);
+    }
+
+    .page-title {
+      font-size: var(--text-3xl);
+    }
+
+    .page-subtitle {
+      font-size: var(--text-base);
+    }
+
+    .gallery-container {
+      gap: var(--space-xl);
+    }
+
+    .filters-sidebar {
+      padding: var(--space-md);
+    }
+
+    .filter-chips {
+      gap: var(--space-xs);
+    }
+
+    .filter-chip {
+      padding: var(--space-xs) var(--space-sm);
+      font-size: var(--text-xs);
+    }
+
+    .cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .page-title {
+      font-size: var(--text-2xl);
+    }
+
+    .page-subtitle {
+      font-size: var(--text-sm);
+    }
+
+    .cards-grid {
+      gap: var(--space-sm);
+    }
+
+    .card-details {
+      padding: var(--space-sm);
+    }
+
+    .card-title {
+      font-size: var(--text-base);
+    }
+  }
+
+  @media (max-width: 375px) {
+    .gallery-page {
+      padding: var(--space-lg) var(--space-sm);
+    }
+
+    .filter-title {
+      font-size: var(--text-lg);
+    }
+  }
+</style>
+
+<script>
+  // Gestion des filtres
+  const familyFilters = document.getElementById('familyFilters');
+  const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+  const resetButton = document.getElementById('resetFilters');
+  const cardItems = document.querySelectorAll('.card-item');
+
+  let activeFamily = 'Toutes';
+  let searchTerm = '';
+
+  // Mapping des familles pour le filtre
+  const familyMap: Record<string, string> = {
+    'Toutes': 'all',
+    'Majeures': 'Majeures',
+    'Feu': 'Feu',
+    'Eau': 'Eau',
+    'Nuages': 'Nuages',
+    'Arc-en-ciel': 'Arc-en-ciel'
+  };
+
+  function filterCards() {
+    cardItems.forEach((card) => {
+      const cardElement = card as HTMLElement;
+      const cardFamily = cardElement.dataset.cardFamily || 'Majeures';
+      const cardName = cardElement.dataset.cardName || '';
+
+      const familyMatch = activeFamily === 'Toutes' || cardFamily === activeFamily;
+      const searchMatch = searchTerm === '' || cardName.includes(searchTerm.toLowerCase());
+
+      if (familyMatch && searchMatch) {
+        cardElement.classList.remove('hidden');
+      } else {
+        cardElement.classList.add('hidden');
+      }
+    });
+  }
+
+  // Filtres par famille
+  if (familyFilters) {
+    familyFilters.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (target.classList.contains('filter-chip')) {
+        const family = target.dataset.family || 'Toutes';
+        
+        // Mettre à jour l'état actif
+        familyFilters.querySelectorAll('.filter-chip').forEach((chip) => {
+          chip.classList.remove('active');
+          chip.setAttribute('aria-checked', 'false');
+        });
+        target.classList.add('active');
+        target.setAttribute('aria-checked', 'true');
+        
+        activeFamily = family;
+        filterCards();
+      }
+    });
+  }
+
+  // Recherche
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchTerm = (e.target as HTMLInputElement).value;
+      filterCards();
+    });
+  }
+
+  // Réinitialiser
+  if (resetButton) {
+    resetButton.addEventListener('click', () => {
+      activeFamily = 'Toutes';
+      searchTerm = '';
+      
+      if (searchInput) {
+        searchInput.value = '';
+      }
+      
+      familyFilters?.querySelectorAll('.filter-chip').forEach((chip) => {
+        chip.classList.remove('active');
+        chip.setAttribute('aria-checked', 'false');
+        if ((chip as HTMLElement).dataset.family === 'Toutes') {
+          chip.classList.add('active');
+          chip.setAttribute('aria-checked', 'true');
+        }
+      });
+      
+      filterCards();
+    });
+  }
+
+  // Subtle parallax effect on header
+  let ticking = false;
+  const galleryHeader = document.querySelector('.gallery-header') as HTMLElement;
+
+  function updateParallax() {
+    const scrolled = window.pageYOffset;
+    
+    if (galleryHeader && scrolled < 500) {
+      galleryHeader.style.transform = `translateY(${scrolled * 0.3}px)`;
+      galleryHeader.style.opacity = `${Math.max(0.3, 1 - scrolled / 400)}`;
+    }
+    
+    ticking = false;
+  }
+
+  function requestParallaxUpdate() {
+    if (!ticking && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      window.requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', requestParallaxUpdate);
+</script>
+</BaseLayout>
