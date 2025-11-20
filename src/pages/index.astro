@@ -1173,20 +1173,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 </style>
 
 <script>
-  // Charger les cartes depuis le JSON
-  let cardsData: any[] = [];
-
-  async function loadCards() {
-    try {
-      const response = await fetch("/src/data/osho_cards.json");
-      cardsData = await response.json();
-    } catch (error) {
-      console.error("Erreur de chargement des cartes:", error);
-    }
-  }
-
-  // Initialiser au chargement
-  loadCards();
+  import cardsDataImport from '../data/osho_cards.json';
+  
+  // Les cartes sont disponibles immédiatement
+  const cardsData: any[] = cardsDataImport as any[];
 
   const drawBtn = document.getElementById("drawCardBtn") as HTMLButtonElement;
   const revealOverlay = document.getElementById("cardRevealOverlay");

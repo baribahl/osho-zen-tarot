@@ -15,12 +15,10 @@ const { title, description = "Explorez le Tarot Zen d'Osho avec Barib - Tirage d
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="stylesheet" href="/src/styles/variables.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Philosopher:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="preload" href="/src/data/osho_cards.json" as="fetch" crossorigin="anonymous" />
     <title>{title}</title>
   </head>
   <body>
@@ -50,6 +48,58 @@ const { title, description = "Explorez le Tarot Zen d'Osho avec Barib - Tirage d
     </footer>
   </body>
 </html>
+
+<style is:global>
+  /* ===== Variables CSS - Palette Osho Zen Tarot ===== */
+  :root {
+    /* === Couleurs principales === */
+    --color-bg-dark: #0f1725;
+    --color-bg-indigo: #1a1a3e;
+    --color-bg-teal: #0f3443;
+    
+    /* === Couleurs d'accent === */
+    --color-accent-orange: #ff8c42;
+    --color-accent-magenta: #ee5a6f;
+    --color-accent-fuchsia: #c06c84;
+    --color-accent-turquoise: #4ecdc4;
+    --color-accent-teal: #46a0a0;
+    
+    /* === Texte === */
+    --color-text-primary: #e8e8f0;
+    --color-text-secondary: #b8b8d0;
+    --color-text-muted: #888899;
+    
+    /* === Typographie === */
+    --font-heading: 'Cinzel Decorative', 'Cinzel', serif;
+    --font-body: 'Crimson Pro', 'Georgia', serif;
+    --font-card-name: 'Philosopher', 'Cinzel Decorative', serif;
+    
+    /* === Tailles de police === */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+    --text-4xl: 2.25rem;
+    --text-5xl: 3rem;
+    
+    /* === Espacements === */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
+    
+    /* === Transitions === */
+    --transition-fast: 150ms ease;
+    --transition-normal: 300ms ease;
+    --transition-slow: 500ms ease;
+  }
+</style>
 
 <style>
   :global(*) {
