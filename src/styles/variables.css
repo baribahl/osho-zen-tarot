@@ -88,9 +88,6 @@
   --gradient-overlay: linear-gradient(180deg, transparent 0%, rgba(15, 23, 37, 0.8) 100%);
 }
 
-/* === Google Fonts Import === */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Philosopher:ital,wght@0,400;0,700;1,400&display=swap');
-
 /* === Reset & Base === */
 * {
   margin: 0;
