@@ -1,7 +1,15 @@
 {
-  "name": "osho-website",
+  "name": "baribosho",
   "type": "module",
   "version": "0.0.1",
+  "description": "BaribOsho v0 - Interactive Osho Zen Tarot website",
+  "author": "Barib",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/baribahl/osho-zen-tarot.git"
+  },
+  "homepage": "https://osho.barib.art",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
