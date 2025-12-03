@@ -1,0 +1,280 @@
+/* === Card Reveal Overlay === */
+.card-reveal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    padding: var(--space-2xl);
+}
+
+.card-reveal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.close-reveal-btn {
+    position: absolute;
+    top: var(--space-xl);
+    right: var(--space-xl);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--color-text-primary);
+    transition: all var(--transition-fast);
+    z-index: 10;
+}
+
+.close-reveal-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg) scale(1.1);
+}
+
+.reveal-content {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+}
+
+/* === Card Showcase === */
+.card-showcase {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3xl);
+    max-width: 1200px;
+    width: 100%;
+    pointer-events: auto;
+}
+
+.showcase-card {
+    flex-shrink: 0;
+}
+
+.showcase-image {
+    width: 480px;
+    /* Increased from 420px */
+    height: auto;
+    border-radius: var(--border-radius-lg);
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(212, 175, 55, 0.2);
+    transition: transform var(--transition-normal);
+}
+
+.showcase-image:hover {
+    transform: scale(1.02) translateY(-4px);
+}
+
+.showcase-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    max-width: 420px;
+}
+
+.showcase-title {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    /* Increased from 3rem */
+    margin: 0;
+    color: var(--color-text-primary);
+    line-height: 1.1;
+    background: linear-gradient(135deg, var(--color-accent-gold), var(--color-accent-amber));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.showcase-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 1.25rem;
+    /* Increased from 1.125rem */
+    color: var(--color-text-secondary);
+    flex-wrap: wrap;
+}
+
+.showcase-arcana {
+    color: var(--color-accent-gold);
+    font-weight: 600;
+}
+
+.showcase-separator {
+    color: var(--color-text-muted);
+}
+
+.showcase-position {
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.showcase-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-xl);
+    background: var(--color-accent-gold);
+    color: #0f1725;
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-size: 1.25rem;
+    /* Increased from 1.125rem */
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+    margin-top: var(--space-md);
+}
+
+.showcase-btn:hover {
+    background: var(--color-accent-amber);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+}
+
+.showcase-btn .material-symbols-outlined {
+    font-size: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+    .card-showcase {
+        flex-direction: column;
+        gap: var(--space-2xl);
+    }
+
+    .showcase-image {
+        width: 100%;
+        max-width: 380px;
+    }
+
+    .showcase-title {
+        font-size: 2.5rem;
+    }
+
+    .showcase-content {
+        max-width: 100%;
+        align-items: center;
+        text-align: center;
+    }
+
+    .close-reveal-btn {
+        top: var(--space-lg);
+        right: var(--space-lg);
+    }
+}
+
+@media (max-width: 600px) {
+    .card-reveal-overlay {
+        padding: var(--space-lg);
+    }
+
+    .showcase-image {
+        max-width: 300px;
+    }
+
+    .showcase-title {
+        font-size: 2rem;
+    }
+
+    .showcase-btn {
+        width: 100%;
+    }
+    
+    .close-reveal-btn {
+        top: var(--space-md);
+        right: var(--space-md);
+        width: 44px;
+        height: 44px;
+    }
+    
+    .showcase-meta {
+        font-size: 1.1rem;
+    }
+}
+
+/* Small phones */
+@media (max-width: 375px) {
+    .card-reveal-overlay {
+        padding: var(--space-md);
+    }
+    
+    .showcase-image {
+        max-width: 260px;
+    }
+    
+    .showcase-title {
+        font-size: 1.75rem;
+    }
+    
+    .showcase-btn {
+        font-size: 1.1rem;
+        padding: var(--space-sm) var(--space-md);
+    }
+}
+
+/* iPad / Tablet landscape */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .card-showcase {
+        flex-direction: row;
+        gap: var(--space-2xl);
+    }
+    
+    .showcase-image {
+        max-width: 320px;
+    }
+    
+    .showcase-content {
+        align-items: flex-start;
+        text-align: left;
+    }
+    
+    .showcase-title {
+        font-size: 2.25rem;
+    }
+}
+
+/* iPadOS Safari specific - safe areas */
+@supports (padding: max(0px)) {
+    .card-reveal-overlay {
+        padding-top: max(var(--space-2xl), env(safe-area-inset-top));
+        padding-bottom: max(var(--space-2xl), env(safe-area-inset-bottom));
+        padding-left: max(var(--space-2xl), env(safe-area-inset-left));
+        padding-right: max(var(--space-2xl), env(safe-area-inset-right));
+    }
+    
+    .close-reveal-btn {
+        top: max(var(--space-xl), env(safe-area-inset-top));
+        right: max(var(--space-xl), env(safe-area-inset-right));
+    }
+}
+
+/* High DPI displays - crisper shadows */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .showcase-image {
+        image-rendering: -webkit-optimize-contrast;
+    }
+}

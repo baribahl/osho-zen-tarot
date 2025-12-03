@@ -1,0 +1,86 @@
+---
+import cardsData from '../data/osho_cards.json';
+
+// Duplicate cards to ensure smooth infinite scroll
+const carouselCards = [...cardsData, ...cardsData].slice(0, 30); // Take first 15 * 2 for performance
+---
+
+<div class="carousel-container">
+  <div class="carousel-track">
+    {carouselCards.map((card, index) => (
+      <a href={`/carte/${card.card_number}`} class="carousel-card" aria-label={`Voir la carte ${card.name}`}>
+        <img 
+          src={card.image_url_online} 
+          alt={card.name} 
+          class="carousel-image" 
+          loading="lazy"
+          width="120"
+          height="176"
+        />
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  .carousel-container {
+    width: 100%;
+    overflow: hidden;
+    padding: var(--space-xl) 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2), transparent);
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: var(--space-lg);
+    width: max-content;
+    animation: scroll 40s linear infinite;
+  }
+
+  .carousel-container:hover .carousel-track {
+    animation-play-state: paused;
+  }
+
+  .carousel-card {
+    flex: 0 0 auto;
+    width: 120px;
+    height: 176px;
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+    transition: transform var(--transition-fast);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+  }
+
+  .carousel-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(212, 175, 55, 0);
+    transition: background var(--transition-fast);
+  }
+
+  .carousel-card:hover {
+    transform: translateY(-5px) scale(1.05);
+    border-color: var(--color-accent-gold);
+    z-index: 1;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  }
+
+  .carousel-card:hover::after {
+    background: rgba(212, 175, 55, 0.1);
+  }
+
+  .carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+</style>

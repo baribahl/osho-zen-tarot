@@ -1,0 +1,414 @@
+---
+// CardStack - Complete choreographed card draw animation
+---
+
+<div class="card-stack-wrapper" id="cardStackWrapper">
+  <!-- The deck of cards - each card can animate independently -->
+  <div class="card-stack" id="cardStack" role="img" aria-label="Pile de cartes de tarot">
+    <div class="stack-card" data-index="0">
+      <div class="card-inner">
+        <div class="card-back"></div>
+        <div class="card-front">
+          <img class="card-image" src="" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="stack-card" data-index="1">
+      <div class="card-inner">
+        <div class="card-back"></div>
+        <div class="card-front">
+          <img class="card-image" src="" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="stack-card" data-index="2">
+      <div class="card-inner">
+        <div class="card-back"></div>
+        <div class="card-front">
+          <img class="card-image" src="" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="stack-card" data-index="3">
+      <div class="card-inner">
+        <div class="card-back"></div>
+        <div class="card-front">
+          <img class="card-image" src="" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="stack-card" data-index="4">
+      <div class="card-inner">
+        <div class="card-back"></div>
+        <div class="card-front">
+          <img class="card-image" src="" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="stack-card" data-index="5">
+      <div class="card-inner">
+        <div class="card-back"></div>
+        <div class="card-front">
+          <img class="card-image" src="" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="stack-card" data-index="6">
+      <div class="card-inner">
+        <div class="card-back"></div>
+        <div class="card-front">
+          <img class="card-image" src="" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .card-stack-wrapper {
+    position: relative;
+    width: 300px;
+    height: 440px;
+    perspective: 1500px;
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ===== THE DECK ===== */
+  .card-stack {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: floatIdle 6s ease-in-out infinite;
+  }
+
+  @keyframes floatIdle {
+    0%, 100% { transform: translateY(0) rotateX(8deg) rotateY(-8deg); }
+    50% { transform: translateY(-12px) rotateX(10deg) rotateY(-6deg); }
+  }
+
+  .stack-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-back,
+  .card-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .card-back {
+    background: linear-gradient(145deg, #2d2d5a 0%, #1a1a3e 50%, #151535 100%);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Card back design */
+  .card-back::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 10px;
+  }
+
+  .card-back::after {
+    content: "✦";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    color: rgba(212, 175, 55, 0.35);
+  }
+
+  .card-front {
+    transform: rotateY(180deg);
+    background: transparent;
+  }
+
+  .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+
+  /* Default stack positions */
+  .stack-card[data-index="0"] { z-index: 7; transform: translateZ(0px); }
+  .stack-card[data-index="1"] { z-index: 6; transform: translateZ(-2px) translateY(-3px) translateX(3px); }
+  .stack-card[data-index="2"] { z-index: 5; transform: translateZ(-4px) translateY(-6px) translateX(6px); }
+  .stack-card[data-index="3"] { z-index: 4; transform: translateZ(-6px) translateY(-9px) translateX(9px); }
+  .stack-card[data-index="4"] { z-index: 3; transform: translateZ(-8px) translateY(-12px) translateX(12px); }
+  .stack-card[data-index="5"] { z-index: 2; transform: translateZ(-10px) translateY(-15px) translateX(15px); }
+  .stack-card[data-index="6"] { z-index: 1; transform: translateZ(-12px) translateY(-18px) translateX(18px); }
+
+  /* ===== PHASE 0: CENTERING - Deck moves to center ===== */
+  /* Position is set dynamically via JS to avoid jump */
+  :global(.card-stack-wrapper.centering) {
+    position: fixed !important;
+    z-index: 1000;
+    transition: top 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                left 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  :global(.card-stack-wrapper.centering .card-stack) {
+    animation: none;
+    transform: rotateX(5deg) rotateY(0deg);
+  }
+
+  /* ===== PHASE 1: WIGGLE - Use card-inner for wiggle to preserve stack position ===== */
+  :global(.card-stack.wiggling) {
+    animation: none;
+    transform: rotateX(5deg) rotateY(0deg);
+  }
+
+  :global(.card-stack.wiggling .stack-card .card-inner) {
+    animation: cardWiggle 0.8s ease-in-out infinite;
+  }
+
+  /* Stagger the wiggle for each card */
+  :global(.card-stack.wiggling .stack-card[data-index="0"] .card-inner) { animation-delay: 0s; }
+  :global(.card-stack.wiggling .stack-card[data-index="1"] .card-inner) { animation-delay: 0.1s; }
+  :global(.card-stack.wiggling .stack-card[data-index="2"] .card-inner) { animation-delay: 0.2s; }
+  :global(.card-stack.wiggling .stack-card[data-index="3"] .card-inner) { animation-delay: 0.3s; }
+  :global(.card-stack.wiggling .stack-card[data-index="4"] .card-inner) { animation-delay: 0.4s; }
+  :global(.card-stack.wiggling .stack-card[data-index="5"] .card-inner) { animation-delay: 0.5s; }
+  :global(.card-stack.wiggling .stack-card[data-index="6"] .card-inner) { animation-delay: 0.6s; }
+
+  @keyframes cardWiggle {
+    0%, 100% { transform: translateX(0) rotateZ(0deg); }
+    25% { transform: translateX(-18px) rotateZ(-3deg); }
+    75% { transform: translateX(18px) rotateZ(3deg); }
+  }
+
+  /* ===== PHASE 2: SPREAD - Wide fan, slow transition ===== */
+  :global(.card-stack.spread) {
+    animation: none !important;
+    transform: rotateX(0deg) rotateY(0deg) !important;
+  }
+
+  :global(.card-stack.spread .stack-card) {
+    transition: all 1.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  :global(.card-stack.spread .stack-card .card-inner) {
+    animation: none !important;
+    transform: rotateY(0deg);
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Wide fan positions - card 0 (top of stack) goes RIGHT, card 6 (bottom) goes LEFT */
+  :global(.card-stack.spread .stack-card[data-index="0"]) { 
+    transform: translateX(200px) translateY(40px) rotateZ(28deg); 
+    z-index: 7;
+  }
+  :global(.card-stack.spread .stack-card[data-index="1"]) { 
+    transform: translateX(133px) translateY(15px) rotateZ(18deg); 
+    z-index: 6;
+  }
+  :global(.card-stack.spread .stack-card[data-index="2"]) { 
+    transform: translateX(66px) translateY(2px) rotateZ(9deg); 
+    z-index: 5;
+  }
+  :global(.card-stack.spread .stack-card[data-index="3"]) { 
+    transform: translateX(0px) translateY(-5px) rotateZ(0deg); 
+    z-index: 4;
+  }
+  :global(.card-stack.spread .stack-card[data-index="4"]) { 
+    transform: translateX(-66px) translateY(2px) rotateZ(-9deg); 
+    z-index: 3;
+  }
+  :global(.card-stack.spread .stack-card[data-index="5"]) { 
+    transform: translateX(-133px) translateY(15px) rotateZ(-18deg); 
+    z-index: 2;
+  }
+  :global(.card-stack.spread .stack-card[data-index="6"]) { 
+    transform: translateX(-200px) translateY(40px) rotateZ(-28deg); 
+    z-index: 1;
+  }
+
+  /* ===== PHASE 2.5: PRE-SELECTION GLOW (before emerging) ===== */
+  :global(.card-stack.spread .stack-card.pre-selected) {
+    z-index: 50 !important;
+    transition: box-shadow 1s ease, filter 1s ease;
+    box-shadow: 
+      0 0 20px rgba(212, 175, 55, 0.4),
+      0 0 40px rgba(212, 175, 55, 0.2),
+      0 10px 30px rgba(0, 0, 0, 0.3);
+    filter: brightness(1.1);
+  }
+
+  /* ===== PHASE 3: SELECTED CARD EMERGES FROM SPREAD ===== */
+  :global(.card-stack.spread .stack-card.emerging) {
+    z-index: 100 !important;
+    transition: all 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateY(-60px) translateZ(40px) scale(1.05) !important;
+    border-radius: 16px;
+    box-shadow: 
+      0 0 40px rgba(212, 175, 55, 0.5),
+      0 0 80px rgba(212, 175, 55, 0.25),
+      0 20px 40px rgba(0, 0, 0, 0.4);
+    filter: brightness(1.15);
+  }
+
+  /* Other cards fade slightly when one emerges */
+  :global(.card-stack.spread .stack-card:not(.emerging):not(.rising):not(.flipping):not(.revealed)) {
+    transition: all 0.8s ease;
+  }
+
+  :global(.card-stack.has-selection .stack-card:not(.emerging):not(.rising):not(.flipping):not(.revealed)) {
+    opacity: 0.4;
+  }
+
+  /* ===== PHASE 4: RISING - Card comes toward viewer ===== */
+  :global(.card-stack.spread .stack-card.rising) {
+    z-index: 100 !important;
+    transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateX(0) translateY(-80px) translateZ(150px) rotateX(-3deg) scale(1.25) !important;
+    border-radius: 16px;
+    box-shadow: 
+      0 0 50px rgba(212, 175, 55, 0.4),
+      0 0 100px rgba(212, 175, 55, 0.2),
+      0 25px 50px rgba(0, 0, 0, 0.5);
+  }
+
+  /* ===== PHASE 5: FLIPPING ===== */
+  :global(.card-stack.spread .stack-card.flipping) {
+    z-index: 100 !important;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateX(0) translateY(-80px) translateZ(150px) rotateX(0deg) scale(1.35) !important;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 
+      0 0 80px rgba(212, 175, 55, 0.6),
+      0 0 150px rgba(255, 215, 0, 0.3),
+      0 30px 60px rgba(0, 0, 0, 0.5);
+  }
+
+  :global(.card-stack.spread .stack-card.flipping .card-inner) {
+    transform: rotateY(180deg);
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ===== PHASE 6: REVEALED - Card slides left, centered vertically ===== */
+  :global(.card-stack.spread .stack-card.revealed) {
+    z-index: 100 !important;
+    /* Position: move left by 18vw, center vertically relative to viewport center */
+    transform: translateX(-18vw) translateY(0px) translateZ(80px) rotateX(0deg) scale(1.25) !important;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 
+      0 0 40px rgba(212, 175, 55, 0.3),
+      0 25px 50px rgba(0, 0, 0, 0.5);
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  :global(.card-stack.spread .stack-card.revealed .card-inner) {
+    transform: rotateY(180deg);
+  }
+
+  /* Hide non-selected cards during reveal */
+  :global(.card-stack.final-reveal .stack-card:not(.revealed)) {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .card-stack-wrapper {
+      width: 240px;
+      height: 350px;
+    }
+
+    :global(.card-stack.spread .stack-card[data-index="0"]) { transform: translateX(140px) translateY(30px) rotateZ(22deg); }
+    :global(.card-stack.spread .stack-card[data-index="1"]) { transform: translateX(93px) translateY(12px) rotateZ(14deg); }
+    :global(.card-stack.spread .stack-card[data-index="2"]) { transform: translateX(46px) translateY(2px) rotateZ(7deg); }
+    :global(.card-stack.spread .stack-card[data-index="3"]) { transform: translateX(0px) translateY(-4px) rotateZ(0deg); }
+    :global(.card-stack.spread .stack-card[data-index="4"]) { transform: translateX(-46px) translateY(2px) rotateZ(-7deg); }
+    :global(.card-stack.spread .stack-card[data-index="5"]) { transform: translateX(-93px) translateY(12px) rotateZ(-14deg); }
+    :global(.card-stack.spread .stack-card[data-index="6"]) { transform: translateX(-140px) translateY(30px) rotateZ(-22deg); }
+
+    :global(.card-stack.spread .stack-card.revealed) {
+      transform: translateX(-15vw) translateY(0) translateZ(60px) scale(1.15) !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .card-stack-wrapper {
+      width: 200px;
+      height: 290px;
+    }
+
+    .card-back::after {
+      font-size: 2rem;
+    }
+
+    :global(.card-stack.spread .stack-card[data-index="0"]) { transform: translateX(100px) translateY(25px) rotateZ(18deg); }
+    :global(.card-stack.spread .stack-card[data-index="1"]) { transform: translateX(66px) translateY(10px) rotateZ(12deg); }
+    :global(.card-stack.spread .stack-card[data-index="2"]) { transform: translateX(33px) translateY(2px) rotateZ(6deg); }
+    :global(.card-stack.spread .stack-card[data-index="3"]) { transform: translateX(0px) translateY(-3px) rotateZ(0deg); }
+    :global(.card-stack.spread .stack-card[data-index="4"]) { transform: translateX(-33px) translateY(2px) rotateZ(-6deg); }
+    :global(.card-stack.spread .stack-card[data-index="5"]) { transform: translateX(-66px) translateY(10px) rotateZ(-12deg); }
+    :global(.card-stack.spread .stack-card[data-index="6"]) { transform: translateX(-100px) translateY(25px) rotateZ(-18deg); }
+
+    /* On mobile: card and text stack vertically */
+    :global(.card-stack.spread .stack-card.revealed) {
+      transform: translateX(0) translateY(-30vh) translateZ(50px) scale(1.05) !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .card-stack-wrapper {
+      width: 160px;
+      height: 235px;
+    }
+
+    .card-back::after {
+      font-size: 1.5rem;
+    }
+
+    :global(.card-stack.spread .stack-card[data-index="0"]) { transform: translateX(70px) translateY(18px) rotateZ(15deg); }
+    :global(.card-stack.spread .stack-card[data-index="1"]) { transform: translateX(46px) translateY(8px) rotateZ(10deg); }
+    :global(.card-stack.spread .stack-card[data-index="2"]) { transform: translateX(23px) translateY(2px) rotateZ(5deg); }
+    :global(.card-stack.spread .stack-card[data-index="3"]) { transform: translateX(0px) translateY(-2px) rotateZ(0deg); }
+    :global(.card-stack.spread .stack-card[data-index="4"]) { transform: translateX(-23px) translateY(2px) rotateZ(-5deg); }
+    :global(.card-stack.spread .stack-card[data-index="5"]) { transform: translateX(-46px) translateY(8px) rotateZ(-10deg); }
+    :global(.card-stack.spread .stack-card[data-index="6"]) { transform: translateX(-70px) translateY(18px) rotateZ(-15deg); }
+
+    :global(.card-stack.spread .stack-card.emerging) {
+      transform: translateY(-40px) translateZ(25px) scale(1.03) !important;
+    }
+
+    :global(.card-stack.spread .stack-card.rising) {
+      transform: translateX(0) translateY(-50px) translateZ(60px) scale(1.12) !important;
+    }
+
+    :global(.card-stack.spread .stack-card.flipping) {
+      transform: translateX(0) translateY(-70px) translateZ(80px) scale(1.2) !important;
+    }
+
+    :global(.card-stack.spread .stack-card.revealed) {
+      transform: translateX(0) translateY(-120px) translateZ(60px) scale(1.05) !important;
+    }
+  }
+</style>

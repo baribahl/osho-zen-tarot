@@ -1,8 +1,8 @@
 {
   "name": "baribosho",
   "type": "module",
-  "version": "0.0.1",
-  "description": "BaribOsho v0 - Interactive Osho Zen Tarot website",
+  "version": "1.0.0",
+  "description": "BaribOsho v1 - Interactive Osho Zen Tarot website",
   "author": "Barib",
   "license": "UNLICENSED",
   "repository": {
@@ -17,6 +17,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.15.9"
+    "astro": "^5.15.9",
+    "fuse.js": "^7.1.0",
+    "marked": "^17.0.1"
   }
 }

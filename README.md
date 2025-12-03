@@ -1,22 +1,20 @@
-# 🌸 BaribOsho v0
+# 🌸 BaribOsho v1
 
-> *Mon premier site web interactif - Une exploration du Tarot Zen d'Osho*
+> *Site web interactif - Une exploration du Tarot Zen d'Osho*
 
 [![Live Site](https://img.shields.io/badge/🌐_Live-osho.barib.art-4ecdc4?style=for-the-badge)](https://osho.barib.art)
-[![Version](https://img.shields.io/badge/Version-0.0.1-ff8c42?style=for-the-badge)](https://github.com/baribahl/osho-zen-tarot/releases)
+[![Version](https://img.shields.io/badge/Version-1.0.0-ff8c42?style=for-the-badge)](https://github.com/baribahl/osho-zen-tarot/releases)
 [![Built with Astro](https://img.shields.io/badge/Built_with-Astro_5.15-ee5a6f?style=for-the-badge&logo=astro)](https://astro.build)
 
-**BaribOsho** est ma première incursion dans le développement web - un site interactif dédié au Tarot Zen d'Osho. Ce projet représente une étape importante dans mon apprentissage du développement frontend et de l'expérience utilisateur.
+**BaribOsho** est un site interactif dédié au Tarot Zen d'Osho - une interface minimaliste et contemplative pour tirer une carte et explorer les 79 arcanes.
 
-🎯 **Version actuelle**: v0 (Milestone inaugural)  
+🎯 **Version actuelle**: v1 (Major UI overhaul)  
 🚀 **Statut**: En ligne et fonctionnel!  
-🔮 **Évolution**: Qui sait ce que l'avenir réserve? 🥷
+🔮 **Évolution**: Design mystique, typographie raffinée, animations fluides
 
 ---
 
-## ✨ Ce que j'ai réalisé
-
-### Fonctionnalités principales
+## ✨ Fonctionnalités
 - 🎴 **Tirage de carte intuitif** - Animation de révélation avec loader créatif
 - 📚 **Galerie des 79 cartes** - Navigation par famille d'arcanes (Feu, Eau, Nuages, Arc-en-ciel, Majeure)
 - 🎨 **Design immersif** - Interface avec backdrop blur, dégradés et effets translucides
@@ -38,21 +36,27 @@
 baribosho/
 ├── public/
 │   ├── favicon.svg
-│   └── CNAME                      # Configuration domaine personnalisé
+│   ├── CNAME                      # Custom domain config
+│   └── images/cards/              # Local card images (fallback)
 ├── src/
+│   ├── components/
+│   │   ├── CardCarousel.astro     # Horizontal card browser
+│   │   ├── CardStack.astro        # Interactive card stack
+│   │   └── Markdown.astro         # Rich text renderer
 │   ├── data/
-│   │   └── osho_cards.json        # Dataset: 79 cartes complètes
+│   │   └── osho_cards.json        # 79 cards dataset
 │   ├── layouts/
-│   │   └── BaseLayout.astro       # Layout global avec navigation
+│   │   └── BaseLayout.astro       # Global layout + nav
 │   ├── pages/
-│   │   ├── index.astro            # 🎴 Page de tirage
-│   │   ├── cartes.astro           # 📚 Galerie complète
-│   │   ├── a-propos.astro         # ℹ️ À propos
-│   │   └── carte/[id].astro       # 🔍 Pages détail (x79)
-│   └── components/
-│       └── Welcome.astro
+│   │   ├── index.astro            # 🎴 Card draw page
+│   │   ├── cartes.astro           # 📚 Full gallery
+│   │   ├── a-propos.astro         # ℹ️ About page
+│   │   └── carte/[id].astro       # 🔍 Card details (x79)
+│   └── styles/
+│       ├── global.css             # Design tokens & base styles
+│       └── overlay.css            # Card reveal overlay
 ├── .github/workflows/
-│   └── deploy.yml                 # CI/CD automatique
+│   └── deploy.yml                 # Auto CI/CD
 ├── astro.config.mjs
 └── package.json
 ```
@@ -123,32 +127,33 @@ Quelques choix de design dont je suis fier:
 
 ---
 
-## 🔮 Roadmap & Idées futures
+## 📝 Changelog & Roadmap
 
-Ce projet est en v0 - c'est un début! Quelques pistes d'amélioration possibles:
+### v1.0.0 - UI Overhaul (Dec 2025)
+- ✨ **Design mystique** - Family-specific colors & glow effects
+- 🎨 **Typographie raffinée** - Fluid typography scale
+- 🔥 **Family emojis** - 🔥 Feu, 💧 Eau, ☁️ Nuages, 🌈 Arc-en-ciel, ✨ Majeures
+- 🎭 **Animation fluide** - Smooth card draw with precise centering
+- 📖 **Meilleure lisibilité** - Optimal reading width (62ch)
+- 🧹 **Codebase clean** - Removed unused files, consolidated CSS
 
+### v0.0.1 - Version initiale (Nov 2025)
+- ✅ Tirage de carte fonctionnel
+- ✅ Galerie complète des 79 cartes
+- ✅ Pages détail individuelles
+- ✅ Design responsive
+- ✅ Déploiement GitHub Pages
+
+### 🔮 Idées futures
 - [ ] 🎯 Système de favoris / historique des tirages
 - [ ] 🌙 Mode sombre / clair
-- [ ] 🎭 Animations plus poussées pour la révélation
 - [ ] 🔊 Effets sonores subtils (option?)
 - [ ] 📱 PWA pour installation mobile
 - [ ] 🌍 Version anglaise du contenu
 - [ ] 📊 Analytics simples (respectueux de la vie privée)
 - [ ] ✨ Easter eggs mystiques...?
 
-*Mais bon, on verra. Un pas à la fois!* 🥷
-
----
-
-## 📝 Notes de version
-
-### v0.0.1 - Version initiale (20 Nov 2025)
-- ✅ Tirage de carte fonctionnel
-- ✅ Galerie complète des 79 cartes
-- ✅ Pages détail individuelles
-- ✅ Design responsive
-- ✅ Déploiement GitHub Pages
-- ✅ Domaine personnalisé configuré
+*Un pas à la fois!* 🥷
 
 ---
 
@@ -173,7 +178,7 @@ Contenu du Tarot Zen d'Osho © leurs auteurs respectifs
 
 **Fait avec ❤️ et beaucoup de ☕**
 
-*Premier projet web - Version 0 - Novembre 2025*
+*BaribOsho v1 - Décembre 2025*
 
 🔗 [osho.barib.art](https://osho.barib.art)
 

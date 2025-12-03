@@ -1,0 +1,45 @@
+---
+import { marked } from 'marked';
+
+interface Props {
+  content: string;
+  class?: string;
+}
+
+const { content, class: className = '' } = Astro.props;
+const html = marked.parse(content ?? "");
+---
+
+<div class={`prose ${className}`} set:html={html} />
+
+<style is:global>
+  /* Styles de base pour le contenu Markdown */
+  .prose p {
+    margin-bottom: 1em;
+    line-height: 1.75;
+    font-size: clamp(1.05rem, 1rem + 0.3vw, 1.2rem); /* Default prose size */
+  }
+
+  .prose strong {
+    font-weight: 700;
+    color: var(--color-accent-orange);
+  }
+
+  .prose hr {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    margin: 2rem 0;
+  }
+  
+  .prose em {
+    font-style: italic;
+    color: var(--color-text-primary);
+  }
+  
+  /* Card page specific - comfortable reading size */
+  .text-content.prose p {
+    font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem);
+    line-height: 1.8;
+  }
+</style>

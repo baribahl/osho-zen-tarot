@@ -1,313 +1,291 @@
 ﻿---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import CardStack from "../components/CardStack.astro";
+import CardCarousel from "../components/CardCarousel.astro";
+import "../styles/overlay.css";
 
-// Les cartes seront chargées côté client
+// Les cartes seront chargées côté client via le script
 ---
 
-<BaseLayout title="Barib''s Osho Zen Tarot - Tirer une carte">
-  <div class="hero-section" role="region" aria-label="Tirage de carte">
+<BaseLayout title="Tirer une carte - BaribOsho v1">
+  <div class="hero-section">
     <div class="hero-container">
       <div class="hero-left">
-        <h1 class="hero-title">Tirer une carte</h1>
+        <h1 class="hero-title">Osho Zen Tarot</h1>
         <p class="hero-subtitle">
-          Une invitation à la contemplation et à l''introspection.
-          Laissez l''instant présent vous guider vers une carte qui résonne avec votre être.
+          Découvrez la sagesse du moment présent à travers les 79 cartes du
+          Tarot Zen. Une approche unique pour explorer votre réalité intérieure.
         </p>
-        <button class="draw-button" id="drawCardBtn" aria-label="Tirer une carte du tarot Zen d'Osho">
-          <span class="button-text">Tirer une carte</span>
-          <span class="button-glow" aria-hidden="true"></span>
+        <button id="drawCardBtn" class="draw-button">
+          <span class="btn-text">Tirer une carte</span>
+          <span class="material-symbols-outlined btn-icon">playing_cards</span>
         </button>
       </div>
-
       <div class="hero-right">
-        <div class="card-stack" id="cardStack" role="img" aria-label="Pile de cartes de tarot">
-          <div class="stack-card" style="--card-index: 0">
-            <div class="card-back"></div>
-          </div>
-          <div class="stack-card" style="--card-index: 1">
-            <div class="card-back"></div>
-          </div>
-          <div class="stack-card" style="--card-index: 2">
-            <div class="card-back"></div>
-          </div>
-        </div>
+        <CardStack />
       </div>
     </div>
   </div>
 
-  <!-- Overlay for drawn card reveal -->
-  <div class="card-reveal-overlay" id="cardRevealOverlay" role="dialog" aria-modal="true" aria-label="Carte révélée">
-    <button class="close-reveal" id="closeReveal" aria-label="Fermer la carte">
+  <!-- Discovery Section -->
+  <section class="discovery-section">
+    <div class="discovery-container">
+      <a href="#" id="drawCardLink" class="discovery-tile">
+        <span class="material-symbols-outlined tile-icon">auto_awesome</span>
+        <h3 class="tile-title">Tirage du Moment</h3>
+        <p class="tile-desc">
+          Recevez un message immédiat pour éclairer votre situation actuelle.
+        </p>
+      </a>
+      <a href="/cartes" class="discovery-tile">
+        <span class="material-symbols-outlined tile-icon">grid_view</span>
+        <h3 class="tile-title">Explorer la Galerie</h3>
+        <p class="tile-desc">
+          Parcourez les 79 cartes et découvrez leurs significations profondes.
+        </p>
+      </a>
+      <a href="/a-propos" class="discovery-tile">
+        <span class="material-symbols-outlined tile-icon">info</span>
+        <h3 class="tile-title">À propos</h3>
+        <p class="tile-desc">
+          Pourquoi ce site existe, et ce qu'il y a dans les coulisses.
+        </p>
+      </a>
+    </div>
+  </section>
+
+  <!-- Card Carousel -->
+  <CardCarousel />
+
+  <!-- Card Reveal Overlay -->
+  <div id="cardRevealOverlay" class="card-reveal-overlay">
+    <button id="closeReveal" class="close-reveal-btn" aria-label="Fermer">
       <span class="material-symbols-outlined">close</span>
     </button>
-    <div class="reveal-content" id="revealContent">
-      <!-- Contenu injecté dynamiquement -->
+    <div id="revealContent" class="reveal-content">
+      <!-- Content will be dynamically injected -->
     </div>
   </div>
 </BaseLayout>
 
-<style is:global>
-  /* Global styles for dynamically created elements */
-  .card-name-cinematic,
-  .card-name-big,
-  .name-starfield,
-  .star,
-  .name-glow-ring,
-  .card-gift-box,
-  .gift-glow,
-  .gift-inner,
-  .gift-card-wrapper,
-  .gift-card-frame,
-  .card-corner,
-  .gift-card-image,
-  .gift-card-header,
-  .gift-card-name,
-  .gift-card-arcana-row,
-  .arcana-icon,
-  .gift-card-arcana,
-  .gift-divider,
-  .gift-content,
-  .gift-section,
-  .gift-section-title,
-  .gift-main-text,
-  .gift-commentary,
-  .gift-closing,
-  .gift-closing-text,
-  .gift-closing-icon,
-  .light-particle,
-  .image-placeholder,
-  .card-loader,
-  .loader-ring,
-  .loader-center {
-    /* Styles will be applied below */
-  }
-
-  /* Loader animations */
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes pulse {
-    0%, 100% {
-      opacity: 0.4;
-      transform: translate(-50%, -50%) scale(0.9);
-    }
-    50% {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1.1);
-      color: #4ecdc4;
-    }
-  }
-</style>
-
 <style>
+  /* === Hero Section === */
   .hero-section {
-    min-height: 80vh;
+    min-height: 75vh;
     display: flex;
     align-items: center;
-    padding: var(--space-3xl) var(--space-xl);
+    justify-content: center;
+    padding: var(--space-3xl) var(--space-lg);
     position: relative;
     overflow: hidden;
   }
 
-  /* === Parallax background layers === */
-  .hero-section::before {
-    content: '';
-    position: absolute;
-    top: -10%;
-    left: -10%;
-    width: 120%;
-    height: 120%;
-    background: radial-gradient(
-      ellipse at 30% 40%,
-      rgba(255, 140, 66, 0.15) 0%,
-      transparent 50%
-    );
-    z-index: 0;
-    pointer-events: none;
-    will-change: transform;
-    transform: translateY(var(--parallax-offset-before, 0));
-    transition: transform 0.1s ease-out;
-  }
-
-  .hero-section::after {
-    content: '';
-    position: absolute;
-    top: -10%;
-    right: -10%;
-    width: 120%;
-    height: 120%;
-    background: radial-gradient(
-      ellipse at 70% 60%,
-      rgba(78, 205, 196, 0.12) 0%,
-      transparent 50%
-    );
-    z-index: 0;
-    pointer-events: none;
-    will-change: transform;
-    transform: translateY(var(--parallax-offset-after, 0));
-    transition: transform 0.1s ease-out;
-  }
-
   .hero-container {
-    max-width: var(--breakpoint-xl);
-    margin: 0 auto;
+    max-width: 1400px;
+    width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 60% 40%;
     gap: var(--space-3xl);
     align-items: center;
-    position: relative;
-    z-index: 1;
   }
 
   .hero-left {
     display: flex;
     flex-direction: column;
-    gap: var(--space-xl);
-    will-change: transform;
+    gap: var(--space-lg);
   }
 
   .hero-title {
-    font-size: var(--text-5xl);
     font-family: var(--font-heading);
-    font-weight: 900;
-    background: var(--gradient-accent);
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    font-weight: 700;
+    background: linear-gradient(
+      135deg,
+      var(--color-accent-gold),
+      var(--color-accent-amber)
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    margin: 0;
     line-height: 1.1;
   }
 
   .hero-subtitle {
-    font-size: var(--text-lg);
+    font-size: clamp(1.125rem, 1.5vw, 1.375rem);
     color: var(--color-text-secondary);
     line-height: 1.7;
-    max-width: 500px;
+    max-width: 560px;
+    margin: 0;
   }
 
   .draw-button {
-    position: relative;
-    padding: var(--space-lg) var(--space-2xl);
-    font-size: var(--text-xl);
-    font-family: var(--font-heading);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-xl);
+    background: var(--color-accent-gold);
+    color: #0f1725;
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-size: 1.125rem;
     font-weight: 700;
-    color: var(--color-text-primary);
-    background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(238, 90, 111, 0.2));
-    border: 2px solid var(--color-accent-magenta);
-    border-radius: 8px;
     cursor: pointer;
     transition: all var(--transition-normal);
-    overflow: hidden;
+    box-shadow: var(--shadow-mystic);
     width: fit-content;
   }
 
   .draw-button:hover {
+    background: var(--color-accent-amber);
     transform: translateY(-2px);
-    box-shadow: var(--glow-magenta), var(--card-shadow-lg);
-    border-color: var(--color-accent-orange);
+    box-shadow: 0 12px 40px -12px rgba(212, 175, 55, 0.5);
   }
 
-  .draw-button:active {
-    transform: translateY(0);
-  }
-
-  .button-glow {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent, rgba(255, 140, 66, 0.3), transparent);
-    opacity: 0;
-    transition: opacity var(--transition-normal);
-  }
-
-  .draw-button:hover .button-glow {
-    opacity: 1;
+  .draw-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
   }
 
   .hero-right {
     display: flex;
     justify-content: center;
     align-items: center;
-    perspective: 1000px;
-    will-change: transform;
   }
 
-  .card-stack {
-    position: relative;
-    width: 280px;
-    height: 400px;
+  /* === Discovery Section === */
+  .discovery-section {
+    padding: var(--space-3xl) var(--space-lg);
+    background: rgba(15, 23, 37, 0.4);
   }
 
-  .stack-card {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: var(--card-border-radius);
-    transform: 
-      translateX(calc(var(--card-index) * 12px))
-      translateY(calc(var(--card-index) * -8px))
-      rotateZ(calc(var(--card-index) * 3deg));
-    transition: transform var(--transition-slow);
+  .discovery-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-xl);
   }
 
-  .card-back {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #2a2a4e 0%, #1a1a3e 100%);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--card-border-radius);
-    box-shadow: var(--card-shadow-lg);
+  .discovery-tile {
+    background: rgba(26, 34, 50, 0.6);
+    border: var(--border-gold-thin);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-xl);
     display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
+    flex-direction: column;
+    gap: var(--space-md);
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
   }
 
-  .card-back::before {
-    content: "";
-    position: absolute;
-    inset: 20px;
-    border: 2px solid rgba(255, 140, 66, 0.3);
-    border-radius: 8px;
+  .discovery-tile:hover {
+    border-color: var(--color-accent-gold);
+    background: rgba(26, 34, 50, 0.8);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.2);
   }
 
-  .card-back::after {
-    content: "";
-    font-size: 4rem;
-    color: rgba(255, 140, 66, 0.4);
+  .tile-icon {
+    font-size: 2.5rem;
+    color: var(--color-accent-gold);
   }
 
-  /* === CARD REVEAL OVERLAY === */
-  .card-reveal-overlay {
+  .tile-title {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--color-text-primary);
+  }
+
+  .tile-desc {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ===== DRAW ANIMATION BACKDROP ===== */
+  :global(.draw-backdrop) {
     position: fixed;
     inset: 0;
-    z-index: 1000;
-    background: rgba(10, 15, 25, 0.75);
-    backdrop-filter: blur(30px) saturate(1.2);
-    -webkit-backdrop-filter: blur(30px) saturate(1.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-xl);
+    background: rgba(10, 15, 25, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 999;
     opacity: 0;
+    transition: opacity 1s ease;
     pointer-events: none;
-    transition: opacity 0.6s ease;
   }
 
-  .card-reveal-overlay.active {
+  :global(.draw-backdrop.active) {
     opacity: 1;
-    pointer-events: all;
+    pointer-events: auto;
   }
 
-  .close-reveal {
-    position: absolute;
-    top: var(--space-xl);
-    right: var(--space-xl);
+  /* ===== CARD INFO PANEL (appears after reveal) ===== */
+  :global(.card-info-panel) {
+    position: fixed;
+    /* Center vertically, position to the right of center */
+    top: 50%;
+    left: calc(50% + 12vw);
+    transform: translateY(-50%);
+    max-width: 380px;
+    z-index: 1001;
+    opacity: 0;
+    transition: opacity 1.2s ease, transform 1.2s ease;
+    pointer-events: none;
+  }
+
+  :global(.card-info-panel.visible) {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  :global(.card-info-panel .card-name) {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--color-accent-gold);
+    margin: 0 0 var(--space-md) 0;
+  }
+
+  :global(.card-info-panel .card-meta) {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-lg);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  :global(.card-info-panel .card-action) {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-xl);
+    background: var(--color-accent-gold);
+    color: #0f1725;
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-size: var(--text-base);
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all var(--transition-normal);
+  }
+
+  :global(.card-info-panel .card-action:hover) {
+    background: var(--color-accent-amber);
+    transform: translateY(-2px);
+  }
+
+  :global(.close-draw-btn) {
+    position: fixed;
+    top: var(--space-lg);
+    right: var(--space-lg);
+    z-index: 1002;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 50%;
@@ -316,1139 +294,325 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-text-primary);
     cursor: pointer;
-    transition: all var(--transition-normal);
-    z-index: 10;
-  }
-
-  .close-reveal:hover {
-    background: rgba(255, 140, 66, 0.2);
-    border-color: var(--color-accent-orange);
-    transform: rotate(90deg);
-  }
-
-  .close-reveal .material-symbols-outlined {
-    font-size: 1.5rem;
-  }
-
-  .reveal-content {
-    max-width: 900px;
-    width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(78, 205, 196, 0.5) rgba(255, 255, 255, 0.1);
-  }
-
-  .reveal-content::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  .reveal-content::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 4px;
-  }
-
-  .reveal-content::-webkit-scrollbar-thumb {
-    background: rgba(78, 205, 196, 0.5);
-    border-radius: 4px;
-    transition: background var(--transition-normal);
-  }
-
-  .reveal-content::-webkit-scrollbar-thumb:hover {
-    background: rgba(78, 205, 196, 0.7);
-  }
-
-  /* === CINEMATIC CARD NAME REVEAL === */
-  .card-name-cinematic {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 6;
-    opacity: 0;
-    animation: nameAppear 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    background: radial-gradient(ellipse at center, rgba(15, 23, 37, 0.95), rgba(10, 10, 20, 0.98));
-  }
-
-  @keyframes nameAppear {
-    0% {
-      opacity: 0;
-    }
-    5% {
-      opacity: 1;
-    }
-    15% {
-      opacity: 1;
-    }
-    85% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-
-  /* Starfield background for name reveal */
-  .name-starfield {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    opacity: 0.4;
-  }
-
-  .star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: white;
-    border-radius: 50%;
-    animation: starTwinkle 3s ease-in-out infinite;
-  }
-
-  @keyframes starTwinkle {
-    0%, 100% {
-      opacity: 0.2;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.5);
-    }
-  }
-
-  .card-name-big {
-    font-family: var(--font-heading);
-    font-size: clamp(2.5rem, 12vw, 7rem);
-    font-weight: 900;
-    text-align: center;
-    background: linear-gradient(135deg, 
-      var(--color-accent-orange), 
-      var(--color-accent-magenta), 
-      var(--color-accent-turquoise),
-      var(--color-accent-orange)
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    background-size: 200% 200%;
-    letter-spacing: 4px;
-    padding: 0 var(--space-2xl);
-    position: relative;
-    z-index: 2;
-    text-transform: uppercase;
-    animation: 
-      nameScale 3s cubic-bezier(0.16, 1, 0.3, 1) forwards,
-      nameGradient 3s ease infinite;
-    filter: drop-shadow(0 0 40px rgba(255, 140, 66, 0.6))
-            drop-shadow(0 0 80px rgba(78, 205, 196, 0.4));
-  }
-
-  @keyframes nameScale {
-    0% {
-      transform: scale(0.5);
-      filter: blur(30px);
-      opacity: 0;
-    }
-    15% {
-      transform: scale(1);
-      filter: blur(0);
-      opacity: 1;
-    }
-    85% {
-      transform: scale(1);
-      filter: blur(0);
-      opacity: 1;
-    }
-    100% {
-      transform: scale(0.3);
-      filter: blur(20px);
-      opacity: 0;
-    }
-  }
-
-  @keyframes nameGradient {
-    0%, 100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-  }
-
-  /* Concentric glow rings */
-  .name-glow-ring {
-    position: absolute;
-    inset: 50%;
-    transform: translate(-50%, -50%);
-    border: 2px solid rgba(78, 205, 196, 0.3);
-    border-radius: 50%;
-    animation: ringExpand 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  @keyframes ringExpand {
-    0% {
-      width: 0;
-      height: 0;
-      opacity: 0;
-    }
-    20% {
-      opacity: 1;
-    }
-    100% {
-      width: 150vmax;
-      height: 150vmax;
-      opacity: 0;
-    }
-  }
-
-  /* === THE GIFT BOX - Main Card Container === */
-  .card-gift-box {
-    background: linear-gradient(135deg, rgba(26, 26, 62, 0.90), rgba(15, 52, 67, 0.85));
-    backdrop-filter: blur(20px) saturate(1.2);
-    -webkit-backdrop-filter: blur(20px) saturate(1.2);
-    border: 2px solid rgba(78, 205, 196, 0.3);
-    border-radius: 24px;
-    padding: var(--space-3xl) var(--space-2xl);
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 
-      0 40px 100px rgba(0, 0, 0, 0.7),
-      0 0 120px rgba(78, 205, 196, 0.2),
-      inset 0 2px 0 rgba(255, 255, 255, 0.1);
-  }
-
-  @keyframes giftBoxReveal {
-    0% {
-      opacity: 0;
-      transform: scale(0.85) translateY(50px);
-      filter: blur(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-      filter: blur(0);
-    }
-  }
-
-  /* Animated gradient border */
-  .card-gift-box::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 24px;
-    padding: 2px;
-    background: linear-gradient(135deg, 
-      var(--color-accent-turquoise),
-      var(--color-accent-magenta),
-      var(--color-accent-orange),
-      var(--color-accent-turquoise)
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    animation: borderRotate 4s linear infinite;
-    opacity: 0.6;
-  }
-
-  @keyframes borderRotate {
-    0% {
-      filter: hue-rotate(0deg);
-    }
-    100% {
-      filter: hue-rotate(360deg);
-    }
-  }
-
-  /* Decorative corners */
-  .card-gift-box::after {
-    content: '';
-    position: absolute;
-    inset: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    pointer-events: none;
-  }
-
-  /* Ethereal glow layers */
-  .gift-glow {
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    pointer-events: none;
-    animation: glowPulse 4s ease-in-out infinite;
-  }
-
-  .gift-glow:nth-child(1) {
-    top: -150px;
-    left: -150px;
-    background: radial-gradient(circle, rgba(78, 205, 196, 0.2), transparent 70%);
-  }
-
-  .gift-glow:nth-child(2) {
-    bottom: -150px;
-    right: -150px;
-    background: radial-gradient(circle, rgba(255, 140, 66, 0.2), transparent 70%);
-    animation-delay: 2s;
-  }
-
-  @keyframes glowPulse {
-    0%, 100% {
-      opacity: 0.4;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.8;
-      transform: scale(1.2);
-    }
-  }
-
-  /* === Card Image Container === */
-  .gift-card-image-container {
-    width: 100%;
-    max-width: 350px;
-    margin: 0 auto var(--space-2xl);
-    position: relative;
-  }
-
-  .gift-card-image {
-    width: 100%;
-    height: auto;
-    border-radius: 16px;
-    box-shadow: 
-      0 20px 60px rgba(0, 0, 0, 0.8),
-      0 0 80px rgba(78, 205, 196, 0.3);
-    display: block;
-    border: 3px solid rgba(255, 255, 255, 0.2);
-  }
-
-  /* Sacred geometry corners - all four */
-  .gift-card-frame {
-    position: relative;
-  }
-
-  .card-corner {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    border: 2px solid rgba(255, 140, 66, 0.5);
-    pointer-events: none;
-    opacity: 0;
-    animation: cornerReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  .card-corner.top-left {
-    top: -16px;
-    left: -16px;
-    border-right: none;
-    border-bottom: none;
-    border-top-left-radius: 12px;
-    animation-delay: 4.2s;
-  }
-
-  .card-corner.top-right {
-    top: -16px;
-    right: -16px;
-    border-left: none;
-    border-bottom: none;
-    border-top-right-radius: 12px;
-    animation-delay: 4.3s;
-  }
-
-  .card-corner.bottom-left {
-    bottom: -16px;
-    left: -16px;
-    border-right: none;
-    border-top: none;
-    border-bottom-left-radius: 12px;
-    animation-delay: 4.4s;
-  }
-
-  .card-corner.bottom-right {
-    bottom: -16px;
-    right: -16px;
-    border-left: none;
-    border-top: none;
-    border-bottom-right-radius: 12px;
-    animation-delay: 4.5s;
-  }
-
-  @keyframes cornerReveal {
-    0% {
-      opacity: 0;
-      transform: scale(0.5);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  /* === Card Header === */
-  .gift-card-header {
-    text-align: center;
-    margin-bottom: var(--space-2xl);
-  }
-
-  .gift-card-name {
-    font-family: var(--font-card-name);
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-magenta));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin: 0 0 var(--space-lg) 0;
-    letter-spacing: 1px;
-    line-height: 1.1;
-    text-transform: uppercase;
-  }
-
-  .gift-card-arcana-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-md);
-    padding: var(--space-md) var(--space-xl);
-    background: rgba(78, 205, 196, 0.1);
-    border-radius: 100px;
-    display: inline-flex;
-  }
-
-  .arcana-icon {
-    font-size: 1.75rem;
-    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
-  }
-
-  .gift-card-arcana {
-    font-family: var(--font-heading);
-    font-size: var(--text-sm);
-    color: var(--color-accent-turquoise);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 700;
-  }
-
-  .gift-divider {
-    text-align: center;
-    margin: var(--space-2xl) 0;
-    position: relative;
-  }
-
-  .gift-divider::before,
-  .gift-divider::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 35%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(78, 205, 196, 0.5), transparent);
-  }
-
-  .gift-divider::before {
-    left: 0;
-  }
-
-  .gift-divider::after {
-    right: 0;
-  }
-
-  .divider-ornament {
-    display: inline-block;
-    color: var(--color-accent-turquoise);
-    font-size: var(--text-xl);
-    position: relative;
-    z-index: 1;
-  }
-
-  /* === Content Sections === */
-  .gift-section {
-    margin-bottom: var(--space-3xl);
-  }
-
-  .gift-section:last-of-type {
-    margin-bottom: var(--space-2xl);
-  }
-
-  .gift-section-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-sm);
-    font-family: var(--font-heading);
-    font-size: var(--text-xl);
-    font-weight: 700;
-    color: var(--color-accent-orange);
-    margin-bottom: var(--space-xl);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-align: center;
-  }
-
-  .gift-section-title .material-symbols-outlined {
-    font-size: 1.5rem;
-    color: var(--color-accent-turquoise);
-  }
-
-  .gift-main-text {
-    font-family: var(--font-body);
-    font-size: var(--text-lg);
-    line-height: 1.9;
     color: var(--color-text-primary);
-    font-weight: 500;
-    padding: var(--space-xl);
-    background: rgba(78, 205, 196, 0.08);
-    border: 1px solid rgba(78, 205, 196, 0.2);
-    border-radius: 12px;
-    position: relative;
-    text-align: justify;
-  }
-
-  .gift-main-text::before {
-    content: '"';
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    font-size: 4rem;
-    color: rgba(78, 205, 196, 0.3);
-    font-family: Georgia, serif;
-    line-height: 1;
-  }
-
-  .gift-commentary {
-    font-family: var(--font-body);
-    font-size: var(--text-base);
-    line-height: 1.9;
-    color: var(--color-text-secondary);
-  }
-
-  .gift-commentary p {
-    margin-bottom: var(--space-lg);
-    text-align: justify;
-  }
-
-  .gift-commentary p:last-child {
-    margin-bottom: 0;
-  }
-
-  /* === Closing Section === */
-  .gift-closing {
-    text-align: center;
-    margin-top: var(--space-3xl);
-    padding-top: var(--space-2xl);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .closing-ornament {
-    font-size: var(--text-xl);
-    color: var(--color-accent-turquoise);
-    margin-bottom: var(--space-md);
-    opacity: 0.6;
-    letter-spacing: var(--space-md);
-  }
-
-  .gift-closing-text {
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    font-style: italic;
-    color: var(--color-text-muted);
-    margin: 0;
-  }
-
-  /* === Animation de tirage === */
-  .draw-animation-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(10, 10, 20, 0);
-    backdrop-filter: blur(0px);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     opacity: 0;
+    transition: opacity 0.5s ease, background 0.3s ease;
     pointer-events: none;
-    transition: all 0.3s ease;
   }
 
-  .draw-animation-overlay.active {
+  :global(.close-draw-btn.visible) {
     opacity: 1;
-    background: rgba(10, 10, 20, 0.85);
-    backdrop-filter: blur(8px);
-    pointer-events: all;
+    pointer-events: auto;
   }
 
-  .animated-card {
-    width: 280px;
-    height: 400px;
-    position: relative;
-    transform: translateY(100vh) rotateY(0deg);
-    transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  :global(.close-draw-btn:hover) {
+    background: rgba(255, 255, 255, 0.2);
   }
 
-  .draw-animation-overlay.active .animated-card {
-    transform: translateY(0) rotateY(0deg);
-  }
-
-  .animated-card.reveal {
-    animation: cardReveal 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-  }
-
-  @keyframes cardReveal {
-    0% {
-      transform: translateY(0) rotateY(0deg) scale(1);
-    }
-    50% {
-      transform: translateY(-30px) rotateY(90deg) scale(1.1);
-    }
-    100% {
-      transform: translateY(0) rotateY(180deg) scale(1);
-      opacity: 0;
+  /* Responsive for card info panel */
+  @media (max-width: 1024px) {
+    :global(.card-info-panel) {
+      left: calc(50% + 10vw);
+      max-width: 320px;
     }
   }
 
-  .animated-card-back {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #2a2a4e 0%, #1a1a3e 100%);
-    border: 2px solid rgba(255, 140, 66, 0.5);
-    border-radius: var(--card-border-radius);
-    box-shadow: var(--card-shadow-lg), var(--glow-orange);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .animated-card-back::before {
-    content: "";
-    position: absolute;
-    inset: 20px;
-    border: 2px solid rgba(255, 140, 66, 0.3);
-    border-radius: 8px;
-    animation: pulseGlow 2s ease-in-out infinite;
-  }
-
-  @keyframes pulseGlow {
-    0%, 100% {
-      border-color: rgba(255, 140, 66, 0.3);
-      box-shadow: 0 0 10px rgba(255, 140, 66, 0.2);
-    }
-    50% {
-      border-color: rgba(255, 140, 66, 0.6);
-      box-shadow: 0 0 20px rgba(255, 140, 66, 0.4);
-    }
-  }
-
-  /* Animation de mélange pour la pile */
-  .card-stack.shuffling .stack-card {
-    animation: shuffle 0.4s ease-in-out;
-  }
-
-  .card-stack.shuffling .stack-card:nth-child(1) {
-    animation-delay: 0s;
-  }
-
-  .card-stack.shuffling .stack-card:nth-child(2) {
-    animation-delay: 0.1s;
-  }
-
-  .card-stack.shuffling .stack-card:nth-child(3) {
-    animation-delay: 0.2s;
-  }
-
-  @keyframes shuffle {
-    0%, 100% {
-      transform: 
-        translateX(calc(var(--card-index) * 12px))
-        translateY(calc(var(--card-index) * -8px))
-        rotateZ(calc(var(--card-index) * 3deg));
-    }
-    25% {
-      transform: 
-        translateX(calc(var(--card-index) * 20px))
-        translateY(calc(var(--card-index) * -15px))
-        rotateZ(calc(var(--card-index) * 8deg));
-    }
-    50% {
-      transform: 
-        translateX(calc(var(--card-index) * 5px))
-        translateY(calc(var(--card-index) * -12px))
-        rotateZ(calc(var(--card-index) * -5deg));
-    }
-    75% {
-      transform: 
-        translateX(calc(var(--card-index) * 15px))
-        translateY(calc(var(--card-index) * -10px))
-        rotateZ(calc(var(--card-index) * 6deg));
-    }
-  }
-
-  /* Désactiver l'animation si prefers-reduced-motion */
-  @media (prefers-reduced-motion: reduce) {
-    .animated-card,
-    .card-stack.shuffling .stack-card {
-      animation: none !important;
-      transition: none !important;
-    }
-
-    .draw-animation-overlay.active {
-      transition: opacity 0.1s ease;
-    }
-  }
-
-  /* Floating mystical particles */
-  .light-particle {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background: radial-gradient(circle, rgba(78, 205, 196, 0.9), rgba(255, 140, 66, 0.5), transparent);
-    border-radius: 50%;
-    pointer-events: none;
-    filter: blur(1px);
-    animation: floatParticle 8s ease-in-out infinite;
-  }
-
-  @keyframes floatParticle {
-    0%, 100% {
-      transform: translate(0, 0) scale(1);
-      opacity: 0;
-    }
-    5% {
-      opacity: 0.8;
-    }
-    95% {
-      opacity: 0.8;
-    }
-    100% {
-      transform: translate(var(--particle-x, 50px), var(--particle-y, -100px)) scale(0.5);
-      opacity: 0;
-    }
-  }
-
-  /* === Mobile Responsive (Tablet) === */
   @media (max-width: 768px) {
-    .hero-section {
-      min-height: auto;
-      padding: var(--space-2xl) var(--space-md);
+    :global(.card-info-panel) {
+      position: fixed;
+      top: auto;
+      left: 50%;
+      bottom: 8%;
+      transform: translateX(-50%);
+      text-align: center;
+      max-width: 90%;
     }
-
-    .hero-container {
-      grid-template-columns: 1fr;
-      gap: var(--space-xl);
+    
+    :global(.card-info-panel .card-name) {
+      font-size: 1.75rem;
     }
-
-    .hero-title {
-      font-size: var(--text-4xl);
-    }
-
-    .hero-subtitle {
-      font-size: var(--text-base);
-      max-width: 100%;
-    }
-
-    .draw-button {
-      width: 100%;
-      justify-content: center;
-    }
-
-    .card-stack {
-      width: 200px;
-      height: 290px;
-    }
-
-    .card-reveal-overlay {
-      padding: var(--space-md);
-    }
-
-    .close-reveal {
-      top: var(--space-md);
-      right: var(--space-md);
-      width: 40px;
-      height: 40px;
-    }
-
-    .reveal-content {
-      max-height: 85vh;
-    }
-
-    /* Gift box mobile styles */
-    .card-gift-box {
-      padding: var(--space-xl) var(--space-lg);
-      max-width: 95%;
-    }
-
-    .gift-card-image-container {
-      max-width: 280px;
-    }
-
-    .gift-card-name {
-      font-size: clamp(1.5rem, 6vw, 2.5rem);
-    }
-
-    .gift-card-arcana-row {
-      font-size: var(--text-sm);
-      padding: var(--space-xs) var(--space-md);
-    }
-
-    .gift-section-title {
-      font-size: var(--text-lg);
-    }
-
-    .gift-main-text {
-      font-size: var(--text-base);
-      padding: var(--space-md);
-    }
-
-    .gift-commentary {
-      font-size: var(--text-sm);
-    }
-
-    .gift-commentary p {
+    
+    :global(.card-info-panel .card-meta) {
+      font-size: 0.875rem;
       margin-bottom: var(--space-md);
-    }
-  }
-
-  /* === Mobile Responsive (Phone) === */
-  @media (max-width: 480px) {
-    .hero-title {
-      font-size: var(--text-3xl);
-    }
-
-    .hero-subtitle {
-      font-size: var(--text-sm);
-    }
-
-    .card-stack {
-      width: 160px;
-      height: 240px;
-    }
-
-    .draw-button {
-      font-size: var(--text-lg);
-      padding: var(--space-md) var(--space-xl);
-    }
-
-    .card-gift-box {
-      padding: var(--space-lg) var(--space-md);
-    }
-
-    .gift-card-image-container {
-      max-width: 240px;
-    }
-
-    .gift-card-name {
-      font-size: clamp(1.25rem, 5vw, 2rem);
-    }
-
-    .gift-section-title {
-      font-size: var(--text-base);
-    }
-
-    .gift-main-text {
-      padding: var(--space-sm) var(--space-md);
-    }
-  }
-
-  /* === Mobile Responsive (Small Phone) === */
-  @media (max-width: 375px) {
-    .hero-section {
-      padding: var(--space-xl) var(--space-sm);
-    }
-
-    .card-gift-box {
-      padding: var(--space-md) var(--space-sm);
-    }
-
-    .gift-card-image-container {
-      max-width: 200px;
     }
   }
 </style>
 
 <script>
-  import cardsDataImport from '../data/osho_cards.json';
-  
-  // Les cartes sont disponibles immédiatement
-  const cardsData: any[] = cardsDataImport as any[];
+  import cardsDataImport from "../data/osho_cards.json";
 
-  const drawBtn = document.getElementById("drawCardBtn") as HTMLButtonElement;
-  const revealOverlay = document.getElementById("cardRevealOverlay");
-  const revealContent = document.getElementById("revealContent");
-  const closeReveal = document.getElementById("closeReveal");
+  const cardsData = cardsDataImport;
 
-  if (drawBtn && revealOverlay && revealContent && closeReveal) {
-    drawBtn.addEventListener("click", async () => {
+  const drawBtn = document.getElementById("drawCardBtn");
+  const drawLink = document.getElementById("drawCardLink");
+  const cardStackWrapper = document.getElementById("cardStackWrapper");
+  const cardStack = document.getElementById("cardStack");
+
+  // We'll create these dynamically
+  let backdrop: HTMLElement | null = null;
+  let infoPanel: HTMLElement | null = null;
+  let closeBtn: HTMLElement | null = null;
+  let selectedCard: HTMLElement | null = null;
+
+  if ((drawBtn || drawLink) && cardStack && cardStackWrapper) {
+    
+    const handleDraw = async (e: Event) => {
+      if (e) e.preventDefault();
+
       if (cardsData.length === 0) {
         console.error("Les cartes ne sont pas encore chargées");
         return;
       }
 
-      // Désactiver le bouton pendant l'animation
-      drawBtn.disabled = true;
-      
-      // Créer l'overlay d'animation de tirage
-      const drawOverlay = document.createElement('div');
-      drawOverlay.className = 'draw-animation-overlay';
-      document.body.appendChild(drawOverlay);
+      // Disable button
+      if (drawBtn) drawBtn.setAttribute("disabled", "true");
 
-      // Créer la carte animée
-      const animatedCard = document.createElement('div');
-      animatedCard.className = 'animated-card';
-      animatedCard.innerHTML = '<div class="animated-card-back"></div>';
-      drawOverlay.appendChild(animatedCard);
-
-      // Activer l'overlay
-      await new Promise(resolve => setTimeout(resolve, 50));
-      drawOverlay.classList.add('active');
-
-      // Tirer une carte au hasard
+      // Pick random card data
       const randomCard = cardsData[Math.floor(Math.random() * cardsData.length)];
       
-      // Effet de mélange
-      const cardStack = document.getElementById('cardStack');
-      if (cardStack) {
-        cardStack.classList.add('shuffling');
-      }
-
-      await new Promise(resolve => setTimeout(resolve, 400));
-      animatedCard.classList.add('reveal');
-      await new Promise(resolve => setTimeout(resolve, 800));
-
-      if (cardStack) {
-        cardStack.classList.remove('shuffling');
-      }
-
-      // Retirer l'overlay de tirage
-      drawOverlay.classList.remove('active');
-      await new Promise(resolve => setTimeout(resolve, 300));
-      drawOverlay.remove();
-
-      // === CINEMATIC REVEAL SEQUENCE ===
-      // Activer l'overlay de révélation
-      revealOverlay.classList.add('active');
-
-      // Étape 1: Nom de la carte avec starfield (0-3000ms)
-      const cinematicName = document.createElement('div');
-      cinematicName.className = 'card-name-cinematic';
+      // Pick random card from the visual deck (0-6)
+      const selectedIndex = Math.floor(Math.random() * 7);
+      selectedCard = cardStack.querySelector(`.stack-card[data-index="${selectedIndex}"]`) as HTMLElement;
       
-      // Créer le starfield
-      let starfieldHTML = '<div class="name-starfield">';
-      for (let i = 0; i < 50; i++) {
-        const x = Math.random() * 100;
-        const y = Math.random() * 100;
-        const delay = Math.random() * 3;
-        starfieldHTML += `<div class="star" style="left: ${x}%; top: ${y}%; animation-delay: ${delay}s;"></div>`;
-      }
-      starfieldHTML += '</div>';
-      
-      // Ajouter les anneaux de glow
-      const rings = '<div class="name-glow-ring"></div><div class="name-glow-ring" style="animation-delay: 0.3s;"></div><div class="name-glow-ring" style="animation-delay: 0.6s;"></div>';
-      
-      cinematicName.innerHTML = `
-        ${starfieldHTML}
-        ${rings}
-        <h2 class="card-name-big">${randomCard.name}</h2>
-      `;
-      revealOverlay.appendChild(cinematicName);
-
-      // Attendre que le nom disparaisse (3000ms)
-      await new Promise(resolve => setTimeout(resolve, 3200));
-      cinematicName.remove();
-
-      // Déterminer l'icône de famille
-      const arcanaIcons: Record<string, string> = {
-        'Feu': '🔥',
-        'Eau': '💧',
-        'Nuages': '☁️',
-        'Arc-en-ciel': '🌈',
-        'Majeure': '⭐'
-      };
-      
-      const familyKey = randomCard.arcana.includes('Feu') ? 'Feu' :
-                       randomCard.arcana.includes('Eau') ? 'Eau' :
-                       randomCard.arcana.includes('Nuages') ? 'Nuages' :
-                       randomCard.arcana.includes('Arc-en-ciel') ? 'Arc-en-ciel' :
-                       'Majeure';
-      const arcanaIcon = arcanaIcons[familyKey] || '✦';
-
-      // Construire le contenu complet avec TOUS les paragraphes
-      const commentaryParagraphs = randomCard.commentary.split('\n\n').filter((p: string) => p.trim().length > 0);
-      const fullCommentary = commentaryParagraphs.map((p: string) => `<p style="margin-bottom: 1rem; text-align: justify;">${p}</p>`).join('');
-
-      revealContent.innerHTML = `
-        <div class="card-gift-box" style="max-width: 800px; margin: 0 auto; padding: 3rem 2rem; background: rgba(20, 25, 35, 0.92); backdrop-filter: blur(20px) saturate(1.2); -webkit-backdrop-filter: blur(20px) saturate(1.2); border: 1px solid rgba(78, 205, 196, 0.3); border-radius: 24px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 80px rgba(78, 205, 196, 0.15);">
-          
-          <!-- Card Image - Top Center -->
-          <div class="gift-card-image-container" style="max-width: 350px; margin: 0 auto 2rem; text-align: center;">
-            <div style="position: relative; width: 100%; aspect-ratio: 2/3;">
-              <!-- Image Placeholder with Loader -->
-              <div class="image-placeholder" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(78, 205, 196, 0.05); border: 2px dashed rgba(78, 205, 196, 0.2); border-radius: 16px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                <!-- Animated Loader -->
-                <div class="card-loader" style="width: 80px; height: 80px; position: relative;">
-                  <div class="loader-ring" style="position: absolute; width: 100%; height: 100%; border: 3px solid transparent; border-top-color: #4ecdc4; border-radius: 50%; animation: spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;"></div>
-                  <div class="loader-ring" style="position: absolute; width: 100%; height: 100%; border: 3px solid transparent; border-top-color: #ff8c42; border-radius: 50%; animation: spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite reverse; animation-delay: 0.3s;"></div>
-                  <div class="loader-ring" style="position: absolute; width: 100%; height: 100%; border: 3px solid transparent; border-top-color: #ee5a6f; border-radius: 50%; animation: spin 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; animation-delay: 0.6s;"></div>
-                  <div class="loader-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 2rem; animation: pulse 2s ease-in-out infinite;">✦</div>
-                </div>
-              </div>
-              <!-- Actual Image (hidden until loaded) -->
-              <img 
-                src="${randomCard.image_url_online}" 
-                alt="${randomCard.name}"
-                class="gift-card-image"
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 16px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 40px rgba(78, 205, 196, 0.2); opacity: 0; transition: opacity 0.5s ease-in-out;"
-                onload="this.style.opacity='1'; this.parentElement.querySelector('.image-placeholder').style.display='none';"
-              />
-            </div>
-          </div>
-          
-          <!-- Card Header - Name + Arcana -->
-          <div class="gift-card-header" style="text-align: center; margin-bottom: 1.5rem;">
-            <h2 class="gift-card-name" style="font-family: 'Cinzel Decorative', serif; font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 1rem; background: linear-gradient(135deg, #4ecdc4 0%, #ff8c42 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">${randomCard.name}</h2>
-            <div class="gift-card-arcana-row" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(78, 205, 196, 0.15); border: 1px solid rgba(78, 205, 196, 0.3); border-radius: 50px; font-size: 0.875rem; color: #4ecdc4;">
-              <span class="arcana-icon" style="font-size: 1.25rem;">${arcanaIcon}</span>
-              <span class="gift-card-arcana">${randomCard.arcana}</span>
-            </div>
-          </div>
-
-          <!-- Decorative Divider -->
-          <div class="gift-divider" style="position: relative; text-align: center; margin: 2rem 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(78, 205, 196, 0.3) 30%, rgba(78, 205, 196, 0.3) 70%, transparent);">
-            <span class="divider-ornament" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 0 1rem; background: rgba(20, 25, 35, 0.92); font-size: 1.5rem; color: rgba(78, 205, 196, 0.5);">✦</span>
-          </div>
-
-          <!-- Main Meaning Section -->
-          <section class="gift-section meaning-section" style="margin-bottom: 2rem;">
-            <h3 class="gift-section-title" style="font-family: 'Cinzel Decorative', serif; font-size: 1.5rem; font-weight: 600; text-align: center; margin-bottom: 1rem; color: #4ecdc4; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-              <span class="material-symbols-outlined" style="font-size: 1.5rem;">auto_stories</span>
-              Signification
-            </h3>
-            <div class="gift-main-text" style="font-family: 'Crimson Pro', serif; font-size: 1.125rem; line-height: 1.8; color: rgba(255, 255, 255, 0.95); padding: 1.5rem; background: rgba(78, 205, 196, 0.05); border-left: 3px solid rgba(78, 205, 196, 0.4); border-radius: 8px; position: relative;">
-              <span style="position: absolute; top: 0.5rem; left: 0.5rem; font-size: 3rem; color: rgba(78, 205, 196, 0.2); font-family: Georgia, serif; line-height: 1;">"</span>
-              <div style="position: relative; z-index: 1;">${randomCard.main_text}</div>
-            </div>
-          </section>
-
-          <!-- Commentary Section -->
-          <section class="gift-section commentary-section" style="margin-bottom: 2rem;">
-            <h3 class="gift-section-title" style="font-family: 'Cinzel Decorative', serif; font-size: 1.5rem; font-weight: 600; text-align: center; margin-bottom: 1rem; color: #ff8c42; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-              <span class="material-symbols-outlined" style="font-size: 1.5rem;">chat_bubble</span>
-              Commentaire
-            </h3>
-            <div class="gift-commentary" style="font-family: 'Crimson Pro', serif; font-size: 1rem; line-height: 1.8; color: rgba(255, 255, 255, 0.85);">
-              ${fullCommentary}
-            </div>
-          </section>
-
-          <!-- Closing -->
-          <div class="gift-closing" style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-            <div class="closing-ornament" style="font-size: 1.25rem; color: #4ecdc4; opacity: 0.6; letter-spacing: 1rem;">✦ ✦ ✦</div>
-          </div>
-        </div>
-      `;
-
-      // Ajouter des particules mystiques colorées
-      const giftBox = revealContent.querySelector('.card-gift-box');
-      if (giftBox) {
-        const particleColors = [
-          'rgba(78, 205, 196, 0.9)',
-          'rgba(255, 140, 66, 0.9)',
-          'rgba(238, 90, 111, 0.9)',
-          'rgba(192, 108, 132, 0.9)'
-        ];
-        
-        for (let i = 0; i < 16; i++) {
-          const particle = document.createElement('div');
-          particle.className = 'light-particle';
-          particle.style.left = `${Math.random() * 100}%`;
-          particle.style.top = `${Math.random() * 100}%`;
-          particle.style.setProperty('--particle-x', `${(Math.random() - 0.5) * 200}px`);
-          particle.style.setProperty('--particle-y', `${-120 - Math.random() * 180}px`);
-          particle.style.animationDelay = `${Math.random() * 4}s`;
-          particle.style.background = `radial-gradient(circle, ${particleColors[i % particleColors.length]}, transparent)`;
-          giftBox.appendChild(particle);
+      // Preload image BEFORE starting animation
+      const cardImage = selectedCard.querySelector('.card-image') as HTMLImageElement;
+      const imageLoaded = new Promise<void>((resolve) => {
+        if (cardImage) {
+          cardImage.onload = () => resolve();
+          cardImage.onerror = () => resolve(); // Continue even if error
+          cardImage.src = randomCard.image_url_online;
+          cardImage.alt = randomCard.name;
+          // If already cached, resolve immediately
+          if (cardImage.complete) resolve();
+        } else {
+          resolve();
         }
+      });
+
+      // ========== PHASE 0: CREATE BACKDROP & CENTER DECK ==========
+      // Create backdrop
+      backdrop = document.createElement("div");
+      backdrop.className = "draw-backdrop";
+      document.body.appendChild(backdrop);
+
+      // Create close button
+      closeBtn = document.createElement("button");
+      closeBtn.className = "close-draw-btn";
+      closeBtn.innerHTML = '<span class="material-symbols-outlined">close</span>';
+      closeBtn.setAttribute("aria-label", "Fermer");
+      document.body.appendChild(closeBtn);
+
+      // Stop float idle animation smoothly
+      cardStack.style.animation = 'none';
+
+      // === SMOOTH CENTERING: Capture current position first ===
+      const rect = cardStackWrapper.getBoundingClientRect();
+      const startTop = rect.top;
+      const startLeft = rect.left;
+      
+      // Set the starting position as inline styles BEFORE adding centering class
+      cardStackWrapper.style.top = `${startTop}px`;
+      cardStackWrapper.style.left = `${startLeft}px`;
+      cardStackWrapper.style.transform = 'none';
+      
+      // Now add centering class (which sets position: fixed)
+      cardStackWrapper.classList.add("centering");
+      
+      // Force reflow to ensure the starting position is applied
+      void cardStackWrapper.offsetHeight;
+      
+      // Activate backdrop (blur/darken page)
+      await new Promise((resolve) => setTimeout(resolve, 50));
+      backdrop.classList.add("active");
+
+      // Now animate to center position
+      const targetTop = window.innerHeight * 0.50; // Center vertically
+      const targetLeft = window.innerWidth / 2;
+      cardStackWrapper.style.top = `${targetTop}px`;
+      cardStackWrapper.style.left = `${targetLeft}px`;
+      cardStackWrapper.style.transform = 'translate(-50%, -50%) scale(1.1)';
+      
+      // Wait for centering transition
+      await new Promise((resolve) => setTimeout(resolve, 900));
+
+      // ========== PHASE 1: WIGGLE (2.5 seconds) ==========
+      cardStack.classList.add("wiggling");
+      await new Promise((resolve) => setTimeout(resolve, 2500));
+
+      // ========== PHASE 2: SPREAD (slow, wide fan) ==========
+      cardStack.classList.remove("wiggling");
+      
+      // Small pause to let wiggle animation stop cleanly
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      
+      cardStack.classList.add("spread");
+      
+      // Wait for spread animation (1.8s transition) + pause
+      await new Promise((resolve) => setTimeout(resolve, 2500));
+
+      // ========== PHASE 2.5: PRE-SELECTION GLOW ==========
+      // Add subtle glow to selected card BEFORE it emerges
+      selectedCard.classList.add("pre-selected");
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+
+      // ========== PHASE 3: SELECTED CARD EMERGES ==========
+      selectedCard.classList.remove("pre-selected");
+      selectedCard.classList.add("emerging");
+      
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+
+      // Fade other cards
+      cardStack.classList.add("has-selection");
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
+      // ========== PHASE 4: RISING (3D toward viewer) ==========
+      selectedCard.classList.remove("emerging");
+      selectedCard.classList.add("rising");
+      
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+
+      // ========== PHASE 5: FLIP - Wait for image first ==========
+      await imageLoaded; // Ensure image is loaded before flip
+      
+      selectedCard.classList.remove("rising");
+      selectedCard.classList.add("flipping");
+      
+      // Wait for flip animation (1s transform)
+      await new Promise((resolve) => setTimeout(resolve, 1400));
+
+      // ========== PHASE 6: REVEALED - slide left, show info ==========
+      selectedCard.classList.remove("flipping");
+      selectedCard.classList.add("revealed");
+      cardStack.classList.add("final-reveal");
+
+      // Show close button
+      closeBtn.classList.add("visible");
+
+      // Create and show info panel
+      const familyEmojis: Record<string, string> = {
+        "Arc-en-ciel": "🌈",
+        "Feu": "🔥",
+        "Eau": "💧",
+        "Nuages": "☁️",
+      };
+
+      let metaText = "";
+      if (randomCard.arcana_type === "major") {
+        metaText = randomCard.arcana;
+      } else {
+        const familyEmoji = randomCard.arcana_family ? familyEmojis[randomCard.arcana_family] || "" : "";
+        const positionWithEmoji = randomCard.arcana_position 
+          ? `${randomCard.arcana_position} ${familyEmoji}`.trim()
+          : "";
+        metaText = positionWithEmoji 
+          ? `Arcane Mineure • ${positionWithEmoji}`
+          : "Arcane Mineure";
       }
 
-      // Réactiver le bouton après toute l'animation (6 secondes)
-      setTimeout(() => {
-        drawBtn.disabled = false;
-      }, 6000);
-    });
+      infoPanel = document.createElement("div");
+      infoPanel.className = "card-info-panel";
+      infoPanel.innerHTML = `
+        <h2 class="card-name">${randomCard.name}</h2>
+        <p class="card-meta">${metaText}</p>
+        <a href="/carte/${randomCard.card_number}" class="card-action">
+          <span class="material-symbols-outlined">visibility</span>
+          Voir la fiche complète
+        </a>
+      `;
+      document.body.appendChild(infoPanel);
 
-    // Fermer l'overlay
-    closeReveal.addEventListener("click", () => {
-      revealOverlay.classList.remove('active');
-      drawBtn.disabled = false;
-    });
+      // Fade in info panel after card slides
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      infoPanel.classList.add("visible");
+    };
 
-    // Fermer avec Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && revealOverlay.classList.contains('active')) {
-        revealOverlay.classList.remove('active');
-        drawBtn.disabled = false;
+    const closeDraw = () => {
+      // Remove all dynamic elements
+      if (backdrop) {
+        backdrop.classList.remove("active");
+        setTimeout(() => backdrop?.remove(), 500);
+      }
+      if (infoPanel) {
+        infoPanel.classList.remove("visible");
+        setTimeout(() => infoPanel?.remove(), 500);
+      }
+      if (closeBtn) {
+        closeBtn.classList.remove("visible");
+        setTimeout(() => closeBtn?.remove(), 500);
+      }
+
+      // Reset card stack
+      cardStackWrapper.classList.remove("centering");
+      cardStack.classList.remove("wiggling", "spread", "has-selection", "final-reveal");
+      
+      // Clear inline styles used for smooth centering
+      cardStackWrapper.style.top = '';
+      cardStackWrapper.style.left = '';
+      cardStackWrapper.style.transform = '';
+      
+      // Restore float animation
+      cardStack.style.animation = '';
+      
+      // Reset all cards
+      cardStack.querySelectorAll(".stack-card").forEach((card) => {
+        card.classList.remove("pre-selected", "emerging", "rising", "flipping", "revealed");
+        // Clear the image source
+        const img = card.querySelector('.card-image') as HTMLImageElement;
+        if (img) {
+          img.src = '';
+          img.alt = '';
+        }
+      });
+
+      // Re-enable button
+      if (drawBtn) drawBtn.removeAttribute("disabled");
+
+      // Clear references
+      backdrop = null;
+      infoPanel = null;
+      closeBtn = null;
+      selectedCard = null;
+    };
+
+    // Event listeners
+    if (drawBtn) drawBtn.addEventListener("click", handleDraw);
+    if (drawLink) drawLink.addEventListener("click", handleDraw);
+
+    // Close on button click, backdrop click, or Escape
+    document.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+      
+      // Close button clicked
+      if (closeBtn && (target === closeBtn || target.closest(".close-draw-btn"))) {
+        closeDraw();
+        return;
+      }
+      
+      // Backdrop clicked (but not the card or info panel)
+      if (backdrop && target === backdrop) {
+        closeDraw();
+        return;
       }
     });
 
-    // Fermer en cliquant sur le fond
-    revealOverlay.addEventListener('click', (e) => {
-      if (e.target === revealOverlay) {
-        revealOverlay.classList.remove('active');
-        drawBtn.disabled = false;
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && backdrop?.classList.contains("active")) {
+        closeDraw();
       }
     });
   }
 
-  // Parallax scroll effect
-  let ticking = false;
-  const heroSection = document.querySelector('.hero-section') as HTMLElement;
-  const heroLeft = document.querySelector('.hero-left') as HTMLElement;
-  const heroRight = document.querySelector('.hero-right') as HTMLElement;
-
-  function updateParallax() {
-    const scrolled = window.pageYOffset;
-    const heroHeight = heroSection ? heroSection.offsetHeight : 0;
-    
-    if (scrolled < heroHeight) {
-      const parallaxSpeed = 0.5;
-      const parallaxSpeedFast = 0.3;
-      
-      if (heroSection) {
-        const before = heroSection.querySelector('::before') as HTMLElement;
-        const after = heroSection.querySelector('::after') as HTMLElement;
-        
-        // Move background layers at different speeds
-        heroSection.style.setProperty('--parallax-offset-before', `${scrolled * parallaxSpeed}px`);
-        heroSection.style.setProperty('--parallax-offset-after', `${scrolled * parallaxSpeedFast}px`);
+  // Parallax
+  const heroSection = document.querySelector(".hero-section") as HTMLElement;
+  if (heroSection) {
+    window.addEventListener("scroll", () => {
+      const scrolled = window.pageYOffset;
+      if (scrolled < heroSection.offsetHeight) {
+        heroSection.style.setProperty("--parallax-offset-before", `${scrolled * 0.5}px`);
+        heroSection.style.setProperty("--parallax-offset-after", `${scrolled * 0.3}px`);
       }
-      
-      // Move content layers
-      if (heroLeft) {
-        heroLeft.style.transform = `translateY(${scrolled * 0.4}px)`;
-        heroLeft.style.opacity = `${1 - scrolled / heroHeight}`;
-      }
-      
-      if (heroRight) {
-        heroRight.style.transform = `translateY(${scrolled * 0.2}px)`;
-        heroRight.style.opacity = `${1 - scrolled / heroHeight}`;
-      }
-    }
-    
-    ticking = false;
+    });
   }
-
-  function requestParallaxUpdate() {
-    if (!ticking && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-      window.requestAnimationFrame(updateParallax);
-      ticking = true;
-    }
-  }
-
-  window.addEventListener('scroll', requestParallaxUpdate);
 </script>

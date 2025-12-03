@@ -6,7 +6,7 @@ import cardsData from '../data/osho_cards.json';
 const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
 ---
 
-<BaseLayout title="Parcourir les cartes - Barib's Osho Zen Tarot">
+<BaseLayout title="Parcourir les cartes - BaribOsho v1">
   <div class="gallery-page">
     <div class="gallery-header">
       <h1 class="page-title">Parcourir les cartes</h1>
@@ -63,20 +63,25 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
       </aside>
 
       <!-- Grille de cartes -->
-      <main class="cards-grid" id="cardsGrid" role="main" aria-label="Galerie des cartes de tarot">
+      <section class="cards-grid" id="cardsGrid" aria-label="Galerie des cartes de tarot">
         {cardsData.map((card) => (
           <a 
             href={`/carte/${card.card_number}`} 
             class="card-item"
             data-card-family={card.arcana_family || 'Majeures'}
             data-card-name={card.name.toLowerCase()}
+            data-card-number={card.card_number}
           >
             <div class="card-image-container">
+              <div class="image-skeleton"></div>
               <img 
-                src={card.image_url_online} 
+                src={card.image_url_thumb || card.image_url_online} 
                 alt={card.name}
                 class="card-thumbnail"
                 loading="lazy"
+                width="300"
+                height="450"
+                onload="this.classList.add('loaded'); this.previousElementSibling.style.display='none';"
               />
             </div>
             <div class="card-details">
@@ -85,7 +90,7 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
             </div>
           </a>
         ))}
-      </main>
+      </section>
     </div>
   </div>
 </BaseLayout>
@@ -98,15 +103,15 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
 
   .gallery-header {
     text-align: center;
-    margin-bottom: var(--space-3xl);
-    padding-top: var(--space-xl);
+    margin-bottom: var(--space-2xl);
+    padding-top: 0;
     will-change: transform;
     transition: transform 0.1s ease-out;
   }
 
   .page-title {
     font-family: var(--font-heading);
-    font-size: var(--text-5xl);
+    font-size: var(--text-4xl);
     font-weight: 900;
     background: var(--gradient-accent);
     -webkit-background-clip: text;
@@ -126,8 +131,8 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
     max-width: var(--breakpoint-xl);
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: var(--space-3xl);
+    grid-template-columns: 260px 1fr;
+    gap: var(--space-2xl);
   }
 
   /* === Sidebar Filtres === */
@@ -135,11 +140,20 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
     position: sticky;
     top: calc(var(--space-3xl) + 60px);
     height: fit-content;
-    background: rgba(15, 23, 37, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
+    background: linear-gradient(
+      135deg, 
+      rgba(78, 205, 196, 0.04) 0%, 
+      rgba(15, 23, 37, 0.5) 50%,
+      rgba(255, 140, 66, 0.04) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
     padding: var(--space-xl);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(16px);
+    z-index: 10;
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 
   .filter-title {
@@ -153,7 +167,7 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
   }
 
   .filter-title .material-symbols-outlined {
-    font-size: 1.5rem;
+    font-size: var(--text-2xl);
   }
 
   .filter-group {
@@ -169,10 +183,11 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: var(--space-md);
+    font-weight: 600;
   }
 
   .filter-group-title .material-symbols-outlined {
-    font-size: 1rem;
+    font-size: var(--text-base);
   }
 
   .filter-chips {
@@ -183,34 +198,37 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
 
   .filter-chip {
     padding: var(--space-sm) var(--space-md);
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
+    border-radius: 100px;
     color: var(--color-text-secondary);
     font-size: var(--text-sm);
     cursor: pointer;
     transition: all var(--transition-normal);
+    font-family: var(--font-body);
   }
 
   .filter-chip:hover {
     background: rgba(255, 140, 66, 0.1);
     border-color: var(--color-accent-orange);
     color: var(--color-accent-orange);
+    transform: translateY(-1px);
   }
 
   .filter-chip.active {
-    background: rgba(255, 140, 66, 0.2);
-    border-color: var(--color-accent-orange);
-    color: var(--color-accent-orange);
+    background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-magenta));
+    border-color: transparent;
+    color: white;
     font-weight: 600;
+    box-shadow: 0 4px 12px rgba(238, 90, 111, 0.3);
   }
 
   .search-input {
     width: 100%;
     padding: var(--space-md);
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    border-radius: 12px;
     color: var(--color-text-primary);
     font-family: var(--font-body);
     font-size: var(--text-base);
@@ -220,6 +238,7 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
   .search-input:focus {
     outline: none;
     border-color: var(--color-accent-turquoise);
+    background: rgba(0, 0, 0, 0.4);
     box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
   }
 
@@ -234,9 +253,9 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
     gap: var(--space-sm);
     width: 100%;
     padding: var(--space-md);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    background: transparent;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
     color: var(--color-text-secondary);
     font-family: var(--font-heading);
     font-size: var(--text-sm);
@@ -245,37 +264,64 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
   }
 
   .reset-button:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--color-text-primary);
     color: var(--color-text-primary);
   }
 
   .reset-button .material-symbols-outlined {
-    font-size: 1.2rem;
+    font-size: var(--text-lg);
   }
 
   /* === Grille de cartes === */
   .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: var(--space-xl);
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--space-lg);
   }
 
   .card-item {
     display: flex;
     flex-direction: column;
-    background: rgba(15, 23, 37, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    background: rgba(30, 30, 50, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
     overflow: hidden;
     text-decoration: none;
     transition: all var(--transition-normal);
     cursor: pointer;
+    position: relative;
   }
 
+  /* Subtle glow aura on hover - colored by family */
+  .card-item::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 18px;
+    background: var(--card-glow, rgba(78, 205, 196, 0.3));
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    z-index: -1;
+    filter: blur(8px);
+  }
+
+  .card-item:hover::before {
+    opacity: 1;
+  }
+
+  /* Family-specific glow colors */
+  .card-item[data-card-family="Majeures"] { --card-glow: rgba(255, 215, 0, 0.4); }
+  .card-item[data-card-family="Feu"] { --card-glow: rgba(255, 100, 50, 0.4); }
+  .card-item[data-card-family="Eau"] { --card-glow: rgba(78, 205, 196, 0.4); }
+  .card-item[data-card-family="Nuages"] { --card-glow: rgba(180, 160, 220, 0.4); }
+  .card-item[data-card-family="Arc-en-ciel"] { --card-glow: linear-gradient(135deg, rgba(255, 100, 100, 0.3), rgba(255, 200, 100, 0.3), rgba(100, 255, 150, 0.3), rgba(100, 200, 255, 0.3), rgba(200, 100, 255, 0.3)); }
+
   .card-item:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--card-shadow-lg), var(--glow-orange);
-    border-color: var(--color-accent-orange);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.15);
+    z-index: 2;
   }
 
   .card-image-container {
@@ -283,18 +329,37 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
     width: 100%;
     aspect-ratio: 2/3;
     overflow: hidden;
-    background: linear-gradient(135deg, #2a2a4e 0%, #1a1a3e 100%);
+    background: #1a1a2e;
+  }
+
+  .image-skeleton {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #1a1a2e 25%, #2a2a4e 50%, #1a1a2e 75%);
+    background-size: 200% 100%;
+    animation: skeletonLoading 1.5s infinite;
+    z-index: 1;
+  }
+
+  @keyframes skeletonLoading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
   }
 
   .card-thumbnail {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform var(--transition-slow);
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+    opacity: 0;
+  }
+
+  .card-thumbnail.loaded {
+    opacity: 1;
   }
 
   .card-item:hover .card-thumbnail {
-    transform: scale(1.05);
+    transform: scale(1.1);
   }
 
   .card-details {
@@ -302,21 +367,27 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
+    background: linear-gradient(to bottom, rgba(30, 30, 50, 0), rgba(30, 30, 50, 0.8));
   }
 
   .card-title {
     font-family: var(--font-card-name);
     font-size: var(--text-lg);
     font-weight: 700;
-    color: var(--color-accent-orange);
+    color: var(--color-text-primary);
     margin: 0;
+    transition: color var(--transition-fast);
+  }
+  
+  .card-item:hover .card-title {
+    color: var(--color-accent-turquoise);
   }
 
   .card-arcana {
     font-size: var(--text-xs);
     color: var(--color-text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     margin: 0;
   }
 
@@ -328,10 +399,32 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
   @media (max-width: 1024px) {
     .gallery-container {
       grid-template-columns: 1fr;
+      gap: var(--space-xl);
     }
 
     .filters-sidebar {
-      position: static;
+      position: sticky;
+      top: 60px; /* Sticky below header */
+      margin-bottom: var(--space-xl);
+      z-index: 90;
+      background: rgba(15, 23, 37, 0.95);
+    }
+    
+    .filter-chips {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: var(--space-xs);
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Hide scrollbar Firefox */
+    }
+    
+    .filter-chips::-webkit-scrollbar {
+      display: none; /* Hide scrollbar Chrome/Safari */
+    }
+    
+    .filter-chip {
+      white-space: nowrap;
+      flex-shrink: 0;
     }
   }
 
@@ -342,7 +435,7 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
 
     .gallery-header {
       padding-top: var(--space-md);
-      margin-bottom: var(--space-2xl);
+      margin-bottom: var(--space-xl);
     }
 
     .page-title {
@@ -354,25 +447,21 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
     }
 
     .gallery-container {
-      gap: var(--space-xl);
+      gap: var(--space-lg);
     }
 
     .filters-sidebar {
       padding: var(--space-md);
-    }
-
-    .filter-chips {
-      gap: var(--space-xs);
-    }
-
-    .filter-chip {
-      padding: var(--space-xs) var(--space-sm);
-      font-size: var(--text-xs);
+      top: 56px;
     }
 
     .cards-grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 1fr); /* Force 2 columns */
       gap: var(--space-md);
+    }
+    
+    .card-details {
+      padding: var(--space-sm);
     }
   }
 
@@ -389,12 +478,13 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
       gap: var(--space-sm);
     }
 
-    .card-details {
-      padding: var(--space-sm);
-    }
-
     .card-title {
       font-size: var(--text-base);
+    }
+    
+    /* Ensure 2 columns even on small screens */
+    .cards-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)); 
     }
   }
 
@@ -407,43 +497,112 @@ const families = ['Toutes', 'Majeures', 'Feu', 'Eau', 'Nuages', 'Arc-en-ciel'];
       font-size: var(--text-lg);
     }
   }
+
+  .no-results {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3xl);
+    color: var(--color-text-muted);
+    text-align: center;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+  }
+
+  .no-results .material-symbols-outlined {
+    font-size: var(--text-5xl);
+    margin-bottom: var(--space-md);
+    opacity: 0.5;
+  }
 </style>
 
 <script>
+  import Fuse from 'fuse.js';
+  
   // Gestion des filtres
   const familyFilters = document.getElementById('familyFilters');
   const searchInput = document.getElementById('searchInput') as HTMLInputElement;
   const resetButton = document.getElementById('resetFilters');
   const cardItems = document.querySelectorAll('.card-item');
 
+  // Récupérer les données des cartes depuis le DOM (attributs data) ou via un script global si nécessaire
+  // Pour une meilleure performance avec Fuse, on va reconstruire un tableau d'objets à partir des éléments DOM
+  // ou mieux, on peut passer les données JSON directement au script si on les a importées
+  
+  // Option 1: Reconstruire depuis le DOM (limité aux données exposées)
+  // Option 2: Utiliser les données importées (nécessite que le script soit un module ou ait accès aux données)
+  // Ici, comme on est dans un bloc <script> Astro qui est traité comme un module, on peut importer les données.
+  import cardsData from '../data/osho_cards.json';
+
   let activeFamily = 'Toutes';
   let searchTerm = '';
 
-  // Mapping des familles pour le filtre
-  const familyMap: Record<string, string> = {
-    'Toutes': 'all',
-    'Majeures': 'Majeures',
-    'Feu': 'Feu',
-    'Eau': 'Eau',
-    'Nuages': 'Nuages',
-    'Arc-en-ciel': 'Arc-en-ciel'
+  // Configuration Fuse.js
+  const fuseOptions = {
+    keys: [
+      { name: 'name', weight: 0.7 },
+      { name: 'arcana', weight: 0.3 },
+      { name: 'main_text', weight: 0.2 },
+      { name: 'commentary', weight: 0.1 }
+    ],
+    threshold: 0.4, // Sensibilité (0.0 = correspondance parfaite, 1.0 = tout correspond)
+    ignoreLocation: true
   };
 
+  const fuse = new Fuse(cardsData, fuseOptions);
+
   function filterCards() {
+    // 1. Obtenir les résultats de recherche si un terme est présent
+    let searchResults: Set<string> | null = null;
+    
+    if (searchTerm.length > 1) {
+      const results = fuse.search(searchTerm);
+      searchResults = new Set(results.map(r => r.item.card_number));
+    }
+
+    // 2. Appliquer les filtres
     cardItems.forEach((card) => {
       const cardElement = card as HTMLElement;
       const cardFamily = cardElement.dataset.cardFamily || 'Majeures';
-      const cardName = cardElement.dataset.cardName || '';
+      const cardNumber = cardElement.dataset.cardNumber || '';
 
       const familyMatch = activeFamily === 'Toutes' || cardFamily === activeFamily;
-      const searchMatch = searchTerm === '' || cardName.includes(searchTerm.toLowerCase());
+      
+      // Si recherche active, on vérifie si la carte est dans les résultats
+      // Sinon, on considère que c'est un match (pas de filtre de recherche)
+      const searchMatch = searchResults === null || searchResults.has(cardNumber);
 
       if (familyMatch && searchMatch) {
         cardElement.classList.remove('hidden');
+        // Animation d'entrée optionnelle
+        cardElement.style.opacity = '1';
+        cardElement.style.transform = 'translateY(0)';
       } else {
         cardElement.classList.add('hidden');
       }
     });
+    
+    // Afficher un message si aucun résultat ?
+    const visibleCards = document.querySelectorAll('.card-item:not(.hidden)');
+    const noResultsMsg = document.getElementById('noResultsMessage');
+    
+    if (visibleCards.length === 0) {
+      if (!noResultsMsg) {
+        const msg = document.createElement('div');
+        msg.id = 'noResultsMessage';
+        msg.className = 'no-results';
+        msg.innerHTML = `
+          <span class="material-symbols-outlined">search_off</span>
+          <p>Aucune carte ne correspond à votre recherche.</p>
+        `;
+        document.getElementById('cardsGrid')?.appendChild(msg);
+      }
+    } else {
+      noResultsMsg?.remove();
+    }
   }
 
   // Filtres par famille

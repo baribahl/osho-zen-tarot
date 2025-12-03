@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 interface Props {
   title: string;
   description?: string;
@@ -25,7 +27,7 @@ const { title, description = "Explorez le Tarot Zen d'Osho avec Barib - Tirage d
     <header class="site-header">
       <nav class="nav-container">
         <a href="/" class="site-logo">
-          <span class="logo-text">Barib's Osho Zen Tarot</span>
+          <span class="logo-text">BaribOsho v1</span>
         </a>
         <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
           <span class="material-symbols-outlined">menu</span>
@@ -43,78 +45,14 @@ const { title, description = "Explorez le Tarot Zen d'Osho avec Barib - Tirage d
     </main>
 
     <footer class="site-footer">
-      <p>© 2025 Barib's Osho Zen Tarot - Une exploration spirituelle et contemplative</p>
+      <p>© 2025 BaribOsho v1 - Une exploration spirituelle et contemplative</p>
     </footer>
   </body>
 </html>
 
-<style is:global>
-  /* ===== Variables CSS - Palette Osho Zen Tarot ===== */
-  :root {
-    /* === Couleurs principales === */
-    --color-bg-dark: #0f1725;
-    --color-bg-indigo: #1a1a3e;
-    --color-bg-teal: #0f3443;
-    
-    /* === Couleurs d'accent === */
-    --color-accent-orange: #ff8c42;
-    --color-accent-magenta: #ee5a6f;
-    --color-accent-fuchsia: #c06c84;
-    --color-accent-turquoise: #4ecdc4;
-    --color-accent-teal: #46a0a0;
-    
-    /* === Texte === */
-    --color-text-primary: #e8e8f0;
-    --color-text-secondary: #b8b8d0;
-    --color-text-muted: #888899;
-    
-    /* === Typographie === */
-    --font-heading: 'Cinzel Decorative', 'Cinzel', serif;
-    --font-body: 'Crimson Pro', 'Georgia', serif;
-    --font-card-name: 'Philosopher', 'Cinzel Decorative', serif;
-    
-    /* === Tailles de police === */
-    --text-xs: 0.75rem;
-    --text-sm: 0.875rem;
-    --text-base: 1rem;
-    --text-lg: 1.125rem;
-    --text-xl: 1.25rem;
-    --text-2xl: 1.5rem;
-    --text-3xl: 1.875rem;
-    --text-4xl: 2.25rem;
-    --text-5xl: 3rem;
-    
-    /* === Espacements === */
-    --space-xs: 0.25rem;
-    --space-sm: 0.5rem;
-    --space-md: 1rem;
-    --space-lg: 1.5rem;
-    --space-xl: 2rem;
-    --space-2xl: 3rem;
-    --space-3xl: 4rem;
-    
-    /* === Transitions === */
-    --transition-fast: 150ms ease;
-    --transition-normal: 300ms ease;
-    --transition-slow: 500ms ease;
-  }
-</style>
+
 
 <style>
-  :global(*) {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  :global(body) {
-    font-family: 'Crimson Pro', Georgia, serif;
-    line-height: 1.6;
-    color: #e0e0e0;
-    background: linear-gradient(135deg, #1a1a3e 0%, #0f3443 100%);
-    min-height: 100vh;
-  }
-
   .site-header {
     position: sticky;
     top: 0;
@@ -127,7 +65,7 @@ const { title, description = "Explorez le Tarot Zen d'Osho avec Barib - Tirage d
   .nav-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem 2rem;
+    padding: 0.75rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -139,10 +77,11 @@ const { title, description = "Explorez le Tarot Zen d'Osho avec Barib - Tirage d
   }
 
   .logo-text {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1.25rem;
+    font-family: 'Philosopher', sans-serif;
+    font-size: 1.4rem;
     font-weight: 700;
     letter-spacing: 0.5px;
+    text-transform: none;
     background: linear-gradient(135deg, #ff6b6b, #ee5a6f, #c06c84);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -160,7 +99,7 @@ const { title, description = "Explorez le Tarot Zen d'Osho avec Barib - Tirage d
     font-weight: 400;
     color: #e0e0e0;
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     transition: color 0.3s ease;
     position: relative;
   }

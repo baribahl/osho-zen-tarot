@@ -1,0 +1,171 @@
+/* ===== Variables CSS - Palette Osho Zen Tarot (Mystical Edition) ===== */
+:root {
+  /* === Couleurs principales === */
+  --color-bg-dark: #0f1725;
+  --color-bg-indigo: #1a1a3e;
+  --color-bg-teal: #0f3443;
+
+  /* === Couleurs d'accent (Gold/Amber Theme) === */
+  --color-accent-gold: #d4af37;
+  /* Primary Gold */
+  --color-accent-amber: #ffbf00;
+  /* Lighter Amber */
+  --color-accent-bronze: #cd7f32;
+  /* Darker Bronze */
+  --color-accent-orange: #d4af37;
+  /* Legacy mapping to Gold */
+  --color-accent-magenta: #c06c84;
+  /* Muted Magenta */
+  --color-accent-turquoise: #4ecdc4;
+  /* Kept for contrast */
+
+  /* === Texte === */
+  --color-text-primary: #f0f0e8;
+  /* Slightly warmer white */
+  --color-text-secondary: #c0c0b0;
+  /* Warmer grey */
+  --color-text-muted: #888877;
+
+  /* === Typographie === */
+  --font-heading: 'Cinzel Decorative', 'Cinzel', serif;
+  --font-body: 'Crimson Pro', 'Georgia', serif;
+  --font-card-name: 'Philosopher', 'Cinzel Decorative', serif;
+
+  /* === Tailles de police (Fluid) === */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.85rem + 0.15vw, 1rem);
+  --text-base: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+  --text-lg: clamp(1.1rem, 1.05rem + 0.25vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.15rem + 0.35vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.35rem + 0.5vw, 1.875rem);
+  --text-3xl: clamp(1.875rem, 1.7rem + 0.6vw, 2.25rem);
+  --text-4xl: clamp(2.25rem, 2rem + 0.8vw, 2.75rem);
+  --text-5xl: clamp(2.75rem, 2.4rem + 1vw, 3.25rem);
+  --text-6xl: clamp(3.25rem, 2.8rem + 1.2vw, 4rem);
+
+  /* === Espacements === */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 0.75rem;
+  --space-lg: 1.25rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4.5rem;
+
+  /* === Design Tokens (Mystical) === */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+
+  --border-gold-thin: 1px solid rgba(212, 175, 55, 0.3);
+  --border-gold-glow: 1px solid rgba(212, 175, 55, 0.6);
+
+  --shadow-mystic: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+  --shadow-glow: 0 0 20px rgba(212, 175, 55, 0.15);
+
+  /* === Transitions === */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* === Reset & Base === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  background: #0f1016;
+  /* Deep dark base */
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* === Texture & Atmosphere === */
+/* 1. Noise Grain */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* 2. Vignette & Gradient */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0%, rgba(10, 10, 15, 0.8) 100%),
+    linear-gradient(135deg, rgba(26, 26, 62, 0.4) 0%, rgba(15, 52, 67, 0.4) 100%);
+  pointer-events: none;
+}
+
+/* === Typography Utilities === */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-accent-gold);
+}
+
+p {
+  max-width: 65ch;
+  /* Readability measure */
+  margin-bottom: 1rem;
+}
+
+/* === Focus States (Gold) === */
+*:focus-visible {
+  outline: 2px solid var(--color-accent-gold);
+  outline-offset: 4px;
+}
+
+/* === Safari & iOS Specific Fixes === */
+/* Fix for iOS Safari 100vh issue */
+@supports (-webkit-touch-callout: none) {
+  body {
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Smooth scrolling with reduced motion respect */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Better touch targets for mobile */
+@media (hover: none) and (pointer: coarse) {
+  button,
+  a,
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-accent-gold: #ffd700;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #e0e0e0;
+  }
+}
