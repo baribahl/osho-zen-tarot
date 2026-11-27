@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Markdown from '../components/Markdown.astro';
+import Icon from '../components/Icon.astro';
+import {
+  deck,
+  familyOf,
+  rank,
+  reading,
+  route,
+  type Card,
+  type Lang,
+} from '../lib/deck';
+interface Props {
+  lang: Lang;
+  card: Card;
+}
+const { lang, card } = Astro.props,
+  en = lang === 'en',
+  entry = reading(card, lang),
+  f = familyOf(card);
+const i = deck.indexOf(card),
+  previous = deck[(i + deck.length - 1) % deck.length],
+  next = deck[(i + 1) % deck.length];
+const description = entry.commentary
+  .split(/\n---/)[0]
+  .replaceAll('*', '')
+  .slice(0, 155);
+---
+
+<BaseLayout
+  lang={lang}
+  page="card"
+  title={entry.name}
+  description={description}
+  id={card.card_number}
+>
+  <div class="paper detail">
+    <div class="wrap">
+      <a class="back-to" data-gallery-back href={route(lang, 'gallery')}>
+        <Icon name="grid" size={15} />
+        {en ? 'Card gallery' : 'Galerie des cartes'}
+      </a>
+      <div class="detail-grid" style={`--family:${f.color}`}>
+        <header class="reading-title">
+          <p class="kicker">
+            <Icon name="spark" size={14} />
+            {f[lang]} · {rank(card, lang)}
+          </p>
+          <h1>{entry.name}</h1>
+        </header>
+        <figure class="portrait">
+          <a
+            id="enlarge"
+            href={card.image_url_full}
+            aria-label={
+              en ? 'Enlarge the photograph' : 'Agrandir la photographie'
+            }
+          >
+            <img
+              src={card.image_url_medium}
+              srcset={`${card.image_url_medium} 600w, ${card.image_url_full} 1200w`}
+              sizes="(max-width: 740px) 83vw, (max-width: 1100px) 41vw, 460px"
+              alt={entry.name}
+              width="600"
+              height="900"
+            />
+            <span class="zoom-mark">
+              <Icon name="zoom" size={20} />
+            </span>
+          </a>
+        </figure>
+        <article class="reading-text">
+          <section aria-labelledby="meaning">
+            <h2 id="meaning">{en ? 'The reading' : 'La signification'}</h2>
+            <Markdown content={entry.main_text} />
+          </section>
+          <section class="commentary" aria-labelledby="commentary">
+            <h2 id="commentary">
+              {en ? 'Commentary' : 'Le commentaire'}{' '}
+              <span class="finger" aria-hidden="true">
+                ☝️
+              </span>
+            </h2>
+            <Markdown content={entry.commentary} />
+          </section>
+        </article>
+      </div>
+      <dialog class="lightbox" aria-label={entry.name} id="photo">
+        <form method="dialog">
+          <button
+            class="close-photo"
+            aria-label={en ? 'Close photograph' : 'Fermer la photographie'}
+          >
+            <Icon name="close" size={24} />
+          </button>
+        </form>
+        <img alt={entry.name} width="1200" height="1800" />
+      </dialog>
+      <nav class="neighbors" aria-label={en ? 'Other cards' : 'Autres cartes'}>
+        {[
+          [previous, en ? 'Previous card' : 'Carte précédente'],
+          [next, en ? 'Next card' : 'Carte suivante'],
+        ].map(([other, label]) => {
+          const c = other as Card;
+          return (
+            <a data-neighbor href={route(lang, 'card', c.card_number)}>
+              <small>{label as string}</small>
+              <span>{reading(c, lang).name}</span>
+            </a>
+          );
+        })}
+      </nav>
+    </div>
+  </div>
+</BaseLayout>
+<script>
+  const photo = document.querySelector<HTMLDialogElement>('#photo')!;
+  const enlarge = document.querySelector<HTMLAnchorElement>('#enlarge')!;
+  enlarge.addEventListener('click', (event) => {
+    if (
+      event.metaKey ||
+      event.ctrlKey ||
+      event.altKey ||
+      event.shiftKey ||
+      !photo.showModal
+    )
+      return;
+    event.preventDefault();
+    const image = photo.querySelector('img')!;
+    image.src = enlarge.href;
+    photo.showModal();
+  });
+  photo.addEventListener('click', (event) => {
+    if (event.target === photo) photo.close();
+  });
+  const args = new URLSearchParams(location.search);
+  const shared = new URLSearchParams();
+  for (const k of ['family', 'q', 'show'])
+    if (args.has(k)) shared.set(k, args.get(k)!);
+  if (shared.size)
+    document
+      .querySelectorAll<HTMLAnchorElement>(
+        '[data-gallery-back],[data-switch-lang],[data-neighbor]',
+      )
+      .forEach((a) => (a.search = shared.toString()));
+</script>

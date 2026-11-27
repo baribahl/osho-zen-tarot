@@ -31,6 +31,9 @@ jobs:
       
       - name: Build site
         run: npm run build
+
+      - name: Remove unused PNG copies from the deployed site
+        run: rm -rf ./dist/images/cards/png
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

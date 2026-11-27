@@ -1,0 +1,55 @@
+---
+const stars = [
+  [35, 136, 3],
+  [60, 260, 2],
+  [77, 88, 6],
+  [102, 315, 4],
+  [118, 164, 2],
+  [152, 45, 3],
+  [185, 350, 4],
+  [230, 65, 2],
+  [294, 31, 4],
+  [347, 345, 2],
+  [394, 48, 2],
+  [440, 80, 7],
+  [466, 295, 3],
+  [491, 143, 4],
+  [505, 233, 2],
+  [540, 66, 3],
+  [543, 318, 5],
+  [560, 190, 2],
+  [10, 216, 3],
+  [480, 38, 2],
+  [80, 360, 2],
+  [193, 93, 2],
+];
+---
+
+<svg class="sky" aria-hidden="true" viewBox="0 0 570 390" fill="none">
+  <g stroke="currentColor" stroke-width=".75">
+    <ellipse
+      cx="283"
+      cy="201"
+      rx="219"
+      ry="102"
+      transform="rotate(-24 283 201)"
+    />
+    <ellipse
+      cx="283"
+      cy="201"
+      rx="240"
+      ry="130"
+      transform="rotate(-24 283 201)"
+      stroke-dasharray="1 6"
+    />
+    <circle cx="286" cy="188" r="154" stroke-dasharray="40 10 1 9 79 800" />
+  </g>
+  <g class="stars" fill="currentColor">
+    {stars.map(([x, y, r]) => (
+      <path
+        transform={`translate(${x} ${y}) scale(${r})`}
+        d="M0-1Q.1-.12 1 0 .13.12 0 1-.12.12-1 0-.1-.12 0-1Z"
+      />
+    ))}
+  </g>
+</svg>

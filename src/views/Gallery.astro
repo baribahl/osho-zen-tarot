@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import {
+  families,
+  deck,
+  reading,
+  rank,
+  route,
+  familyOf,
+  type Lang,
+} from '../lib/deck';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props,
+  en = lang === 'en';
+const description = en
+  ? 'Explore all 79 illustrated cards by name, theme or family.'
+  : 'Explore les 79 cartes illustrées par nom, thème ou famille.';
+---
+
+<BaseLayout
+  lang={lang}
+  page="gallery"
+  title={en ? 'The cards' : 'Les cartes'}
+  description={description}
+>
+  <section class="paper gallery" data-gallery data-lang={lang}>
+    <div class="wrap">
+      <header class="gallery-title">
+        <p class="kicker">
+          <Icon name="grid" size={14} />
+          {en ? 'The collection' : 'La collection'}
+        </p>
+        <h1>
+          {en ? 'The card' : 'La galerie'}{' '}
+          <em>{en ? 'gallery.' : 'des cartes.'}</em>
+        </h1>
+        <p>
+          {en
+            ? 'Follow a family, look for a word, or let an illustration catch your eye.'
+            : 'Suis une famille, cherche un mot ou laisse une illustration te faire de l’œil.'}
+        </p>
+      </header>
+      <div class="filter-bar">
+        <div
+          class="chips"
+          role="group"
+          aria-label={en ? 'Filter by family' : 'Filtrer par famille'}
+        >
+          <button type="button" data-family="" aria-pressed="true">
+            {en ? 'All' : 'Toutes'}
+          </button>
+          {families.map((f) => (
+            <button type="button" data-family={f.key} aria-pressed="false">
+              <i style={`--family:${f.color}`}></i>
+              {f[lang]}
+            </button>
+          ))}
+        </div>
+        <label class="search">
+          <Icon name="search" size={17} />
+          <input
+            id="search"
+            type="search"
+            placeholder={en ? 'Name or keyword' : 'Nom ou mot-clé'}
+            aria-label={en ? 'Search the cards' : 'Rechercher dans les cartes'}
+          />
+        </label>
+      </div>
+      <p id="count" class="count" role="status">
+        {en ? '79 cards' : '79 cartes'}
+      </p>
+      <div class="gallery-grid">
+        {deck.map((card) => {
+          const f = familyOf(card),
+            info = reading(card, lang);
+          return (
+            <a
+              class="gallery-card"
+              href={route(lang, 'card', card.card_number)}
+              data-id={card.card_number}
+              data-suit={f.key}
+              data-name={info.name}
+              data-alias={reading(card, en ? 'fr' : 'en').name}
+              style={`--family:${f.color}`}
+            >
+              <div class="art-mount">
+                <img
+                  src={card.image_url_thumb}
+                  width="300"
+                  height="450"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <p class="card-meta">
+                <i></i>
+                {f[lang]} · {rank(card, lang)}
+              </p>
+              <h2>{info.name}</h2>
+            </a>
+          );
+        })}
+      </div>
+      <div id="empty" class="empty" hidden>
+        <Icon name="search" size={25} />
+        <h2>{en ? 'No cards found.' : 'Aucune carte trouvée.'}</h2>
+        <button class="action outline" type="button" id="clear">
+          {en ? 'Clear the filters' : 'Effacer les filtres'}
+        </button>
+      </div>
+      <div class="more">
+        <button id="more" class="action outline" type="button" hidden>
+          {en ? 'Show more cards' : 'Voir plus de cartes'}
+        </button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+<script>
+  import '../scripts/gallery';
+</script>

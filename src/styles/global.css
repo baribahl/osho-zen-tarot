@@ -1,171 +1,685 @@
-/* ===== Variables CSS - Palette Osho Zen Tarot (Mystical Edition) ===== */
-:root {
-  /* === Couleurs principales === */
-  --color-bg-dark: #0f1725;
-  --color-bg-indigo: #1a1a3e;
-  --color-bg-teal: #0f3443;
-
-  /* === Couleurs d'accent (Gold/Amber Theme) === */
-  --color-accent-gold: #d4af37;
-  /* Primary Gold */
-  --color-accent-amber: #ffbf00;
-  /* Lighter Amber */
-  --color-accent-bronze: #cd7f32;
-  /* Darker Bronze */
-  --color-accent-orange: #d4af37;
-  /* Legacy mapping to Gold */
-  --color-accent-magenta: #c06c84;
-  /* Muted Magenta */
-  --color-accent-turquoise: #4ecdc4;
-  /* Kept for contrast */
-
-  /* === Texte === */
-  --color-text-primary: #f0f0e8;
-  /* Slightly warmer white */
-  --color-text-secondary: #c0c0b0;
-  /* Warmer grey */
-  --color-text-muted: #888877;
-
-  /* === Typographie === */
-  --font-heading: 'Cinzel Decorative', 'Cinzel', serif;
-  --font-body: 'Crimson Pro', 'Georgia', serif;
-  --font-card-name: 'Philosopher', 'Cinzel Decorative', serif;
-
-  /* === Tailles de police (Fluid) === */
-  --text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);
-  --text-sm: clamp(0.875rem, 0.85rem + 0.15vw, 1rem);
-  --text-base: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
-  --text-lg: clamp(1.1rem, 1.05rem + 0.25vw, 1.25rem);
-  --text-xl: clamp(1.25rem, 1.15rem + 0.35vw, 1.5rem);
-  --text-2xl: clamp(1.5rem, 1.35rem + 0.5vw, 1.875rem);
-  --text-3xl: clamp(1.875rem, 1.7rem + 0.6vw, 2.25rem);
-  --text-4xl: clamp(2.25rem, 2rem + 0.8vw, 2.75rem);
-  --text-5xl: clamp(2.75rem, 2.4rem + 1vw, 3.25rem);
-  --text-6xl: clamp(3.25rem, 2.8rem + 1.2vw, 4rem);
-
-  /* === Espacements === */
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 0.75rem;
-  --space-lg: 1.25rem;
-  --space-xl: 2rem;
-  --space-2xl: 3rem;
-  --space-3xl: 4.5rem;
-
-  /* === Design Tokens (Mystical) === */
-  --border-radius-sm: 4px;
-  --border-radius-md: 8px;
-  --border-radius-lg: 12px;
-
-  --border-gold-thin: 1px solid rgba(212, 175, 55, 0.3);
-  --border-gold-glow: 1px solid rgba(212, 175, 55, 0.6);
-
-  --shadow-mystic: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
-  --shadow-glow: 0 0 20px rgba(212, 175, 55, 0.15);
-
-  /* === Transitions === */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+YªçŠx-®éÜj×¢ëiºÚ+Š§j[h‘éÜ¢éíóM4N‹Z–‹­¦ëeŠw¬ÔéÉ½½Ðì(€€´µ¹¥¡Ðè€ŒÈàÅ”Éì(€€´µ¹¥¡Ðµ‘••Àè€ŒÈÔÅˆÈäì(€€´µÉ•…´è€˜á•™”Èì(€€´µÁ•… è€˜Á‰•„Àì(€€´µÁ…Á•Èè€ŒÌÐÈØÌÐì(€€´µ¥¹¬è€˜Õ”å‘”ì(€€´µµÕÑ•è€ÑŒÅŒäì(€€´µÉÕ±”è€ŒØàÔÀØÄì(€€´µÍ•É¥˜è€I…‘±•äœ°•½É¥„°Í•É¥˜ì(€€´µÍ…¹Ìè€!•‘Ù¥œ1•ÑÑ•ÉÌM…¹Ìœ°€!•±Ù•Ñ¥„9•Õ”œ°Í…¹ÌµÍ•É¥˜ì(€€´µÝÉ…Àè€ÄÈØÁÁàì(€™½¹Ðµ™…µ¥±äèÙ…È ´µÍ…¹Ì¤ì(€½±½ÈèÙ…È ´µ¥¹¬¤ì(€‰…­É½Õ¹èÙ…È ´µÁ…Á•È¤ì(€½±½ÈµÍ¡•µ”è‘…É¬ì(€€µÝ•‰­¥Ðµ™½¹ÐµÍµ½½Ñ¡¥¹œè…¹Ñ¥…±¥…Í•ì)ô(¨ì(€‰½àµÍ¥é¥¹œè‰½É‘•Èµ‰½àì)ô)‰½‘äì(€µ…É¥¸è€Àì(€™½¹ÐµÍ¥é”è€ÅÉ•´ì(€±¥¹”µ¡•¥¡Ðè€Ä¸ÔÔì)ô)m¡¥‘‘•¹tì(€‘¥ÍÁ±…äè¹½¹”€…¥µÁ½ÉÑ…¹Ðì)ô)„ì(€½±½Èè¥¹¡•É¥Ðì(€Ñ•áÐµ‘•½É…Ñ¥½¸è¹½¹”ì)ô)‰ÕÑÑ½¸°)¥¹ÁÕÐì(€™½¹Ðè¥¹¡•É¥Ðì)ô)‰ÕÑÑ½¸ì(€ÕÉÍ½ÈèÁ½¥¹Ñ•Èì)ô)‰ÕÑÑ½¸é‘¥Í…‰±•ì(€ÕÉÍ½Èè‘•™…Õ±Ðì)ô)‰ÕÑÑ½¸°)„°)¥¹ÁÕÐì(€€µÝ•‰­¥ÐµÑ…Àµ¡¥¡±¥¡Ðµ½±½ÈèÑÉ…¹ÍÁ…É•¹Ðì)ô)‰ÕÑÑ½¸é™½ÕÌµÙ¥Í¥‰±”°)„é™½ÕÌµÙ¥Í¥‰±”°)¥¹ÁÕÐé™½ÕÌµÙ¥Í¥‰±”ì(€½ÕÑ±¥¹”è€ÉÁàÍ½±¥€˜ÑŒÙ„Ðì(€½ÕÑ±¥¹”µ½™™Í•Ðè€ÕÁàì)ô(¹É¥ÑÕ…°€é™½ÕÌµÙ¥Í¥‰±”°(¹µ…ÍÐ€é™½ÕÌµÙ¥Í¥‰±”ì(€½ÕÑ±¥¹”µ½±½Èè€™™‘…ˆÐì)ô)¥µœ°)ÍÙœì(€‘¥ÍÁ±…äè‰±½¬ì)ô)¥µœì(€µ…àµÝ¥‘Ñ è€ÄÀÀ”ì)ô) Ä°) È°) Ì°)À°)™¥ÕÉ”ì(€µ…É¥¸è€Àì)ô) Ä°) È°) Ì°(¹‘¥ÍÁ±…äì(€™½¹Ðµ™…µ¥±äèÙ…È ´µÍ•É¥˜¤ì(€™½¹ÐµÝ•¥¡Ðè€ÐÀÀì(€±¥¹”µ¡•¥¡Ðè€Ä¸ÀÐì)ô)•´°)¤ì(€™½¹ÐµÝ•¥¡Ðè€ÐÀÀì)ô(¹ÝÉ…Àì(€Ý¥‘Ñ èµ¥¸¡…±Œ ÄÀÀ”€´±…µÀ ÐÑÁà°€ÄÁÙÜ°€ÄØÁÁà¤¤°Ù…È ´µÝÉ…À¤¤ì(€µ…É¥¸µ¥¹±¥¹”è…ÕÑ¼ì)ô(¹Í­¥À°(¹ÍÈµ½¹±äì(€Á½Í¥Ñ¥½¸è…‰Í½±ÕÑ”ì(€Ý¥‘Ñ è€ÅÁàì(€¡•¥¡Ðè€ÅÁàì(€Á…‘‘¥¹œè€Àì(€µ…É¥¸è€´ÅÁàì(€½Ù•É™±½Üè¡¥‘‘•¸ì(€±¥ÀµÁ…Ñ è¥¹Í•Ð ÔÀ”¤ì(€Ý¡¥Ñ”µÍÁ…”è¹½ÝÉ…Àì)ô(¹Í­¥Àé™½ÕÌì(€Ý¥‘Ñ è…ÕÑ¼ì(€¡•¥¡Ðè…ÕÑ¼ì(€µ…É¥¸è€áÁàì(€±¥ÀµÁ…Ñ è¹½¹”ì(€‰…­É½Õ¹èÙ…È ´µÁ…Á•È¤ì(€½±½ÈèÙ…È ´µ¥¹¬¤ì(€Á…‘‘¥¹œè€À¸ÙÉ•´€ÅÉ•´ì(€èµ¥¹‘•àè€ÈÀì)ô(¹µ…ÍÐì(€½±½ÈèÙ…È ´µÉ•…´¤ì(€‰…­É½Õ¹èÙ…È ´µ¹¥¡Ðµ‘••À¤ì(€‰½É‘•Èµ‰½ÑÑ½´è€ÅÁàÍ½±¥€ŒÔÀÍÑŒì)ô(¹µ…ÍÐµ¥¹¹•Èì(€‘¥ÍÁ±…äèÉ¥ì(€É¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™È…ÕÑ¼€Å™Èì(€…±¥¸µ¥Ñ•µÌè•¹Ñ•Èì(€µ¥¸µ¡•¥¡Ðè€ÜáÁàì(€…Àè€Ä¸ÍÉ•´ì)ô(¹‰É…¹ì(€‘¥ÍÁ±…äè¥¹±¥¹”µ™±•àì(€…±¥¸µ¥Ñ•µÌè•¹Ñ•Èì(€…Àè€À¸ØáÉ•´ì(€™½¹Ðµ™…µ¥±äèÙ…È ´µÍ•É¥˜¤ì(€™½¹ÐµÍ¥é”è€Ä¸àÙÉ•´ì(€±¥¹”µ¡•¥¡Ðè€Äì(€Ý¡¥Ñ”µÍÁ…”è¹½ÝÉ…Àì(€©ÕÍÑ¥™äµÍ•±˜èÍÑ…ÉÐì(€±•ÑÑ•ÈµÍÁ…¥¹œè€´À¸ÀÌÕ•´ì)ô(¹‰É…¹ÍÙœì(€½±½ÈèÙ…È ´µÁ•… ¤ì)ô(¹µ…ÍÐ¹…Øì(€‘¥ÍÁ±…äè™±•àì(€…±¥¸µ¥Ñ•µÌè•¹Ñ•Èì(€…Àè€È¸ÉÉ•´ì)ô(¹µ…ÍÐ¹…Ø„ì(€Á½Í¥Ñ¥½¸èÉ•±…Ñ¥Ù”ì(€Á…‘‘¥¹œè€À¸ÝÉ•´€À¸ÀÕÉ•´ì(€½±½Èè€ÙŒá˜ì(€™½¹ÐµÍ¥é”è€ÅÉ•´ì)ô(¹µ…ÍÐ¹…Ø…m…É¥„µÕÉÉ•¹Ñt°(¹µ…ÍÐ¹…Ø„é¡½Ù•Èì(€½±½ÈèÙ…È ´µÉ•…´¤ì)ô(¹µ…ÍÐ¹…Ø…m…É¥„µÕÉÉ•¹Ñtèé…™Ñ•Èì(€½¹Ñ•¹Ðè€œœì(€Á½Í¥Ñ¥½¸è…‰Í½±ÕÑ”ì(€‰½ÑÑ½´è€ÑÁàì(€¡•¥¡Ðè€ÅÁàì(€±•™Ðè€Àì(€É¥¡Ðè€Àì(€‰…­É½Õ¹èÙ…È ´µÁ•… ¤ì)ô(¹±…¹Õ…•Ìì(€©ÕÍÑ¥™äµÍ•±˜è•¹ì(€‘¥ÍÁ±…äè™±•àì(€…±¥¸µ¥Ñ•µÌè•¹Ñ•Èì(€‰½É‘•Èè€ÅÁàÍ½±¥€ŒÜÌØÄÜÐì(€‰½É‘•ÈµÉ…‘¥ÕÌè€ÉÉ•´ì(€Á…‘‘¥¹œè€ÍÁàì(€™½¹ÐµÍ¥é”è€À¸àÙÉ•´ì(€±•ÑÑ•ÈµÍÁ…¥¹œè€À¸ÀÙ•´ì(€±¥¹”µ¡•¥¡Ðè€Äì(€™½¹ÐµÝ•¥¡Ðè€ØÔÀì)ô(¹±…¹Õ…•Ì€ø€¨ì(€Á…‘‘¥¹œè€À¸ÔÉÉ•´€À¸ØÕÉ•´ì(€‰½É‘•ÈµÉ…‘¥ÕÌè€ÅÉ•´ì)ô(¹±…¹Õ…•ÌÍÁ…¸ì(€‰…­É½Õ¹è€˜É‘‘Œàì(€½±½ÈèÙ…È ´µ¹¥¡Ð¤ì)ô(¹±…¹Õ…•Ì„ì(€½±½Èè€”ÉÕ‘Œì)ô(¹±…¹Õ…•Ì„é¡½Ù•Èì(€‰…­É½Õ¹è€ŒÐäÌÐÑ„ì)ô(¹É¥ÑÕ…°ì(€Á½Í¥Ñ¥½¸èÉ•±…Ñ¥Ù”ì(€½Ù•É™±½Üè¡¥‘‘•¸ì(€½±½ÈèÙ…È ´µÉ•…´¤ì(€‰…­É½Õ¹è(€€€É…‘¥…°µÉ…‘¥•¹Ð (€€€€€•±±¥ÁÍ”…Ð€ÜÜ”€ÐÌ”°(€€€€€€ŒÔÀÌÈÐä€À”°(€€€€€€ŒÌäÈØÍˆ€Èä”°(€€€€€ÑÉ…¹ÍÁ…É•¹Ð€ØÈ”(€€€€¤°(€€€Ù…È ´µ¹¥¡Ð¤ì)ô(¹É¥ÑÕ…°èé…™Ñ•Èì(€½¹Ñ•¹Ðè€œœì(€Á½Í¥Ñ¥½¸è…‰Í½±ÕÑ”ì(€¥¹Í•Ðè€Àì(€Á½¥¹Ñ•Èµ•Ù•¹ÑÌè¹½¹”ì(€½Á…¥Ñäè€À¸ÄÈì(€‰…­É½Õ¹µ¥µ…”èÕÉ° œ½¥µ…•Ì½Á…Á•ÈµÉ…¥¸¹Á¹œœ¤ì(€µ¥àµ‰±•¹µµ½‘”èÍ½™Ðµ±¥¡Ðì)ô(¹É¥ÑÕ…°µ±…å½ÕÐì(€Á½Í¥Ñ¥½¸èÉ•±…Ñ¥Ù”ì(€èµ¥¹‘•àè€Äì(€‘¥ÍÁ±…äèÉ¥ì(€É¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€À¸å™È€Ä¸Å™Èì(€…±¥¸µ¥Ñ•µÌè•¹Ñ•Èì(€…Àè€È”ì(€µ¥¸µ¡•¥¡Ðè€ÔØÁÁàì(€Á…‘‘¥¹œµ‰±½¬è€ÔÙÁà€ØÑÁàì)ô(¹É¥ÑÕ…°µ½Áäì(€Á½Í¥Ñ¥½¸èÉ•±…Ñ¥Ù”ì(€èµ¥¹‘•àè€Èì)ô(¹­¥­•Èì(€‘¥ÍÁ±…äè™±•àì(€…Àè€À¸ØÕÉ•´ì(€…±¥¸µ¥Ñ•µÌè•¹Ñ•Èì(€™½¹ÐµÍ¥é”è€À¸àÙÉ•´ì(€±¥¹”µ¡•¥¡Ðè€Ä¸Ðì(€™½¹ÐµÝ•¥¡Ðè€ØÔÀì(€Ñ•áÐµÑÉ…¹Í™½É´èÕÁÁ•É…Í”ì(€±•ÑÑ•ÈµÍÁ…¥¹œè€À¸ÄÙ•´ì)ô(¹¡•É¼µ­¥­•Èì(€½±½Èè€˜Å™ˆàì(€µ…É¥¸µ‰½ÑÑ½´è€Ä¸ØÕÉ•´ì)ô(¹¡•É¼µ­¥­•È€øÍÁ…¸é•µÁÑäì(€Ý¥‘Ñ è€ÌÉÁàì(€¡•¥¡Ðè€ÅÁàì(€‰…­É½Õ¹è€åŒàÀì)ô(¹É¥ÑÕ…° Ä°(¹‘¥ÍÁ±…äì(€™½¹ÐµÍ¥é”è±…µÀ Ð¸ÄÕÉ•´°€Ø¸áÙÜ°€Ü¸ÉÉ•´¤ì(€±¥¹”µ¡•¥¡Ðè€À¸äÄì(€±•ÑÑ•ÈµÍÁ…¥¹œè€´À¸ÀÌÕ•´ì)ô(¹É¥ÑÕ…° Ä•´ì(€½±½ÈèÙ…È ´µÁ•… ¤ì)ô(¹É¥ÑÕ…°€¹‘¥ÍÁ±…äì(€™½¹ÐµÍ¥é”è±…µÀ Ì¸ÈÕÉ•´°€Ô¸ÕÙÜ°€ÙÉ•´¤ì(€±¥¹”µ¡•¥¡Ðè€À¸äàì(€Ñ•áÐµÝÉ…Àè‰…±…¹”ì(€½Ù•É™±½ÜµÝÉ…Àè…¹åÝ¡•É”ì)ô(¹¡•É¼µ‘•ÍŒì(€µ…àµÝ¥‘Ñ è€Ìá ì(€½±½Èè€”ÅÍäì(€™½¹ÐµÍ¥é”è±…µÀ Ä¸ÀÜÕÉ•´°€Ä¸ÍÙÜ°€Ä¸ÉÉ•´¤ì(€±¥¹”µ¡•¥¡Ðè€Ä¸ØÔì(€µ…É¥¸µÑ½Àè€Ä¸ÕÉ•´ì)ô(¹¡•É¼µ…Ñ¥½¹Ìì(€‘¥ÍÁ±…äè™±•àì(€…±¥¸µ¥Ñ•µÌè•¹Ñ•Èì(€…Àè€Ä¸ÄÕÉ•´ì(€™±•àµÝÉ…ÀèÝÉ…Àì(€µ…É¥¸µÑ½Àè€Ä¸áÉ•´ì)ô(¹¡•É¼µ…Ñ¥½¹Ìé•µÁÑäì(€‘¥ÍÁ±…äè¹½¹”ì)ô(¹…Ñ¥½¸°(¹…É¡¥Ù”µ±¥¹¬ì(€‘¥ÍÁ±…äè¥¹±¥¹”µ™±•àì(€…±¥¸µ¥Ñ•µÌè•¹Ñ•Èì(€©ÕÍÑ¥™äµ½¹Ñ•¹Ðè•¹Ñ•Èì(€…Àè€À¸ØÕÉ•´ì(€™½¹ÐµÝ•¥¡Ðè€ØÔÀì(€™½¹ÐµÍ¥é”è€À¸äÑÉ•´ì(€±¥¹”µ¡•¥¡Ðè€Ä¸Ìì)ô(¹…Ñ¥½¸ì(€‰½É‘•Èè€ÅÁàÍ½±¥ÑÉ…¹ÍÁ…É•¹Ðì(€‰½É‘•ÈµÉ…‘¥ÕÌè€ÙÁàì(€Á…‘‘¥¹œè€À¸äÅÉ•´€Ä¸ÌÉÉ•´ì(€µ¥¸µ¡•¥¡Ðè€ÐáÁàì(€ÑÉ…¹Í¥Ñ¥½¸è(€€€‰…­É½Õ¹€À¸ÄáÌ°(€€€ÑÉ…¹Í™½É´€À¸ÄáÌì)ô(¹…Ñ¥½¸é¡½Ù•Èì(€ÑÉ…¹Í™½É´èÑÉ…¹Í±…Ñ•d ´ÉÁà¤ì)ô(¹¥¹Ù¥Ñ…Ñ¥½¸ì(€‘¥ÍÁ±…äè¥¹±¥¹”µ™±•àì(€…±¥¸µ¥Ñ•µÌè•¹Ñ•Èì(€…Àè€À¸áÉ•´ì(€µ¥¸µ¡•¥¡Ðè€ÔÉÁàì(€Á…‘‘¥¹œè€À¸ÄÕÉ•´€À¸ÄÕÉ•´€À¸ÄÕÉ•´€Àì(€‰½É‘•Èè¹½¹”ì(€‰…­É½Õ¹èÑÉ…¹ÍÁ…É•¹Ðì(€½±½Èè€˜ÅŒå…”ì(€™½¹Ðè¥Ñ…±¥Œ€Ä¸ÐÕÉ•´¼Ä¸ÈÙ…È ´µÍ•É¥˜¤ì(€Ñ•áÐµ…±¥¸è±•™Ðì)ô(¹¥¹Ù¥Ñ…Ñ¥½¸€¹Í•…°ì(€Á½Í¥Ñ¥½¸èÉ•±…Ñ¥Ù”ì(€‘¥ÍÁ±…äèÉ¥ì(€Á±…”µ¥Ñ•µÌè•¹Ñ•Èì(€Ý¥‘Ñ è€ÐÕÁàì(€¡•¥¡Ðè€ÐÕÁàì(€™±•àè¹½¹”ì(€‰½É‘•Èè€ÅÁàÍ½±¥€ˆåŒàÌì(€‰½É‘•ÈµÉ…‘¥ÕÌè€ÔÀ”ì(€½±½Èè€˜á‰ˆÀì(€‰…­É½Õ¹èÉ…‘¥…°µÉ…‘¥•¹Ð¡¥É±”…Ð€ÐÀ”€ÌÀ”°€ŒÜäÔÄÔÄÜÜ°€ŒÑŒÌÌÐäÈÈ¤ì(€ÑÉ…¹Í¥Ñ¥½¸è(€€€ÑÉ…¹Í™½É´€À¸ÌÕÌ°(€€€‰…­É½Õ¹µ½±½È€À¸ÌÕÌì)ô(¹Í•…°èé‰•™½É”ì(€½¹Ñ•¹Ðè€œœì(€Á½Í¥Ñ¥½¸è…‰Í½±ÕÑ”ì(€¥¹Í•Ðè€ÍÁàì(€‰½É‘•Èè€ÅÁàÍ½±¥€…˜àØÜÜÑ˜ì(€‰½É‘•ÈµÉ…‘¥ÕÌè€ÔÀ”ì)ô(¹¥¹Ù¥Ñ…Ñ¥½¸€øÍÁ…¸é±…ÍÐµ¡¥±ì(€‰½É‘•Èµ‰½ÑÑ½´è€ÅÁàÍ½±¥€‰ˆäÌàÀàÀì(€Á…‘‘¥¹œè€À¸ÄáÉ•´€À€À¸ÄÕÉ•´ì)ô(¹¥¹Ù¥Ñ…Ñ¥½¸é¡½Ù•È€¹Í•…°°(¹¥¹Ù¥Ñ…Ñ¥½¸é™½ÕÌµÙ¥Í¥‰±”€¹Í•…°ì(€ÑÉ…¹Í™½É´èÉ½Ñ…Ñ” ´á‘•œ¤ì(€‰…­É½Õ¹µ½±½Èè€ŒÜÔÔÈØÀì)ô(¹¥¹Ù¥Ñ…Ñ¥½¸é¡½Ù•È€øÍÁ…¸é±…ÍÐµ¡¥±ì(€‰½É‘•Èµ½±½ÈèÕÉÉ•¹Ñ½±½Èì)ô(¹…Í¥‘”µ¹½Ñ”ì(€™½¹Ðµ™…µ¥±äèÙ…È ´µÍ•É¥˜¤ì(€™½¹ÐµÍÑå±”è¥Ñ…±¥Œì(€±•ÑÑ•ÈµÍÁ…¥¹œè€À¸ÀÄÕ•´ì(€™½¹ÐµÍ¥é”è€Ä¸ÉÉ•´ì(€½±½Èè€•‰™Œàì(€µ…É¥¸µÑ½Àè€À¸ÜáÉ•´ì)ô(¹Ñ•áÐµ…Ñ¥½¸°(¹‰…¬µÑ¼°(¹…É¡¥Ù”µ±¥¹¬ì(€‰½É‘•Èè€Àì(€‰…­É½Õ¹è¹½¹”ì)ô(¹Ñ•áÐµ…Ñ¥½¸ì(€½±½ÈèÙ…È ´µÉ•…´¤ì(€Ñ•áÐµ‘•½É…Ñ¥½¸èÕ¹‘•É±¥¹”ì(€Ñ•áÐµÕ¹‘•É±¥¹”µ½™™Í•Ðè€ÑÁàì)ô(¹Ñ…‰±”ì(€Á½Í¥Ñ¥½¸èÉ•±…Ñ¥Ù”ì(€µ¥¸µÝ¥‘Ñ è€Àì(€Ý¥‘Ñ è€ÄÀÀ”ì(€¡•¥¡Ðè±…µÀ ÌØÁÁà°€ÌÑÙÜ°€ÐÔÕÁà¤ì(€¥Í½±…Ñ¥½¸è¥Í½±…Ñ”ì(€ÑÉ…¹Í¥Ñ¥½¸è¡•¥¡Ð€À¸àÕÌÕ‰¥Œµ‰•é¥•È À¸È°€À¸Ü°€À¸È°€Ä¤ì(€€´µÁ±…å¥¹œµÝ¥‘Ñ è±…µÀ ÄÌÝÁà°€ÄÐ¸ÉÙÜ°€ÈÄÍÁà¤ì(€€´µÍÁÉ•…è±…µÀ ÈÕÁà°€È¸ÝÙÜ°€ÐÑÁà¤ì)ô(¹Í­äì(€Á½Í¥Ñ¥½¸è…‰Í½±ÕÑ”ì(€¥¹Í•Ðè€´Ì”€´Ì”€Àì(€Ý¥‘Ñ è€ÄÀØ”ì(€¡•¥¡Ðè€ÄÀØ”ì(€½±½Èè€„ÄÝˆäÄì(€½Á…¥Ñäè€À¸ØÈì(€Á½¥¹Ñ•Èµ•Ù•¹ÑÌè¹½¹”ì)ô(¹ÍÑ…ÉÌì(€½±½Èè€•‘‰ŒäÈì)ô(¹™…¸ì(€Á½Í¥Ñ¥½¸è…‰Í½±ÕÑ”ì(€¥¹Í•Ðè€À€À€ä”ì(€Á•ÉÍÁ•Ñ¥Ù”è€ÄÐÀÁÁàì)ô(¹Á±…å¥¹œµ…Éì(€€´µÉ½Ñ…Ñ¥½¸è…±Œ¡Ù…È ´µ¤¤€¨€ÄÍ‘•œ¤ì(€€´µàè…±Œ¡Ù…È ´µ¤¤€¨Ù…È ´µÍÁÉ•…¤¤ì(€€´µäè…±Œ¡Ù…È ´µ…‰Ì¤€¨€åÁà¤ì(€Á½Í¥Ñ¥½¸è…‰Í½±ÕÑ”ì(€±•™Ðè€ÔÀ”ì(€Ñ½Àè€ÔÀ”ì(€Ý¥‘Ñ èÙ…È ´µÁ±…å¥¹œµÝ¥‘Ñ ¤ì(€…ÍÁ•ÐµÉ…Ñ¥¼è€È¼Ìì(€Á…‘‘¥¹œè€Àì(€‰½É‘•Èè€Àì(€‰…­É½Õ¹è¹½¹”ì(€‰½É‘•ÈµÉ…‘¥ÕÌè€åÁàì(€ÑÉ…¹Í™½É´µ½É¥¥¸è€ÔÀ”€äÀ”ì(€ÑÉ…¹Í™½É´èÑÉ…¹Í±…Ñ” ´ÔÀ”°€´ÔÀ”¤ÑÉ…¹Í±…Ñ”¡Ù…È ´µà¤°Ù…È ´µä¤¤(€€€É½Ñ…Ñ”¡Ù…È ´µÉ½Ñ…Ñ¥½¸¤¤ì(€èµ¥¹‘•àèÙ…È ´µè¤ì(€ÑÉ…¹Í¥Ñ¥½¸è(€€€ÑÉ…¹Í™½É´€À¸ÔÍÌÕ‰¥Œµ‰•é¥•È À¸È°€À¸ÜÔ°€À¸ÈÈ°€Ä¤°(€€€Ý¥‘Ñ €À¸ÐÕÌ°(€€€½Á…¥Ñä€À¸ÑÌì(€Á•ÉÍÁ•Ñ¥Ù”è€ÄÀÀÁÁàì)ô(¹ÑÕÉ¸°(¹É•Ù•ÉÍ”°(¹™…”ì(€Á½Í¥Ñ¥½¸è…‰Í½±ÕÑ”ì(€¥¹Í•Ðè€Àì(€‰½É‘•ÈµÉ…‘¥ÕÌè¥¹¡•É¥Ðì)ô(¹ÑÕÉ¸ì(€ÑÉ…¹Í™½É´µÍÑå±”èÁÉ•Í•ÉÙ”´Íì(€ÑÉ…¹Í¥Ñ¥½¸èÑÉ…¹Í™½É´€À¸ÙÌÕ‰¥Œµ‰•é¥•È À¸Èà°€À¸ÀÔ°€À¸ÈÈ°€Ä¤€À¸ÍÌì(€‰½àµÍ¡…‘½Üè€À€ÄÍÁà€ÈÍÁà€ŒÄÐÁ”ÅˆÙˆì)ô(¹É•Ù•ÉÍ”°(¹™…”ì(€‰…­™…”µÙ¥Í¥‰¥±¥Ñäè¡¥‘‘•¸ì(€€µÝ•‰­¥Ðµ‰…­™…”µÙ¥Í¥‰¥±¥Ñäè¡¥‘‘•¸ì(€½Ù•É™±½Üè¡¥‘‘•¸ì(€‰½É‘•Èè€ÅÁàÍ½±¥€Õ„ÌàÜì)ô(¹É•Ù•ÉÍ”ì(€‰…­É½Õ¹è€ŒÔäÉˆÌäÕÉ° œ½¥µ…•Ì½ÍÕ¸µ‰…¬¹Ý•‰Àœ¤•¹Ñ•È¼ÄÀÀ”€ÄÀÀ”¹¼µÉ•Á•…Ðì)ô(¹™…”ì(€ÑÉ…¹Í™½É´èÉ½Ñ…Ñ•d ÄàÁ‘•œ¤ì(€‰…­É½Õ¹è€ŒÌÐÈÜÌØì(€½±½ÈèÙ…È ´µÉ•…´¤ì(€‘¥ÍÁ±…äèÉ¥ì(€…±¥¸µ½¹Ñ•¹Ðè•¹Ñ•Èì)ô(¹™…”¥µœì(€Ý¥‘Ñ è€ÄÀÀ”ì(€¡•¥¡Ðè€ÄÀÀ”ì(€½‰©•Ðµ™¥Ðè½¹Ñ…¥¸ì)ô(‘•¬µÍÑ…ÉÐì(€Á½Í¥Ñ¥½¸è…‰Í½±ÕÑ”ì(€èµ¥¹‘•àè€àì(€¥¹Í•Ðè€Ô”€ÄÌ”€ÄØ”ì(€‰½É‘•Èè€Àì(€‰…­É½Õ¹è¹½¹”ì(€‰½É‘•ÈµÉ…‘¥ÕÌè€ÈÔ”ì)ô(¹Ñ…‰±”é¡…Ì ‘•¬µÍÑ…ÉÐé¡½Ù•È¤€¹Á±…å¥¹œµ…Éì(€€´µÉ½Ñ…Ñ¥½¸è…±Œ¡Ù…È ´µ¤¤€¨€ÄÑ‘•œ¤ì)ô(¹‘•¬µ…ÁÑ¥½¸ì(€Á½Í¥Ñ¥½¸è…‰Í½±ÕÑ”ì(€‰½ÑÑ½´è€Ä”ì(€±•™Ðè€Àì(€É¥¡Ðè€Àì(€‘¥ÍÁ±…äè™±•àì(€…±¥¸µ¥Ñ•µÌè•¹Ñ•Èì(€©ÕÍÑ¥™äµ½¹Ñ•¹Ðè•¹Ñ•Èì(€…Àè€À¸ÝÉ•´ì(€½±½Èè€”ÙŒå‰„ì(€™½¹ÐµÍ¥é”è€À¸àÙÉ•´ì(€±•ÑÑ•ÈµÍÁ…¥¹œè€À¸ÄÕ•´ì(€™½¹ÐµÝ•¥¡Ðè€ÔÔÀì(€Ñ•áÐµÑÉ…¹Í™½É´èÕÁÁ•É…Í”ì(€Á½¥¹Ñ•Èµ•Ù•¹ÑÌè¹½¹”ì)ô(¹‘•¬µ…ÁÑ¥½¸€øÍÁ…¸é•µÁÑäì(€¡•¥¡Ðè€ÅÁàì(€Ý¥‘Ñ è€ÌÅÁàì(€‰…­É½Õ¹è€ŒàÐØÜÜÜì)ô(¼¨-••ÀÑ¡”™¥Ù”‰…­ÌÙ¥Í¥‰±”…ÌÑÝ¼Á…­•ÑÌÕÐ°É½ÍÌ…¹…Ñ¡•È……¥¸¸€¨¼)m‘…Ñ„µÁ¡…Í”ôÍ¡Õ™™±”t€¹Á±…å¥¹œµ…Éì(€…¹¥µ…Ñ¥½¸èÕÐµÁ…­•ÑÌ€Ì¸ÈÕÌÕ‰¥Œµ‰•é¥•È À¸ÐÔ°€À°€À¸ÈÐ°€Ä¤‰½Ñ ì(€…¹¥µ…Ñ¥½¸µ‘•±…äè…±Œ¡Ù…È ´µ½É‘•È¤€¨€ÔÕµÌ¤ì)ô)­•å™É…µ•ÌÕÐµÁ…­•ÑÌì(€€À”ì(€€€ÑÉ…¹Í™½É´èÑÉ…¹Í±…Ñ” ´ÔÀ”°€´ÔÀ”¤ÑÉ…¹Í±…Ñ”¡Ù…È ´µà¤°Ù…È ´µä¤¤(€€€€€É½Ñ…Ñ”¡Ù…È ´µÉ½Ñ…Ñ¥½¸¤¤ì(€ô(€€ÄÔ”°(€€ÈÀ”ì(€€€ÑÉ…¹Í™½É´èÑÉ…¹Í±…Ñ” ´ÔÀ”°€´ÔÀ”¤(€€€€€ÑÉ…¹Í±…Ñ”¡…±Œ¡Ù…È ´µ¤¤€¨€ÉÁà¤°…±Œ¡Ù…È ´µ¤¤€¨€ÅÁà¤¤É½Ñ…Ñ” ´Õ‘•œ¤ì(€ô(€€ÌÐ”ì(€€€ÑÉ…¹Í™½É´èÑÉ…¹Í±…Ñ” ´ÔÀ”°€´ÔÀ”¤(€€€€€ÑÉ…¹Í±…Ñ” (€€€€€€€…±Œ¡Ù…È ´µÍ¥‘”¤€¨€ØÀ”€¬Ù…È ´µ¤¤€¨€ÍÁà¤°(€€€€€€€…±Œ¡Ù…È ´µÍ¥‘”¤€¨€´ÄÈ”¤(€€€€€€¤(€€€€€É½Ñ…Ñ”¡…±Œ¡Ù…È ´µÍ¥‘”¤€¨€ÄÅ‘•œ¤¤ì(€€€èµ¥¹‘•àè…±Œ Ø€¬Ù…È ´µÍ¥‘”¤€¨€Ì€¬Ù…È ´µ¤¤¤ì(€ô(€€ÐÜ”ì(€€€ÑÉ…¹Í™½É´èÑÉ…¹Í±…Ñ” ´ÔÀ”°€´ÔÀ”¤(€€€€€ÑÉ…¹Í±…Ñ” (€€€€€€€…±Œ¡Ù…È ´µÍ¥‘”¤€¨€´Äà”€¬Ù…È ´µ¤¤€¨€ÉÁà¤°(€€€€€€€…±Œ¡Ù…È ´µÍ¥‘”¤€¨€´ÄÈ”¤(€€€€€€¤(€€€€€É½Ñ…Ñ”¡…±Œ¡Ù…È ´µÍ¥‘”¤€¨€´Õ‘•œ¤¤ì(€€€èµ¥¹‘•àè…±Œ Ø€¬Ù…È ´µÍ¥‘”¤€¨€Ì€¬Ù…È ´µ¤¤¤ì(€ô(€€ÔÔ”ì(€€€ÑÉ…¹Í™½É´èÑÉ…¹Í±…Ñ” ´ÔÀ”°€´ÔÀ”¤ÑÉ…¹Í±…Ñ•`¡…±Œ¡Ù…È ´µ¤¤€¨€ÉÁà¤¤(€€€€€É½Ñ…Ñ” Ñ‘•œ¤ì(€ô(€€Øä”ì(€€€ÑÉ…¹Í™½É´èÑÉ…¹Í±…Ñ” ´ÔÀ”°€´ÔÀ”¤(€€€€€ÑÉ…¹Í±…Ñ” (€€€€€€€…±Œ¡Ù…È ´µÍ¥‘”¤€¨€´Ôà”€¬Ù…È ´µ¤¤€¨€ÍÁà¤°(€€€€€€€…±Œ¡Ù…È ´µÍ¥‘”¤€¨€ÄÌ”¤(€€€€€€¤(€€€€€É½Ñ…Ñ”¡…±Œ¡Ù…È ´µÍ¥‘”¤€¨€´ÄÉ‘•œ¤¤ì(€€€èµ¥¹‘•àè…±Œ Ø€´Ù…È ´µÍ¥‘”¤€¨€Ì€¬Ù…È ´µ¤¤¤ì(€ô(€€àÌ”ì(€€€ÑÉ…¹Í™½É´èÑÉ…¹Í±…Ñ” ´ÔÀ”°€´ÔÀ”¤(€€€€€ÑÉ…¹Í±…Ñ”¡…±Œ¡Ù…È ´µÍ¥‘”¤€¨€ÄÌ”¤°…±Œ¡Ù…È ´µÍ¥‘”¤€¨€ÄÀ”¤¤(€€€€€É½Ñ…Ñ”¡…±Œ¡Ù…È ´µÍ¥‘”¤€¨€Í‘•œ¤¤ì(€€€èµ¥¹‘•àè…±Œ Ø€´Ù…È ´µÍ¥‘”¤€¨€Ì€¬Ù…È ´µ¤¤¤ì(€ô(€€äØ”°(€€ÄÀÀ”ì(€€€ÑÉ…¹Í™½É´èÑÉ…¹Í±…Ñ” ´ÔÀ”°€´ÔÀ”¤ÑÉ…¹Í±…Ñ•`¡…±Œ¡Ù…È ´µ¤¤€¨€Ä¸ÕÁà¤¤(€€€€€É½Ñ…Ñ” Á‘•œ¤ì(€ô)ô(é¥Ì¡m‘…Ñ„µÁ¡…Í”ô‘•…°t°m‘…Ñ„µÁ¡…Í”ô¡½½Í”t¤€¹Á±…å¥¹œµ…Éì(€Ý¥‘Ñ è€ÄÜ”ì(€€´µàè…±Œ¡Ù…È ´µ¤¤€¨€ÄÄÔ”¤ì(€€´µäè…±Œ¡Ù…È ´µ…‰Ì¤€¨€ÕÁà¤ì(€€´µÉ½Ñ…Ñ¥½¸è…±Œ¡Ù…È ´µ¤¤€¨€É‘•œ¤ì)ô)m‘…Ñ„µÁ¡…Í”ô‘•…°t€¹Á±…å¥¹œµ…Éì(€…¹¥µ…Ñ¥½¸èƒ]4ÒÚ$z{-®éÜj×t img {
+  object-position: center 5%;
 }
-
-/* === Reset & Base === */
-* {
+.family-label {
+  padding-top: 0.85rem;
+}
+.family-label h3 {
+  font-size: clamp(1.45rem, 2.25vw, 2.2rem);
+  letter-spacing: -0.025em;
+}
+.family-label small,
+.count,
+.card-meta,
+.neighbors small,
+figcaption {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+.family-label small {
+  display: block;
+  margin-top: 0.2rem;
+}
+footer {
+  background: var(--night-deep);
+  color: #ebdfe1;
+}
+.foot-inner {
+  display: flex;
+  gap: 1.4rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 1.65rem;
+}
+.foot-inner .brand {
+  font-size: 1.5rem;
+}
+.foot-inner > a:last-child {
+  font-size: 0.95rem;
+  color: #d4c5ce;
+}
+footer a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.gallery,
+.detail,
+.about {
+  min-height: 72vh;
+  padding-block: clamp(38px, 5vw, 72px) clamp(54px, 6vw, 90px);
+}
+.gallery-title h1,
+.about h1,
+.detail h1 {
+  font-size: clamp(3.7rem, 6.9vw, 7rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  margin: 1rem 0;
+}
+.gallery-title > p:last-child {
+  color: var(--muted);
+  max-width: 52ch;
+}
+.filter-bar {
+  margin-top: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border-block: 1px solid var(--rule);
+  padding-block: 1rem;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.chips button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 2rem;
+  font-size: 0.89rem;
+  color: var(--ink);
+}
+.chips button:hover {
+  border-color: var(--rule);
+}
+.chips button[aria-pressed='true'] {
+  background: #705160;
+  color: var(--cream);
+}
+.chips i,
+.card-meta i {
+  width: 8px;
+  height: 8px;
+  background: var(--family);
+  border-radius: 50%;
+  display: inline-block;
+}
+.chips button[aria-pressed='true'] i {
+  box-shadow: 0 0 0 1px #f7e5d7;
+}
+.search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.5rem 0.7rem;
+  color: var(--muted);
+  background: #291f2d;
+}
+.search input {
+  width: 10.6rem;
+  min-width: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-size: 1rem;
+}
+.count {
+  margin: 1rem 0;
+  line-height: 1.4;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 2rem 1.1rem;
+}
+.art-mount {
+  background: radial-gradient(
+    ellipse at 50% 32%,
+    color-mix(in srgb, var(--family) 54%, #564553),
+    #312332 98%
+  );
+  border: 1px solid #785d743d;
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  padding: 10% 12%;
+  overflow: hidden;
+}
+.art-mount img {
+  height: auto;
+  width: 100%;
+  border-radius: 3px;
+  box-shadow: 0 4px 10px #3428382b;
+  transition: transform 0.3s;
+}
+.gallery-card:hover img {
+  transform: rotate(-2deg) scale(1.03);
+}
+.card-meta {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  margin: 0.7rem 0 0.25rem;
+}
+.gallery-card h2 {
+  font-size: clamp(1.55rem, 2.15vw, 2rem);
+  letter-spacing: -0.022em;
+}
+.empty,
+.more {
+  text-align: center;
+}
+.empty {
+  padding: 2rem 0;
+}
+.empty svg {
+  margin: auto;
+  color: var(--muted);
+}
+.empty h2 {
+  margin: 0.8rem 0 1.3rem;
+  font-size: 2rem;
+}
+.more:not(:has([hidden])) {
+  margin-top: 2.2rem;
+}
+.outline {
+  border-color: #927f8b;
+  background: none;
+  color: var(--ink);
+}
+.outline:hover {
+  background: #573a4d;
+}
+.back-to {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.91rem;
+  margin-bottom: 2rem;
+  color: var(--muted);
+}
+.back-to:hover {
+  text-decoration: underline;
+}
+.detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+  grid-template-areas: 'art title' 'art text';
+  grid-template-rows: auto 1fr;
+  align-items: start;
+  column-gap: clamp(2rem, 6vw, 6rem);
+}
+.reading-title {
+  grid-area: title;
+  padding-top: 0.4rem;
+}
+.reading-title .kicker {
+  color: #e8bfac;
+}
+.detail .reading-title h1 {
+  font-size: clamp(3.1rem, 5.5vw, 5.8rem);
+  margin: 0.8rem 0 1.9rem;
+  line-height: 1.02;
+  overflow-wrap: anywhere;
+}
+.portrait {
+  grid-area: art;
+  position: sticky;
+  top: 1.4rem;
+  display: grid;
+  place-items: start center;
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 }
-
-body {
-  font-family: var(--font-body);
-  line-height: 1.6;
-  color: var(--color-text-primary);
-  background: #0f1016;
-  /* Deep dark base */
-  min-height: 100vh;
+.portrait a {
   position: relative;
-  overflow-x: hidden;
+  display: block;
+  width: min(95%, 460px);
+  cursor: zoom-in;
 }
-
-/* === Texture & Atmosphere === */
-/* 1. Noise Grain */
-body::before {
-  content: "";
+.portrait img {
+  width: 100%;
+  height: auto;
+  box-shadow: 0 20px 50px #140c193d;
+  border-radius: 5px;
+}
+.zoom-mark,
+.close-photo {
+  display: grid;
+  place-items: center;
+  border: 1px solid #bc9a94;
+  border-radius: 50%;
+  color: var(--cream);
+  background: #352535eb;
+}
+.zoom-mark {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 38px;
+  height: 38px;
+}
+.lightbox {
   position: fixed;
   inset: 0;
-  z-index: -2;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  opacity: 0.6;
+  background: transparent;
+  color: var(--cream);
+  border: 0;
+  padding: 2.5rem 1rem 1rem;
+  max-width: 100vw;
+  max-height: 100dvh;
+  overflow: visible;
 }
-
-/* 2. Vignette & Gradient */
-body::after {
-  content: "";
-  position: fixed;
+.lightbox::backdrop {
+  background: #1c1320ef;
+  backdrop-filter: blur(7px);
+}
+.lightbox img {
+  display: block;
+  width: auto;
+  max-width: min(91vw, 100%);
+  height: auto;
+  max-height: 85dvh;
+  object-fit: contain;
+  margin: auto;
+}
+.close-photo {
+  position: absolute;
+  right: 0.2rem;
+  top: 0;
+  width: 42px;
+  height: 42px;
+  z-index: 1;
+}
+body:has(.lightbox[open]) {
+  overflow: hidden;
+}
+.reading-text {
+  grid-area: text;
+  max-width: 62ch;
+}
+.reading-text h2,
+.about-notes h2 {
+  font-size: clamp(1.6rem, 2.7vw, 2.45rem);
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+}
+.reading-text h2 {
+  margin-bottom: 0.85rem;
+  color: #f2cfb9;
+}
+.prose {
+  font: 400 clamp(1.22rem, 1.55vw, 1.42rem)/1.55 var(--serif);
+  color: #eadedc;
+}
+.prose strong {
+  color: #fff2df;
+}
+.prose p + p,
+.about-notes p + p {
+  margin-top: 1em;
+}
+.commentary {
+  margin-top: 2.2rem;
+  border-top: 1px solid var(--rule);
+  padding-top: 1.65rem;
+}
+.finger {
+  display: inline-block;
+  vertical-align: 0.07em;
+  font-size: 0.67em;
+  margin-left: 0.18em;
+}
+.neighbors {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 1rem;
+  margin-top: 3.4rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+}
+.neighbors a:last-child {
+  text-align: right;
+}
+.neighbors small,
+.neighbors span {
+  display: block;
+}
+.neighbors span {
+  font: 1.75rem/1.1 var(--serif);
+  margin-top: 0.2rem;
+}
+.neighbors a:hover span {
+  text-decoration: underline;
+}
+.about-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 6rem);
+}
+.about h1 {
+  font-size: clamp(3.45rem, 6.4vw, 6.7rem);
+  margin: 0.9rem 0 1.45rem;
+}
+.standfirst {
+  max-width: 36ch;
+  font-size: clamp(1.12rem, 1.6vw, 1.35rem);
+  line-height: 1.6;
+  color: #e3d3d8;
+}
+.signature {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font: italic 1.65rem/1 var(--serif);
+  color: var(--peach);
+  margin: 1.4rem 0 0;
+}
+.signature::before {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: #bb9380;
+}
+.about-art {
+  text-align: center;
+  margin: 0;
+  padding: 1.1rem 0;
+}
+.about-plates {
+  position: relative;
+  isolation: isolate;
+  width: min(63%, 244px);
+  margin: 0 auto;
+}
+.about-plates::before {
+  content: '';
+  position: absolute;
   inset: 0;
   z-index: -1;
-  background:
-    radial-gradient(circle at 50% 50%, transparent 0%, rgba(10, 10, 15, 0.8) 100%),
-    linear-gradient(135deg, rgba(26, 26, 62, 0.4) 0%, rgba(15, 52, 67, 0.4) 100%);
-  pointer-events: none;
+  border: 1px solid #d5a387;
+  border-radius: 4px;
+  background: #512c39 url('/images/sun-back.webp') center/cover;
+  transform: translateX(-15%) rotate(-10deg);
+  box-shadow: 0 12px 23px #1e111f77;
 }
-
-/* === Typography Utilities === */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: var(--color-accent-gold);
+.about-art img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  transform: translateX(8%) rotate(6deg);
+  box-shadow: 0 10px 26px #1a101f88;
 }
-
-p {
-  max-width: 65ch;
-  /* Readability measure */
-  margin-bottom: 1rem;
+.about-art figcaption {
+  margin-top: 1.65rem;
+  font: italic 1.05rem var(--serif);
+  color: var(--muted);
 }
-
-/* === Focus States (Gold) === */
-*:focus-visible {
-  outline: 2px solid var(--color-accent-gold);
-  outline-offset: 4px;
+.about-notes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 7vw, 7rem);
+  border-top: 1px solid var(--rule);
+  margin-top: clamp(2.4rem, 5vw, 5rem);
+  padding-top: 2rem;
 }
-
-/* === Safari & iOS Specific Fixes === */
-/* Fix for iOS Safari 100vh issue */
-@supports (-webkit-touch-callout: none) {
-  body {
-    min-height: -webkit-fill-available;
+.about-notes h2 {
+  color: #f3d0bd;
+  margin-bottom: 0.85rem;
+}
+.about-notes p {
+  font-size: 1.08rem;
+  line-height: 1.75;
+  color: #e4d4db;
+}
+.about-notes .invitation {
+  margin-top: 1.4rem;
+}
+@media (min-width: 1500px) {
+  .ritual-layout {
+    min-height: 625px;
   }
 }
-
-/* Smooth scrolling with reduced motion respect */
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
+@media (max-width: 980px) {
+  .gallery-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .ritual-layout {
+    min-height: 500px;
+  }
+  .family-label h3 {
+    font-size: 1.6rem;
+  }
+  .mast nav {
+    gap: 1.35rem;
   }
 }
+@media (max-width: 740px) {
+  .wrap {
+    width: calc(100% - 36px);
+  }
+  .mast-inner {
+    min-height: 0;
+    grid-template-columns: 1fr auto;
+    gap: 0;
+    padding-top: 0.86rem;
+  }
+  .brand {
+    font-size: 1.58rem;
+  }
+  .brand svg {
+    width: 24px;
+    height: 24px;
+  }
+  .mast nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: center;
+    gap: 2.1rem;
+    border-top: 1px solid #503d4c;
+    margin-top: 0.7rem;
+  }
+  .mast nav a {
+    font-size: 0.98rem;
+    padding: 0.62rem 0;
+  }
+  .mast nav a[aria-current]::after {
+    bottom: 4px;
+  }
+  .languages {
+    grid-row: 1;
+    grid-column: 2;
+  }
+  .languages > * {
+    padding: 0.42rem 0.57rem;
+  }
+  .ritual-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 2.35rem 0 1rem;
+  }
+  .ritual-copy {
+    text-align: center;
+  }
+  .hero-kicker,
+  .hero-actions {
+    justify-content: center;
+  }
+  .hero-kicker {
+    margin-bottom: 1.1rem;
+  }
+  .hero-kicker > span:empty {
+    width: 18px;
+  }
+  .hero-kicker::after {
+    content: '';
+    width: 18px;
+    height: 1px;
+    background: #cd9c80;
+  }
+  .ritual h1 {
+    font-size: clamp(3.7rem, 13vw, 5.6rem);
+  }
+  .ritual .display {
+    font-size: clamp(3rem, 12vw, 5.5rem);
+  }
+  .hero-desc {
+    margin: 0.95rem auto 0;
+    font-size: 1rem;
+    max-width: 35ch;
+  }
+  .hero-actions {
+    margin-top: 1.25rem;
+  }
+  .aside-note {
+    font-size: 1.05rem;
+    margin-top: 0.4rem;
+  }
+  .table {
+    height: clamp(250px, 66vw, 345px);
+    max-width: 450px;
+    justify-self: center;
+    --playing-width: clamp(90px, 25.5vw, 140px);
+    --spread: clamp(18px, 5.7vw, 33px);
+    margin-top: 0.45rem;
+  }
+  :is([data-phase='turn'], [data-phase='revealed']) .table {
+    height: clamp(346px, 96vw, 435px);
+  }
+  .playing-card.chosen {
+    width: clamp(188px, 52vw, 246px);
+  }
+  .fan {
+    bottom: 9%;
+  }
+  .deck-caption {
+    bottom: 4%;
+  }
+  :is([data-phase='deal'], [data-phase='choose']) .table {
+    height: clamp(270px, 78vw, 360px);
+  }
+  :is([data-phase='deal'], [data-phase='choose']) .playing-card {
+    width: 22%;
+    --x: calc(var(--column) * 114%);
+    --y: calc(var(--row) * 55%);
+    --rotation: calc(var(--column) * 3deg);
+  }
 
-/* Better touch targets for mobile */
-@media (hover: none) and (pointer: coarse) {
-  button,
-  a,
-  [role="button"] {
-    min-height: 44px;
-    min-width: 44px;
+  .family-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 1.4rem;
+  }
+  .family-art {
+    height: auto;
+    aspect-ratio: 1.15;
+  }
+  .family-label h3 {
+    font-size: 1.5rem;
+  }
+  .gallery-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.55rem 0.85rem;
+  }
+  .filter-bar {
+    margin-top: 1.5rem;
+    gap: 0.7rem;
+  }
+  .search,
+  .search input {
+    width: 100%;
+  }
+  .detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: 'title' 'art' 'text';
+    gap: 1.2rem;
+  }
+  .detail .reading-title h1 {
+    margin: 0.5rem 0 0.2rem;
+  }
+  .portrait {
+    position: static;
+  }
+  .portrait a {
+    width: min(86%, 390px);
+  }
+  .reading-text {
+    margin-inline: auto;
+    width: 100%;
+    padding-top: 0.7rem;
+  }
+  .about-intro,
+  .about-notes {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .about-plates {
+    width: min(52%, 210px);
+  }
+  .about-notes {
+    margin-top: 1.8rem;
+  }
+  .foot-inner {
+    flex-wrap: wrap;
+    gap: 0.85rem 1rem;
   }
 }
+@media (max-width: 500px) {
+  .section-intro {
+    display: block;
+  }
+  .section-intro h2 {
+    font-size: 3.2rem;
+  }
+  .archive-link {
+    margin-top: 0.8rem;
+  }
+  .family-grid,
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .family-section {
+    padding-top: 2rem;
+  }
+  .family-label h3 {
+    font-size: 1.6rem;
+  }
+  .family-art {
+    aspect-ratio: 1.45;
+  }
+  .gallery-title h1,
+  .about h1 {
+    font-size: clamp(3rem, 11.8vw, 3.7rem);
+  }
+  .chips {
+    gap: 0;
+  }
+  .chips button {
+    padding: 0.5rem 0.62rem;
+  }
+  .art-mount {
+    padding: 10% 13%;
+  }
 
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  :root {
-    --color-accent-gold: #ffd700;
-    --color-text-primary: #ffffff;
-    --color-text-secondary: #e0e0e0;
+  .neighbors span {
+    font-size: 1.45rem;
+  }
+  .detail h1,
+  .about h1,
+  .display {
+    overflow-wrap: anywhere;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
   }
 }

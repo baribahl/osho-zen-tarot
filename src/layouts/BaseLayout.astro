@@ -1,260 +1,109 @@
 ---
+import '@fontsource/radley/latin-400.css';
+import '@fontsource/radley/latin-400-italic.css';
+import '@fontsource/hedvig-letters-sans/latin-400.css';
 import '../styles/global.css';
-
+import Icon from '../components/Icon.astro';
+import { route, type Lang } from '../lib/deck';
 interface Props {
+  lang: Lang;
+  page: 'home' | 'gallery' | 'about' | 'card';
   title: string;
-  description?: string;
+  description: string;
+  id?: string;
 }
-
-const { title, description = "Explorez le Tarot Zen d'Osho avec Barib - Tirage de cartes, galerie complète et significations profondes." } = Astro.props;
+const { lang, page, title, description, id } = Astro.props;
+const en = lang === 'en';
+const nav = [
+  ['home', en ? 'The draw' : 'Le tirage'],
+  ['gallery', en ? 'The cards' : 'Les cartes'],
+  ['about', en ? 'About' : 'À propos'],
+] as const;
+const other = en ? 'fr' : 'en';
+const url = (l: Lang) => new URL(route(l, page, id), Astro.site);
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang={lang}>
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{title} · Osho Zen Tarot</title>
     <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Philosopher:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <title>{title}</title>
+    <meta name="theme-color" content="#281d2c" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={url(lang)} />
+    {(['fr', 'en'] as const).map((l) => (
+      <link rel="alternate" hreflang={l} href={url(l)} />
+    ))}
+    <meta property="og:title" content={title + ' · Osho Zen Tarot'} />
+    <meta property="og:description" content={description} />
   </head>
   <body>
-    <header class="site-header">
-      <nav class="nav-container">
-        <a href="/" class="site-logo">
-          <span class="logo-text">BaribOsho</span><span class="logo-version">v1</span>
+    <a class="skip" href="#main">
+      {en ? 'Skip to content' : 'Aller au contenu'}
+    </a>
+    <header class="mast">
+      <div class="wrap mast-inner">
+        <a class="brand" href={route(lang, 'home')}>
+          <Icon name="sun" size={29} />
+          <span>
+            Osho Zen <i>Tarot</i>
+          </span>
         </a>
-        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
-          <span class="material-symbols-outlined">menu</span>
-        </button>
-        <ul class="nav-menu" id="navMenu">
-          <li><a href="/">Tirer une carte</a></li>
-          <li><a href="/cartes">Parcourir les cartes</a></li>
-          <li><a href="/a-propos">À propos</a></li>
-        </ul>
-      </nav>
+        <nav aria-label={en ? 'Main navigation' : 'Navigation principale'}>
+          {nav.map(([p, label]) => (
+            <a
+              href={route(lang, p)}
+              aria-current={
+                p === page || (p === 'gallery' && page === 'card')
+                  ? 'page'
+                  : undefined
+              }
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+        <div class="languages" aria-label={en ? 'Language' : 'Langue'}>
+          {(['fr', 'en'] as const).map((l) =>
+            l === lang ? (
+              <span
+                aria-current="true"
+                aria-label={l === 'fr' ? 'Français' : 'English'}
+              >
+                {l.toUpperCase()}
+              </span>
+            ) : (
+              <a
+                data-switch-lang
+                href={route(other, page, id)}
+                lang={l}
+                hreflang={l}
+                aria-label={l === 'fr' ? 'Français' : 'English'}
+              >
+                {l.toUpperCase()}
+              </a>
+            ),
+          )}
+        </div>
+      </div>
     </header>
-
-    <main id="main-content">
+    <main id="main">
       <slot />
     </main>
-
-    <footer class="site-footer">
-      <p>© 2025 BaribOsho v1 - Une exploration spirituelle et contemplative</p>
+    <footer>
+      <div class="wrap foot-inner">
+        <a class="brand" href={route(lang, 'home')}>
+          <Icon name="sun" size={24} />
+          <span>
+            Osho Zen <i>Tarot</i>
+          </span>
+        </a>
+        <a href={route(lang, 'about')}>
+          {en ? 'About the project' : 'À propos du projet'}
+        </a>
+      </div>
     </footer>
   </body>
 </html>
-
-
-
-<style>
-  .site-header {
-    position: sticky;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    background: rgba(15, 15, 30, 0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 100;
-  }
-
-  .nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0.75rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .site-logo {
-    text-decoration: none;
-    color: #e0e0e0;
-    display: flex;
-    align-items: baseline;
-    gap: 0.35rem;
-  }
-
-  .logo-text {
-    font-family: 'Philosopher', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: none;
-    background: linear-gradient(135deg, #ff6b6b, #ee5a6f, #c06c84);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .logo-version {
-    font-family: 'Philosopher', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #d4af37;
-  }
-
-  .nav-menu {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-  }
-
-  .nav-menu a {
-    font-family: 'Philosopher', sans-serif;
-    font-weight: 400;
-    color: #e0e0e0;
-    text-decoration: none;
-    font-size: 1.05rem;
-    transition: color 0.3s ease;
-    position: relative;
-  }
-
-  .nav-menu a:hover {
-    color: #ff6b6b;
-  }
-
-  .nav-menu a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #ff6b6b, #ee5a6f);
-    transition: width 0.3s ease;
-  }
-
-  .nav-menu a:hover::after {
-    width: 100%;
-  }
-
-  main {
-    min-height: calc(100vh - 200px);
-  }
-
-  .site-footer {
-    text-align: center;
-    padding: 2rem;
-    margin-top: 4rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: #888;
-    font-size: 0.9rem;
-  }
-
-  .mobile-menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    color: var(--color-text-primary);
-    cursor: pointer;
-    padding: 0.5rem;
-    transition: color var(--transition-normal);
-  }
-
-  .mobile-menu-toggle:hover {
-    color: var(--color-accent-orange);
-  }
-
-  .mobile-menu-toggle .material-symbols-outlined {
-    font-size: 1.75rem;
-  }
-
-  @media (max-width: 768px) {
-    .nav-container {
-      padding: 1rem;
-      position: relative;
-    }
-
-    .mobile-menu-toggle {
-      display: block;
-    }
-
-    .nav-menu {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: rgba(15, 15, 30, 0.98);
-      backdrop-filter: blur(20px);
-      flex-direction: column;
-      gap: 0;
-      padding: 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-
-    .nav-menu.active {
-      max-height: 300px;
-    }
-
-    .nav-menu li {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .nav-menu li:last-child {
-      border-bottom: none;
-    }
-
-    .nav-menu a {
-      display: block;
-      padding: 1rem 1.5rem;
-      font-size: 1rem;
-    }
-
-    .nav-menu a::after {
-      display: none;
-    }
-
-    .logo-text {
-      font-size: 1rem;
-    }
-  }
-
-  @media (max-width: 375px) {
-    .nav-container {
-      padding: 0.75rem;
-    }
-
-    .logo-text {
-      font-size: 0.9rem;
-    }
-  }
-</style>
-
-<script>
-  // Mobile menu toggle
-  const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-  const navMenu = document.getElementById('navMenu');
-
-  if (mobileMenuToggle && navMenu) {
-    mobileMenuToggle.addEventListener('click', () => {
-      navMenu.classList.toggle('active');
-      const icon = mobileMenuToggle.querySelector('.material-symbols-outlined');
-      if (icon) {
-        icon.textContent = navMenu.classList.contains('active') ? 'close' : 'menu';
-      }
-    });
-
-    // Close menu when clicking a link
-    navMenu.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        const icon = mobileMenuToggle.querySelector('.material-symbols-outlined');
-        if (icon) {
-          icon.textContent = 'menu';
-        }
-      });
-    });
-  }
-</script>

@@ -1,4 +1,20 @@
-# 🌸 BaribOsho v1
+# Osho Zen Tarot
+
+[Ouvrir le tarot](https://osho.barib.art)
+
+Mélange le jeu, choisis l’une des cinq cartes face cachée et ouvre sa lecture. Les 79 cartes se parcourent également par famille ou par mot-clé. Le sélecteur FR / EN conserve la carte ou la famille que tu consultes.
+
+## Développement
+
+Le site est construit avec Astro et publié sur GitHub Pages. Utilise `npm ci`, puis `npm run dev` pour le développement. `npm run build` génère les 164 pages françaises et anglaises dans `dist/`.
+
+Les photos WebP et les polices sont servies depuis le site. Les données françaises se trouvent dans `src/data/osho_cards.json` et leur traduction dans `src/data/readings.en.json`. Les interfaces des deux langues partagent les composants de `src/views/`.
+
+## Archives du projet
+
+Les notes ci-dessous décrivent la première version du site.
+
+## 🌸 BaribOsho v1
 
 > *Site web interactif - Une exploration du Tarot Zen d'Osho*
 

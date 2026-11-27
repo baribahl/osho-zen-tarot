@@ -1,0 +1,190 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import Sky from '../components/Sky.astro';
+import {
+  deck,
+  families,
+  familyOf,
+  rank,
+  reading,
+  route,
+  type Lang,
+} from '../lib/deck';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props,
+  en = lang === 'en';
+const picks = deck.map((c) => ({
+  id: c.card_number,
+  name: reading(c, lang).name,
+  family: familyOf(c)[lang] + ' · ' + rank(c, lang),
+  img: c.image_url_medium,
+  url: route(lang, 'card', c.card_number),
+}));
+const description = en
+  ? 'Shuffle the Osho Zen Tarot, choose a card and explore all 79 illustrated readings.'
+  : 'Mélange le Tarot Zen d’Osho, choisis ta carte et explore les 79 cartes illustrées du jeu.';
+---
+
+<BaseLayout
+  lang={lang}
+  page="home"
+  title={en ? 'Draw a card' : 'Tirer une carte'}
+  description={description}
+>
+  <section class="ritual" id="ritual" data-phase="idle" data-lang={lang}>
+    <div class="wrap ritual-layout">
+      <div class="ritual-copy">
+        <p class="kicker hero-kicker">
+          <span></span>
+          <span id="ritual-label">
+            {en ? 'The Osho Zen Tarot' : 'Le tarot zen d’Osho'}
+          </span>
+        </p>
+        <div id="intro-copy">
+          <h1>
+            {en ? 'One card,' : 'Une carte,'}
+            <br />
+            <em>{en ? 'one moment.' : 'un instant.'}</em>
+          </h1>
+          <p class="hero-desc">
+            {en
+              ? 'Take a breath. Think of a question, or simply see what turns up. The cards are yours.'
+              : 'Respire un coup. Tu peux venir avec une question en tête, ou simplement par curiosité. À toi de jouer.'}
+          </p>
+        </div>
+        <div id="live-copy" hidden>
+          <h1 class="display" id="stage-heading"></h1>
+          <p class="hero-desc" id="stage-desc"></p>
+        </div>
+        <div class="hero-actions">
+          <button class="invitation" id="shuffle" type="button">
+            <span class="seal">
+              <Icon name="cards" />
+            </span>
+            <span>{en ? 'Shuffle the cards' : 'Mélanger les cartes'}</span>
+          </button>
+          <a class="invitation" id="read" hidden>
+            <span class="seal">
+              <Icon name="book" />
+            </span>
+            <span>{en ? 'Read this card' : 'Lire cette carte'}</span>
+          </a>
+          <button type="button" class="text-action" id="reset-draw" hidden>
+            {en ? 'Start again' : 'Recommencer'}
+          </button>
+        </div>
+        <p class="aside-note" id="aside-note">
+          {en ? 'Incense optional.' : 'L’encens est facultatif.'}
+        </p>
+        <noscript>
+          <p>
+            <a href={route(lang, 'gallery')}>
+              {en ? 'Browse the deck' : 'Parcourir le jeu'}
+            </a>
+          </p>
+        </noscript>
+      </div>
+      <div
+        class="table"
+        id="table"
+        role="group"
+        aria-label={en ? 'Drawing table' : 'Table de tirage'}
+      >
+        <Sky />
+        <div class="fan" id="fan">
+          {[-2, -1, 0, 1, 2].map((x, i) => (
+            <button
+              class="playing-card"
+              data-pos={i}
+              style={`--i:${x};--abs:${Math.abs(x)};--z:${4 - Math.abs(x)};--side:${i % 2 ? -1 : 1};--order:${i};--column:${i < 3 ? i - 1 : i - 3.5};--row:${i < 3 ? -1 : 1}`}
+              disabled
+              aria-label={
+                en ? `Choose card ${i + 1}` : `Choisir la carte ${i + 1}`
+              }
+            >
+              <span class="turn">
+                <span class="reverse"></span>
+                <span class="face"></span>
+              </span>
+            </button>
+          ))}
+        </div>
+        <button
+          id="deck-start"
+          type="button"
+          tabindex="-1"
+          aria-label={en ? 'Shuffle the deck' : 'Mélanger le jeu'}
+        ></button>
+        <div class="deck-caption">
+          <span></span>
+          <Icon name="spark" size={11} />
+          <span id="deck-caption">
+            {en ? 'The deck · 79 cards' : 'Le jeu · 79 cartes'}
+          </span>
+          <Icon name="spark" size={11} />
+          <span></span>
+        </div>
+      </div>
+    </div>
+    <p class="sr-only" id="announce" aria-live="polite" aria-atomic="true"></p>
+    <script
+      type="application/json"
+      id="draw-data"
+      set:html={JSON.stringify(picks).replace(/</g, '\\u003c')}
+    />
+  </section>
+  <section class="family-section paper">
+    <div class="wrap">
+      <div class="section-intro">
+        <div>
+          <p class="kicker">
+            <Icon name="grid" size={14} />
+            {en ? 'The collection' : 'La collection'}
+          </p>
+          <h2>
+            {en ? 'The five' : 'Les cinq'}{' '}
+            <em>{en ? 'families.' : 'familles.'}</em>
+          </h2>
+        </div>
+        <a class="archive-link" href={route(lang, 'gallery')}>
+          <Icon name="grid" size={16} />
+          {en ? 'Browse all 79 cards' : 'Voir les 79 cartes'}
+        </a>
+      </div>
+      <div class="family-grid">
+        {families.map((f) => (
+          <a
+            class="family-card"
+            data-family={f.key}
+            href={route(lang, 'gallery') + '?family=' + f.key}
+            style={`--family:${f.color}`}
+          >
+            <div class="family-art">
+              <img
+                width="300"
+                height="450"
+                src={deck[f.cover].image_url_thumb}
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="family-label">
+              <h3>{f[lang]}</h3>
+              <small>
+                {deck.filter((c) => familyOf(c).key === f.key).length}{' '}
+                {en ? 'cards' : 'cartes'}
+              </small>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+<script>
+  import '../scripts/draw';
+</script>

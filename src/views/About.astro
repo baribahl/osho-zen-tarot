@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { deck, route, type Lang } from '../lib/deck';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props,
+  en = lang === 'en';
+const card = deck[8];
+---
+
+<BaseLayout
+  lang={lang}
+  page="about"
+  title={en ? 'About the project' : 'À propos du projet'}
+  description={
+    en
+      ? 'How a photographed deck became a little place to pause.'
+      : 'Comment un jeu photographié carte par carte est devenu un endroit où faire une pause.'
+  }
+>
+  <div class="paper about">
+    <div class="wrap">
+      <div class="about-intro">
+        <header>
+          <p class="kicker">
+            <Icon name="sun" size={17} />
+            {en ? 'About the project' : 'À propos du projet'}
+          </p>
+          <h1>
+            {en ? 'A deck' : 'Un jeu'}
+            <br />
+            <em>{en ? 'close at hand.' : 'à portée de main.'}</em>
+          </h1>
+          <p class="standfirst">
+            {en
+              ? 'I wanted a quiet place to draw an Osho Zen Tarot card and spend a little time with myself. So I made one.'
+              : 'J’avais envie d’un endroit tranquille pour tirer une carte du Tarot Zen d’Osho et prendre un moment avec moi-même. Alors je l’ai bricolé.'}
+          </p>
+          <p class="signature">Baribahl</p>
+        </header>
+        <figure class="about-art">
+          <div class="about-plates">
+            <img
+              src={card.image_url_medium}
+              alt={
+                en
+                  ? 'Courage, a yellow flower growing from a crack in a rock'
+                  : 'Le Courage, une fleur jaune qui pousse dans la fente d’un rocher'
+              }
+              width="600"
+              height="900"
+            />
+          </div>
+          <figcaption>
+            {en
+              ? 'Courage · Major Arcana VIII'
+              : 'Le Courage · Arcane majeur VIII'}
+          </figcaption>
+        </figure>
+      </div>
+      <article class="about-notes">
+        <section>
+          <h2>{en ? 'From the box to the screen' : 'De la boîte à l’écran'}</h2>
+          <p>
+            {en
+              ? 'I photographed all 79 cards from my deck. What you see here are those photographs, right down to the lettering on the cards. The readings and commentaries come from the physical Osho Zen Tarot. The English readings on this site are translations of the French texts.'
+              : 'J’ai photographié les 79 cartes de mon jeu. Ce sont ces photos que tu retrouves ici, jusque dans le lettrage des cartes. Les significations et les commentaires viennent du Tarot Zen d’Osho en version physique. Pour ce site, les lectures anglaises ont été traduites à partir des textes français.'}
+          </p>
+        </section>
+        <section>
+          <h2>
+            {en ? 'What do you notice?' : 'Qu’est-ce qui te saute aux yeux ?'}
+          </h2>
+          <p>
+            {en
+              ? 'You can draw with a question in mind, or simply follow a colour or a detail in an illustration. What feels familiar? What gets on your nerves? Sometimes the second question is the more interesting one.'
+              : 'Tu peux tirer une carte avec une question en tête, ou simplement suivre une couleur, un détail dans l’illustration. Qu’est-ce qui résonne ? Qu’est-ce qui t’agace ? La deuxième question est parfois la plus intéressante.'}
+          </p>
+          <p>
+            {en
+              ? 'Come back when you like. The deck is free to explore and there’s no account to create.'
+              : 'Reviens quand tu veux. Le jeu est gratuit et tu peux l’explorer sans créer de compte.'}
+          </p>
+
+          <a class="invitation" href={route(lang, 'home')}>
+            <span class="seal">
+              <Icon name="cards" />
+            </span>
+            <span>{en ? 'Draw a card' : 'Tirer une carte'}</span>
+          </a>
+        </section>
+      </article>
+    </div>
+  </div>
+</BaseLayout>

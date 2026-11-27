@@ -1,0 +1,12 @@
+---
+import Detail from '../../../views/Detail.astro';
+import { deck } from '../../../lib/deck';
+export function getStaticPaths() {
+  return deck.map((card) => ({
+    params: { id: card.card_number },
+    props: { card },
+  }));
+}
+---
+
+<Detail lang="en" card={Astro.props.card} />
